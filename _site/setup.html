@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=c41cef2b6a127e41af827e1d8a105c2ca8e37e39">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Setting up your Reinforcement Learning Environment | alexandervandekleut.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Setting up your Reinforcement Learning Environment" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Setting up your Reinforcement Learning Environment" />
+<meta property="og:description" content="Setting up your Reinforcement Learning Environment" />
+<link rel="canonical" href="http://localhost:4000/setup" />
+<meta property="og:url" content="http://localhost:4000/setup" />
+<meta property="og:site_name" content="alexandervandekleut.github.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-05-12T00:00:00-04:00" />
+<script type="application/ld+json">
+{"description":"Setting up your Reinforcement Learning Environment","@type":"BlogPosting","url":"http://localhost:4000/setup","headline":"Setting up your Reinforcement Learning Environment","dateModified":"2019-05-12T00:00:00-04:00","datePublished":"2019-05-12T00:00:00-04:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/setup"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          
+            <a id="forkme_banner" href="https://github.com/alexandervandekleut/alexandervandekleut.github.io">View on GitHub</a>
+          
+
+          <h1 id="project_title">alexandervandekleut.github.io</h1>
+          <h2 id="project_tagline"></h2>
+
+          
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1 id="setting-up-your-reinforcement-learning-environment">Setting up your Reinforcement Learning Environment</h1>
+
+<p>In this lesson, we ensure that you have a working development setup for doing research in reinforcement learning. In later lessons, we may require specific packages or github repositories not included here. However, the following should get you up and running. For now, we assume you are developing on MacOS.</p>
+
+<hr />
+
+<h3 id="homebrew">Homebrew</h3>
+
+<p><a href="https://brew.sh/">Homebrew</a> is a package manager for unix that allows you to install most development packages from the command line view <code class="highlighter-rouge">brew install</code>. It is similar to <code class="highlighter-rouge">apt-get</code> for linux. Homebrew installs packages to their own directory and symlinks them into <code class="highlighter-rouge">usr/local</code>.</p>
+
+<p>Paste the following into your terminal:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">/usr/bin/ruby -e "$</span><span class="o">(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/master/install<span class="o">)</span><span class="s2">"
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="atom">Atom</h3>
+<p><a href="https://atom.io/">Atom</a> is a simple text editor with syntax highlighting support for many languages. It also supports <a href="https://atom.io/packages">packages</a> that provides extra functionality, such as autocomplete.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">brew cask install atom
+</span></code></pre></div></div>
+<p>will install atom as an application. You can open atom from any directory using <code class="highlighter-rouge">atom</code> in terminal, or by opening it as a regular application.</p>
+
+<hr />
+
+<h3 id="conda-and-python">Conda and Python</h3>
+<p>We will be using python 3.6 for development. While you may have python on your system already, we will be using <code class="highlighter-rouge">conda</code> to ensure that all of our experiments use their own copy of python separate from the system one. This prevents cluttering the system python with unnecessary libraries, and allows us to easily alias the <code class="highlighter-rouge">python</code> and <code class="highlighter-rouge">pip</code> commands to the ones used for our experiments. I personally prefer conda to other solutions involving <code class="highlighter-rouge">virtualenv</code>.</p>
+
+<p>Conda isn’t available via <code class="highlighter-rouge">brew</code>, so <a href="https://www.anaconda.com/distribution/#macos">download it from their website</a>. Conda needs python to be installed initially, but we can set our own python versions when creating <strong>conda environments</strong> for our code.</p>
+
+<p>Run the following in your terminal:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">bash ~/Downloads/Anaconda3-2019.03-MacOSX-x86_64.sh
+</span></code></pre></div></div>
+
+<p>replace <code class="highlighter-rouge">~/Downloads/</code> with the appropriate path if you chose to download it to another location. You can also install using the graphical user interface by clicking on the downloaded file.</p>
+
+<h5 id="creating-a-conda-environment">Creating a Conda Environment</h5>
+
+<p>To create a new conda environment, use the following syntax:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">conda create -n environmentname python=x.x
+</span></code></pre></div></div>
+
+<p>To follow along, create a new environment called <code class="highlighter-rouge">rl-lessons</code> with python version 3.6. Press <code class="highlighter-rouge">y</code> to confirm you want to create the environment. Conda sets up environment variables that allow you to use <code class="highlighter-rouge">python</code> and <code class="highlighter-rouge">pip</code> to refer specifically to the ones created in your conda environment.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">conda create -n rl-lessons python=3.6
+</span></code></pre></div></div>
+
+<p>To activate the environment, use</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">conda activate rl-lessons
+</span></code></pre></div></div>
+
+<p>and to deactivate, use</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">conda deactivate
+</span></code></pre></div></div>
+
+<p>It is good practice to always deactivate the current environment before activating another.</p>
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        
+        <p class="copyright">alexandervandekleut.github.io maintained by <a href="https://github.com/alexandervandekleut">alexandervandekleut</a></p>
+        
+        <!-- <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p> -->
+      </footer>
+    </div>
+
+    
+  </body>
+</html>
