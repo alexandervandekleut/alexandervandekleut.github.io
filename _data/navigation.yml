@@ -1,0 +1,128 @@
+lessons_title: Introduction to Reinforcement Learning in Tensorflow
+lessons:
+
+- title: Introduction
+  math: no
+  theory: yes
+  code: no
+  url: /
+
+- title: Setting up your Reinforcement Learning Environment
+  math: no
+  theory: no
+  code: yes
+  url: /
+
+- title: Markov Decision Processes
+  math: yes
+  theory: yes
+  code: yes
+  url: /
+
+- title: Introduction to the OpenAI Gym Interface
+  math: no
+  theory: no
+  code: yes
+  url: /
+
+- title: Tabular Reinforcement Learning, \( Q \) learning
+  math: yes
+  theory: yes
+  code: yes
+  url: /
+
+- title: Deep \( Q \)-learning
+  math: yes
+  theory: yes
+  code: yes
+  url: /
+
+- title: Improvements to Deep \( Q \)-learning
+  math: yes
+  theory: yes
+  code: yes
+  url: /
+
+- title: Extending Gym Functionality with Wrappers
+  math: no
+  theory: yes
+  code: yes
+  url: /
+
+- title: Policy Gradients
+  math: yes
+  theory: yes
+  code: yes
+  url: /
+
+- title: Advantage Actor-Critic (A2C)
+  math: yes
+  theory: yes
+  code: yes
+  url: /
+
+- title: Generalizaed Advantage Estimation (GAE)
+  math: yes
+  theory: yes
+  code: yes
+  url: /
+
+- title: Trust Region Policy Optimization (TRPO)
+  math: yes
+  theory: yes
+  code: yes
+  url: /
+
+- title: Proximal Policy Optimization (PPO)
+  math: yes
+  theory: yes
+  code: yes
+  url: /
+
+- title: Entropy
+  math: yes
+  theory: yes
+  code: yes
+  url: /
+
+- title: KL-Divergence
+  math: yes
+  theory: yes
+  code: yes
+  url: /
+
+- title: List of Important Papers
+  math: no
+  theory: yes
+  code: no
+  url: /
+
+- title: Neural Network Design
+  math: yes
+  theory: yes
+  code: yes
+  url: /
+
+meta_title: Meta
+meta:
+
+- title: LaTeX
+
+- title: Markdown
+
+- title: Draw.io
+
+- title: Github Pages
+
+resources_title: Resources
+resources:
+
+- title: Glossary
+
+- title: Conda Cheatsheet
+
+- title: Git Cheatsheet
+
+- title: References
+
+- title: Implementations
