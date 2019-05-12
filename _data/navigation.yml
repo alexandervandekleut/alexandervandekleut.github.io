@@ -5,103 +5,103 @@ lessons:
   math: no
   theory: yes
   code: no
-  url: /
+  url: /introduction
 
 - title: Setting up your Reinforcement Learning Environment
   math: no
   theory: no
   code: yes
-  url: /
+  url: /setup
 
 - title: Markov Decision Processes
   math: yes
   theory: yes
   code: yes
-  url: /
+  url: /mdp
 
 - title: Introduction to the OpenAI Gym Interface
   math: no
   theory: no
   code: yes
-  url: /
+  url: /gym
 
-- title: Tabular Reinforcement Learning, \( Q \) learning
+- title: \( Q \) learning
   math: yes
   theory: yes
   code: yes
-  url: /
+  url: /q-learning
 
 - title: Deep \( Q \)-learning
   math: yes
   theory: yes
   code: yes
-  url: /
+  url: /deep-q-learning
 
-- title: Improvements to Deep \( Q \)-learning
+- title: Rainbow - Improvements to Deep \( Q \)-learning
   math: yes
   theory: yes
   code: yes
-  url: /
+  url: /rainbow
 
 - title: Extending Gym Functionality with Wrappers
   math: no
   theory: yes
   code: yes
-  url: /
+  url: /wrappers
 
 - title: Policy Gradients
   math: yes
   theory: yes
   code: yes
-  url: /
+  url: /policy-gradients
 
 - title: Advantage Actor-Critic (A2C)
   math: yes
   theory: yes
   code: yes
-  url: /
+  url: /a2c
 
 - title: Generalizaed Advantage Estimation (GAE)
   math: yes
   theory: yes
   code: yes
-  url: /
+  url: /gae
 
 - title: Trust Region Policy Optimization (TRPO)
   math: yes
   theory: yes
   code: yes
-  url: /
+  url: /trpo
 
 - title: Proximal Policy Optimization (PPO)
   math: yes
   theory: yes
   code: yes
-  url: /
+  url: /ppo
 
 - title: Entropy
   math: yes
   theory: yes
   code: yes
-  url: /
+  url: /entropy
 
 - title: KL-Divergence
   math: yes
   theory: yes
   code: yes
-  url: /
+  url: /kl
 
 - title: List of Important Papers
   math: no
   theory: yes
   code: no
-  url: /
+  url: /papers
 
 - title: Neural Network Design
   math: yes
   theory: yes
   code: yes
-  url: /
+  url: /neural-networks
 
 meta_title: Meta
 meta:

@@ -1,0 +1,30 @@
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {-A}}Notation}{1}
+\contentsline {section}{\numberline {I}Background}{2}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-A}}Markov Processes}{3}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-B}}Markov Reward Processes}{3}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-C}}Value Function}{4}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-D}}Markov Decision Processes}{5}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-E}}Policies}{5}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-F}}Action-Value Function}{6}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-G}}Incorporating Stochasticity}{6}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-H}}Optimal Policy}{6}
+\contentsline {section}{\numberline {II}$Q$-Learning}{7}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-A}}SARSA}{7}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-B}}$Q$-learning}{8}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-C}}Deep $Q$-Learning}{9}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-D}}Target Networks}{11}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-E}}Exploration-Exploitation}{12}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-F}}Experience Replay}{13}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-G}}Double $Q$-Learning}{14}
+\contentsline {section}{\numberline {III}Policy Gradient}{15}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-A}}The Policy Gradient Theorem}{16}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-B}}REINFORCE}{17}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-C}}Actor-Critic Models (AC)}{18}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-D}}Advantage Actor Critic (A2C)}{18}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-E}}PPO}{19}
+\contentsline {section}{\numberline {IV}Intrinsic Motivation}{19}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-A}}Sparse Rewards}{19}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}}ICM}{19}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}}Go-Explore}{19}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-D}}Episodic Curiosity through Reachability}{19}
+\contentsline {section}{\numberline {V}Sparse Distributed Memory}{19}

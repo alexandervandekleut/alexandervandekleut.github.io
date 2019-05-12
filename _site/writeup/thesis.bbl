@@ -1,0 +1,88 @@
+\begin{thebibliography}{}
+
+\bibitem[Bellemare et~al., 2012]{ale}
+Bellemare, M.~G., Naddaf, Y., Veness, J., \& Bowling, M. (2012).
+\newblock The arcade learning environment: An evaluation platform for general
+  agents.
+
+\bibitem[Burda et~al., 2018]{large-scale-study}
+Burda, Y., Edwards, H., Pathak, D., Storkey, A., Darrell, T., \& Efros, A.~A.
+  (2018).
+\newblock Large-scale study of curiosity-driven learning.
+\newblock arXiv:1808.04355.
+
+\bibitem[Hessel et~al., 2017]{rainbow}
+Hessel, M., Modayil, J., van Hasselt, H., Schaul, T., Ostrovski, G., Dabney,
+  W., Horgan, D., Piot, B., Azar, M., \& Silver, D. (2017).
+\newblock Rainbow: Combining improvements in deep reinforcement learning.
+\newblock arXiv:1710.02298.
+
+\bibitem[Kanerva, 1988]{sdm}
+Kanerva, P. (1988).
+\newblock {\em Sparse Distributed Memory}.
+\newblock The MIT Press.
+
+\bibitem[Lehman \& Stanley, 2011]{novelty}
+Lehman, J. \& Stanley, K. (2011).
+\newblock Abandoning objectives: evolution through the search for novelty
+  alone.
+
+\bibitem[Mnih et~al., 2013]{dqn}
+Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra,
+  D., \& Riedmiller, M. (2013).
+\newblock Playing atari with deep reinforcement learning.
+\newblock arXiv:1312.5602.
+
+\bibitem[Niv, 2009]{brain}
+Niv, Y. (2009).
+\newblock {\em Reinforcement Learning in the Brain}.
+
+\bibitem[Pathak et~al., 2017]{icm}
+Pathak, D., Agrawal, P., Efros, A.~A., \& Darrell, T. (2017).
+\newblock Curiosity-driven exploration by self-supervised prediction.
+\newblock arXiv:1705.05363.
+
+\bibitem[Savinov et~al., 2018]{rnd}
+Savinov, N., Raichuk, A., Marinier, R., Vincent, D., Pollefeys, M., Lillicrap,
+  T., \& Gelly, S. (2018).
+\newblock Episodic curiosity through reachability.
+\newblock arXiv:1810.02274.
+
+\bibitem[Schulman et~al., 2015]{gae}
+Schulman, J., Moritz, P., Levine, S., Jordan, M., \& Abbeel, P. (2015).
+\newblock High-dimensional continuous control using generalized advantage
+  estimation.
+\newblock arXiv:1506.02438.
+
+\bibitem[Schulman et~al., 2017]{ppo}
+Schulman, J., Wolski, F., Dhariwal, P., Radford, A., \& Klimov, O. (2017).
+\newblock Proximal policy optimization algorithms.
+\newblock arXiv:1707.06347.
+
+\bibitem[Sutton, 2019]{reward_hypothesis}
+Sutton, R. (2019).
+\newblock The reward hypothesis.
+
+\bibitem[Sutton \& Barto, 1998]{rl}
+Sutton, R. \& Barto, A. (1998).
+\newblock {\em Introduction to Reinforcement Learning, 1st Edition}.
+\newblock MIT Press Cambridge, MA, USA.
+
+\bibitem[Thorndike, 1901]{operant_conditioning}
+Thorndike, E. (1901).
+\newblock Animal intelligence: An experimental study of the associative
+  processes in animals.
+\newblock {\em Psychological Review Monograph Supplement}, 2, 1--109.
+
+\bibitem[van Hasselt et~al., 2015]{ddqn}
+van Hasselt, H., Guez, A., \& Silver, D. (2015).
+\newblock Deep reinforcement learning with double q-learning.
+\newblock arXiv:1509.06461.
+
+\bibitem[Yantis, 2009]{selective}
+Yantis, S. (2009).
+\newblock The neural basis of selective attention cortical sources and targets
+  of attentional modulation.
+\newblock {\em Current Directions in Psychological Science}, 17, 86--90.
+
+\end{thebibliography}

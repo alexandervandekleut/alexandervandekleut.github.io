@@ -1,0 +1,36 @@
+\relax 
+\citation{lawofeffect}
+\citation{atari}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}}
+\citation{credit}
+\citation{curiosityrat}
+\citation{ICM}
+\@writefile{toc}{\contentsline {section}{\numberline {II}Model}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-A}}Curiosity Module}{2}}
+\citation{autoencoder}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-B}}Policy Network}{3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The simplified diagram showing how the convolutional autoencoder compresses the imput state ($64 \times 64 \times 1$ into an encoded vector, and then deconvolves it to recreate the output.).}}{4}}
+\newlabel{fig:autoencoderdiagram}{{1}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces The simplified diagram showing how the convolutional autoencoder compresses the imput state ($64 \times 64 \times 1$ into an encoded vector, and then deconvolves it to recreate the output.).}}{4}}
+\newlabel{fig:curiositymodule}{{2}{4}}
+\@writefile{toc}{\contentsline {section}{\numberline {III}Training and Results}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces The simplified diagram showing how the convolutional autoencoder compresses the imput state ($64 \times 64 \times 1$ into an encoded vector, and then deconvolves it to recreate the output.).}}{5}}
+\newlabel{fig:qnet}{{3}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Training loss from the $Q$ network during human training. Loss is calculated as the average over 100 epochs. Every 500 epochs we would update the person driving the robot and recharge the battery. The loss increases when the user changes due to potentially different driving styles (though many things stay the same such as driving straight down the hallway). The network decreases in loss over time and becomes better at predicting human commands over time.}}{5}}
+\newlabel{fig:humanloss}{{4}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces The training and testing loss from the autoencoder. Over time, the training loss appears to slightly stabilize, tapering off to a loss that plateaus around 300-500. Such loss is unavoidable due to find details or slight differences in input that cannot be perfectly recreated. The testing loss does not stabilize completely, but is definitely reduced over time.}}{5}}
+\newlabel{fig:autoencoder}{{5}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces The average training loss for the policy network over 100 epoch intervals. It shows that over time this network gets better at successfully predicting the reward of choosing different actions. Eventually the network learns which actions are the best to take (ie; maximize prediction error).}}{6}}
+\newlabel{fig:policy}{{6}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces The average training loss for the prediction network over 100 epoch intervals. Initially it appears that the prediction error decreases, but it rapidly stops decreasing and ends up staying relatively constant throughout the entire training period.}}{6}}
+\newlabel{fig:prediction}{{7}{6}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Conclusions and Future Work}{6}}
+\bibstyle{IEEEtran}
+\bibdata{references}
+\bibcite{lawofeffect}{1}
+\bibcite{atari}{2}
+\bibcite{credit}{3}
+\bibcite{curiosityrat}{4}
+\bibcite{ICM}{5}
+\bibcite{autoencoder}{6}
+\@writefile{toc}{\contentsline {section}{References}{7}}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=c41cef2b6a127e41af827e1d8a105c2ca8e37e39">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Introduction | alexandervandekleut.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Introduction" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Introduction" />
+<meta property="og:description" content="Introduction" />
+<link rel="canonical" href="http://localhost:4000/introduction" />
+<meta property="og:url" content="http://localhost:4000/introduction" />
+<meta property="og:site_name" content="alexandervandekleut.github.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-05-12T00:00:00-04:00" />
+<script type="application/ld+json">
+{"description":"Introduction","@type":"BlogPosting","url":"http://localhost:4000/introduction","headline":"Introduction","dateModified":"2019-05-12T00:00:00-04:00","datePublished":"2019-05-12T00:00:00-04:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/introduction"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          
+            <a id="forkme_banner" href="https://github.com/alexandervandekleut/alexandervandekleut.github.io">View on GitHub</a>
+          
+
+          <h1 id="project_title">alexandervandekleut.github.io</h1>
+          <h2 id="project_tagline"></h2>
+
+          
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1 id="introduction">Introduction</h1>
+
+<p>Reinforcement learning has become extremely popular lately. Advances in techniques and distributed processing has allowed reinforcement learning agents to <a href="https://deepmind.com/research/alphago/">beat the world champion at Go</a> and <a href="https://openai.com/five/">play competitively against world leaders at Dota 2</a>.</p>
+
+<p>In this series, we build up a deep theoretical understanding of reinforcement learning by combining theory and implementations. We will be using the <a href="https://www.python.org/">Python</a> programming language, along with an assortment of libraries such as <a href="https://www.numpy.org">numpy</a>, <a href="https://www.tensorflow.org/">tensorflow</a>, and <a href="https://gym.openai.com/">gym</a>. We assume the reader has familiarity with programming in Python. We will also be making extensive use of <a href="https://jupyter.org/">jupyter notebooks</a>.</p>
+
+<h3 id="the-basic-reinforcement-learning-loop">The Basic Reinforcement Learning Loop</h3>
+
+<p>There are two main entities in reinforcement learning: the <strong>agent</strong> and the <strong>environment</strong>.</p>
+
+<p style="text-align:center"><img src="http://localhost:4000/assets/images/rl.png" alt="rl-loop" /></p>
+
+<p>The agent is responsible for choosing <strong>actions</strong> \( a_t \) based on the current <strong>state</strong> \( s_t \). In turn, the environment changes according the action that the agent took. The environment then provides the agent with the next state \( s_{t+1} \), and also a <strong>reward</strong> \( r_t \) that represents how good or bad it was to choose that action in that state.</p>
+
+<p>The driving idea behind reinforcement learning is the <strong>reward hypothesis</strong>:</p>
+
+<blockquote>
+  <p>Every action of a rational agent can be thought of as seeking to maximize some cumulative scalar reward signal.</p>
+</blockquote>
+
+<p>Our goal is for the agent to learn a <strong>policy</strong>, a set of rules for choosing actions based on the current state, that maximizes the cumulative rewards.</p>
+
+<p>Over the course of several lessons, we will build up an understanding of two main classes of policies: <a href="http://localhost:4000/q-learning"><strong>\( Q \) -learning</strong></a> and <a href="http://localhost:4000/policy-gradients"><strong>policy gradients</strong></a>.</p>
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        
+        <p class="copyright">alexandervandekleut.github.io maintained by <a href="https://github.com/alexandervandekleut">alexandervandekleut</a></p>
+        
+        <!-- <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p> -->
+      </footer>
+    </div>
+
+    
+  </body>
+</html>

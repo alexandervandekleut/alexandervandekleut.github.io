@@ -1,0 +1,90 @@
+\relax 
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {-A}}Notation}{1}}
+\citation{operant_conditioning}
+\citation{reward_hypothesis}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Background}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-A}}Markov Processes}{3}}
+\newlabel{eqn:state_transition_probability}{{I.1}{3}}
+\newlabel{eqn:markov_property}{{I.2}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-B}}Markov Reward Processes}{3}}
+\newlabel{eqn:reward_process}{{I.3}{3}}
+\newlabel{eqn:undiscounted_rewards}{{I.4}{3}}
+\newlabel{eqn:G}{{I.5}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-C}}Value Function}{4}}
+\newlabel{eqn:value}{{I.6}{4}}
+\newlabel{eqn:bellman}{{I.7}{4}}
+\newlabel{eqn:bellman-evaluated}{{I.8}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-D}}Markov Decision Processes}{5}}
+\newlabel{eqn:decision_process}{{I.9}{5}}
+\newlabel{eqn:state_transition_probability_MDP}{{I.10}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-E}}Policies}{5}}
+\newlabel{eqn:policy_as_prob_dist}{{I.11}{5}}
+\newlabel{eqn:action-value}{{I.12}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-F}}Action-Value Function}{6}}
+\newlabel{eqn:q_non_bellman}{{I.13}{6}}
+\newlabel{eqn:q_bellman}{{I.14}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-G}}Incorporating Stochasticity}{6}}
+\newlabel{eqn:v_as_weighted_sum_of_q}{{I.15}{6}}
+\newlabel{eqn:q_as_weighted_sum_of_v}{{I.16}{6}}
+\newlabel{eqn:q_recursive_with_probabilities}{{I.17}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {I-H}}Optimal Policy}{6}}
+\newlabel{eqn:greedy_policy}{{I.19}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {II}$Q$-Learning}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-A}}SARSA}{7}}
+\newlabel{eqn:td_target}{{II.1}{8}}
+\newlabel{eqn:sarsa_update_rule}{{II.2}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-B}}$Q$-learning}{8}}
+\newlabel{eqn:q_greedy_policy}{{II.3}{8}}
+\newlabel{eqn:q_update_rule}{{II.4}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-C}}Deep $Q$-Learning}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces A schematic representation of a deep neural network.}}{9}}
+\newlabel{fig:nn-blank}{{1}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces A $Q$-network. The state is a 4-dimensional vector and there are 3 discrete actions available. The network takes a state $s$ as a parameter and for each action $a$ predicts the quality $Q(s,a;\theta )$ of that action.}}{10}}
+\newlabel{fig:q-network-state-to-many-actions}{{2}{10}}
+\newlabel{eqn:q_loss_no_target_network}{{II.5}{10}}
+\newlabel{eqn:y_i_no_target_network}{{II.6}{10}}
+\citation{worse_than_random}
+\newlabel{eqn:q-learning-gradient-no-target}{{II.7}{11}}
+\newlabel{eqn:SGD}{{II.8}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-D}}Target Networks}{11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces A diagram showing how $Q$-learning gathers data for training.}}{12}}
+\newlabel{fig:state-transition-q-learning-loss}{{3}{12}}
+\newlabel{eqn:q_loss_target_network}{{II.9}{12}}
+\newlabel{eqn:y_i_target_network}{{II.10}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-E}}Exploration-Exploitation}{12}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces A diagram showing how $Q$-learning gathers data for training using the target network and behaviour network.}}{13}}
+\newlabel{fig:state-transition-q-learning-loss-target-networks}{{4}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-F}}Experience Replay}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-G}}Double $Q$-Learning}{14}}
+\newlabel{eqn:y_i_double}{{II.11}{14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces A diagram showing how $Q$-learning gathers data for training using the double $Q$-learning.}}{15}}
+\newlabel{fig:state-transition-q-learning-loss-double}{{5}{15}}
+\@writefile{toc}{\contentsline {section}{\numberline {III}Policy Gradient}{15}}
+\newlabel{eqn:policy-as-distribution}{{III.1}{15}}
+\newlabel{eqn:j-expectation}{{III.2}{15}}
+\newlabel{eqn:j-SGA}{{III.3}{16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-A}}The Policy Gradient Theorem}{16}}
+\newlabel{eqn:j-as-integral-over-tau}{{III.4}{16}}
+\newlabel{eqn:nabla-j-as-integral-over-tau}{{III.5}{16}}
+\newlabel{eqn:nabla_log_identity}{{III.6}{16}}
+\newlabel{eqn:nabla-j-with-log}{{III.8}{16}}
+\newlabel{eqn:probability_of_generating_tau}{{III.9}{16}}
+\citation{sutton}
+\newlabel{eqn:log_probablity_of_generating_tau}{{III.10}{17}}
+\newlabel{eqn:nabla_log_probablity_of_generating_tau}{{III.11}{17}}
+\newlabel{eqn:policy_gradient_theorem}{{III.12}{17}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-B}}REINFORCE}{17}}
+\newlabel{eqn:policy_gradient_theorem_G_t}{{III.13}{17}}
+\newlabel{eqn:REINFORCE}{{III.14}{17}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-C}}Actor-Critic Models (AC)}{18}}
+\newlabel{eqn:j-approximation}{{III.15}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-D}}Advantage Actor Critic (A2C)}{18}}
+\newlabel{eqn:advantage}{{III.16}{19}}
+\newlabel{eqn:policy_gradient_theorem_with_baseline}{{III.17}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-E}}PPO}{19}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Intrinsic Motivation}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-A}}Sparse Rewards}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}}ICM}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}}Go-Explore}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-D}}Episodic Curiosity through Reachability}{19}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Sparse Distributed Memory}{19}}

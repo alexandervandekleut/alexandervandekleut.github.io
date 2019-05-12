@@ -1,0 +1,600 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  11 MAY 2019 13:09
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**thesis.tex
+(./thesis.tex
+LaTeX2e <2018-04-01> patch level 2
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/IEEEtran/IEEEtran.cls
+Document Class: IEEEtran 2015/08/26 V1.8b by Michael Shell
+-- See the "IEEEtran_HOWTO" manual for usage information.
+-- http://www.michaelshell.org/tex/ieeetran/
+\@IEEEtrantmpdimenA=\dimen102
+\@IEEEtrantmpdimenB=\dimen103
+\@IEEEtrantmpdimenC=\dimen104
+\@IEEEtrantmpcountA=\count80
+\@IEEEtrantmpcountB=\count81
+\@IEEEtrantmpcountC=\count82
+\@IEEEtrantmptoksA=\toks14
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 503.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+-- Using 8.5in x 11in (letter) paper.
+-- Using PDF output.
+\@IEEEnormalsizeunitybaselineskip=\dimen105
+-- This is a 12 point document.
+\CLASSINFOnormalsizebaselineskip=\dimen106
+\CLASSINFOnormalsizeunitybaselineskip=\dimen107
+\IEEEnormaljot=\dimen108
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <14> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <20> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <22> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <22> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <24> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+\IEEEquantizedlength=\dimen109
+\IEEEquantizedlengthdiff=\dimen110
+\IEEEquantizedtextheightdiff=\dimen111
+\IEEEilabelindentA=\dimen112
+\IEEEilabelindentB=\dimen113
+\IEEEilabelindent=\dimen114
+\IEEEelabelindent=\dimen115
+\IEEEdlabelindent=\dimen116
+\IEEElabelindent=\dimen117
+\IEEEiednormlabelsep=\dimen118
+\IEEEiedmathlabelsep=\dimen119
+\IEEEiedtopsep=\skip41
+\c@section=\count83
+\c@subsection=\count84
+\c@subsubsection=\count85
+\c@paragraph=\count86
+\c@IEEEsubequation=\count87
+\abovecaptionskip=\skip42
+\belowcaptionskip=\skip43
+\c@figure=\count88
+\c@table=\count89
+\@IEEEeqnnumcols=\count90
+\@IEEEeqncolcnt=\count91
+\@IEEEsubeqnnumrollback=\count92
+\@IEEEquantizeheightA=\dimen120
+\@IEEEquantizeheightB=\dimen121
+\@IEEEquantizeheightC=\dimen122
+\@IEEEquantizeprevdepth=\dimen123
+\@IEEEquantizemultiple=\count93
+\@IEEEquantizeboxA=\box26
+\@IEEEtmpitemindent=\dimen124
+\IEEEPARstartletwidth=\dimen125
+\c@IEEEbiography=\count94
+\@IEEEtranrubishbin=\box27
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/breakcites/breakcites.sty) (/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks15
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen126
+\Gin@req@width=\dimen127
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2017/09/02 v2.17a AMS math features
+\@mathmargin=\skip44
+
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks16
+\ex@=\dimen128
+)) (/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen129
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count95
+LaTeX Info: Redefining \frac on input line 213.
+\uproot@=\count96
+\leftroot@=\count97
+LaTeX Info: Redefining \overline on input line 375.
+\classnum@=\count98
+\DOTSCASE@=\count99
+LaTeX Info: Redefining \ldots on input line 472.
+LaTeX Info: Redefining \dots on input line 475.
+LaTeX Info: Redefining \cdots on input line 596.
+\Mathstrutbox@=\box28
+\strutbox@=\box29
+\big@size=\dimen130
+LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
+\macc@depth=\count100
+\c@MaxMatrixCols=\count101
+\dotsspace@=\muskip10
+\c@parentequation=\count102
+\dspbrk@lvl=\count103
+\tag@help=\toks17
+\row@=\count104
+\column@=\count105
+\maxfields@=\count106
+\andhelp@=\toks18
+\eqnshift@=\dimen131
+\alignsep@=\dimen132
+\tagshift@=\dimen133
+\tagwidth@=\dimen134
+\totwidth@=\dimen135
+\lineht@=\dimen136
+\@envbody=\toks19
+\multlinegap=\skip45
+\multlinetaggap=\skip46
+\mathdisplay@stack=\toks20
+LaTeX Info: Redefining \[ on input line 2817.
+LaTeX Info: Redefining \] on input line 2818.
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/appendix/appendix.sty
+Package: appendix 2009/09/02 v1.2b extra appendix facilities
+\c@@pps=\count107
+\c@@ppsavesec=\count108
+\c@@ppsaveapp=\count109
+
+
+/usr/local/texlive/2018/texmf-dist/tex/latex/appendix/appendix.sty:233: LaTeX Error: Command \appendices already defined.
+               Or name \end... illegal, see p.192 of the manual.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.233   \@ppsaveapp\@pprestoresec}
+                                  
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count110
+\c@ALG@rem=\count111
+\c@ALG@nested=\count112
+\ALG@tlm=\skip47
+\ALG@thistlm=\skip48
+\c@ALG@Lnr=\count113
+\c@ALG@blocknr=\count114
+\c@ALG@storecount=\count115
+\c@ALG@tmpcounter=\count116
+\ALG@tmplength=\skip49
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating environment
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count117
+\float@exts=\toks21
+\float@box=\box30
+\@float@everytoks=\toks22
+\@floatcapt=\box31
+)
+\@float@every@algorithm=\toks23
+\c@algorithm=\count118
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/bbm-macros/bbm.sty
+Package: bbm 1999/03/15 V 1.2 provides fonts for set symbols - TH
+LaTeX Font Info:    Overwriting math alphabet `\mathbbm' in version `bold'
+(Font)                  U/bbm/m/n --> U/bbm/bx/n on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathbbmss' in version `bold'
+(Font)                  U/bbmss/m/n --> U/bbmss/bx/n on input line 35.
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2018/03/24 v5.7 Page Geometry
+ (/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+) (/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/ifvtex.sty
+Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+) (/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+\Gm@cnth=\count119
+\Gm@cntv=\count120
+\c@Gm@tempcnt=\count121
+\Gm@bindingoffset=\dimen137
+\Gm@wd@mp=\dimen138
+\Gm@odd@mp=\dimen139
+\Gm@even@mp=\dimen140
+\Gm@layoutwidth=\dimen141
+\Gm@layoutheight=\dimen142
+\Gm@layouthoffset=\dimen143
+\Gm@layoutvoffset=\dimen144
+\Gm@dimlist=\toks24
+) (./thesis.aux)
+\openout1 = `thesis.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+
+-- Lines per column: 30 (approximate, difference = 18.49742pt).
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count122
+\scratchdimen=\dimen145
+\scratchbox=\box32
+\nofMPsegments=\count123
+\nofMParguments=\count124
+\everyMPshowfont=\toks25
+\MPscratchCnt=\count125
+\MPscratchDim=\dimen146
+\MPnumerator=\count126
+\makeMPintoPDFobject=\count127
+\everyMPtoPDFconversion=\toks26
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+ (/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+ (/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+ (/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+))) (/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+ (/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+ (/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+ (/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+))) (/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2018/01/30 v0.27 Utility functions of pdfTeX for LuaTeX (HO)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 438.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+))
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* bindingoffset: 36.135pt
+* modes: 
+* h-part:(L,W,R)=(72.26999pt, 416.8329pt, 72.26999pt)
+* v-part:(T,H,B)=(72.26999pt, 700.50687pt, 72.26999pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=416.8329pt
+* \textheight=700.50687pt
+* \oddsidemargin=36.135pt
+* \evensidemargin=0.0pt
+* \topmargin=-37.6931pt
+* \headheight=12.0pt
+* \headsep=25.6931pt
+* \topskip=13.92pt
+* \footskip=38.67303pt
+* \marginparwidth=20.0pt
+* \marginparsep=10.0pt
+* \columnsep=12.0pt
+* \skip\footins=18.79185pt plus 8.35187pt minus 4.17593pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+[1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] (./thesis.toc
+LaTeX Font Info:    Try loading font information for U+msa on input line 3.
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 3.
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [4] [5])
+\tf@toc=\write3
+\openout3 = `thesis.toc'.
+
+ [6]
+<fig/rl.pdf, id=24, 373.395pt x 174.6525pt>
+File: fig/rl.pdf Graphic file (type pdf)
+<use fig/rl.pdf>
+Package pdftex.def Info: fig/rl.pdf  used on input line 64.
+(pdftex.def)             Requested size: 373.39409pt x 174.65207pt.
+ [7 <./fig/rl.pdf
+
+pdfTeX warning: pdflatex (file ./fig/rl.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
+>] [8] [9] [10] [11]
+<fig/mdp.pdf, id=76, 373.395pt x 346.4142pt>
+File: fig/mdp.pdf Graphic file (type pdf)
+<use fig/mdp.pdf>
+Package pdftex.def Info: fig/mdp.pdf  used on input line 164.
+(pdftex.def)             Requested size: 373.39409pt x 346.41335pt.
+ [12] [13 <./fig/mdp.pdf
+
+pdfTeX warning: pdflatex (file ./fig/mdp.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
+>] [14]
+<fig/Pavlovian-learning.png, id=132, 636.3775pt x 562.1pt>
+File: fig/Pavlovian-learning.png Graphic file (type png)
+<use fig/Pavlovian-learning.png>
+Package pdftex.def Info: fig/Pavlovian-learning.png  used on input line 234.
+(pdftex.def)             Requested size: 381.82944pt x 337.2626pt.
+ [15] [16 <./fig/Pavlovian-learning.png>] [17] [18] [19]
+Overfull \hbox (17.43588pt too wide) in paragraph at lines 285--286
+[]\OT1/ptm/m/n/12 The agent is in a state $\OML/cmm/m/it/12 s[]$ \OT1/ptm/m/n/12 and for each pos-si-ble ac-tion $\OML/cmm/m/it/12 a[]$ \OT1/ptm/m/n/12 cal-cu-lates $\OML/cmm/m/it/12 Q\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 s[]; a[]\OT1/cmr/m/n/12 )$\OT1/ptm/m/n/12 .
+ []
+
+<fig/nn-blank.pdf, id=151, 262.0992pt x 204.765pt>
+File: fig/nn-blank.pdf Graphic file (type pdf)
+<use fig/nn-blank.pdf>
+Package pdftex.def Info: fig/nn-blank.pdf  used on input line 300.
+(pdftex.def)             Requested size: 196.5739pt x 153.57335pt.
+[20]
+<fig/q-network-state-to-many-actions.pdf, id=155, 314.13359pt x 415.5525pt>
+File: fig/q-network-state-to-many-actions.pdf Graphic file (type pdf)
+<use fig/q-network-state-to-many-actions.pdf>
+Package pdftex.def Info: fig/q-network-state-to-many-actions.pdf  used on input line 309.
+(pdftex.def)             Requested size: 235.59961pt x 311.6636pt.
+ [21 <./fig/nn-blank.pdf
+
+pdfTeX warning: pdflatex (file ./fig/nn-blank.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
+>] [22 <./fig/q-network-state-to-many-actions.pdf
+
+pdfTeX warning: pdflatex (file ./fig/q-network-state-to-many-actions.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
+>]
+<fig/state-transition-q-learning-loss.pdf, id=197, 451.6875pt x 382.5492pt>
+File: fig/state-transition-q-learning-loss.pdf Graphic file (type pdf)
+<use fig/state-transition-q-learning-loss.pdf>
+Package pdftex.def Info: fig/state-transition-q-learning-loss.pdf  used on input line 348.
+(pdftex.def)             Requested size: 338.76479pt x 286.91118pt.
+ [23] [24 <./fig/state-transition-q-learning-loss.pdf
+
+pdfTeX warning: pdflatex (file ./fig/state-transition-q-learning-loss.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
+>]
+<fig/state-transition-q-learning-loss-target-networks.pdf, id=303, 450.72388pt x 382.5492pt>
+File: fig/state-transition-q-learning-loss-target-networks.pdf Graphic file (type pdf)
+<use fig/state-transition-q-learning-loss-target-networks.pdf>
+Package pdftex.def Info: fig/state-transition-q-learning-loss-target-networks.pdf  used on input line 374.
+(pdftex.def)             Requested size: 338.04207pt x 286.91118pt.
+ [25 <./fig/state-transition-q-learning-loss-target-networks.pdf
+
+pdfTeX warning: pdflatex (file ./fig/state-transition-q-learning-loss-target-networks.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
+>] [26]
+<fig/state-transition-q-learning-loss-double.pdf, id=421, 543.95218pt x 420.61137pt>
+File: fig/state-transition-q-learning-loss-double.pdf Graphic file (type pdf)
+<use fig/state-transition-q-learning-loss-double.pdf>
+Package pdftex.def Info: fig/state-transition-q-learning-loss-double.pdf  used on input line 402.
+(pdftex.def)             Requested size: 407.96312pt x 315.45776pt.
+ [27] [28 <./fig/state-transition-q-learning-loss-double.pdf
+
+pdfTeX warning: pdflatex (file ./fig/state-transition-q-learning-loss-double.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
+>] [29] [30] [31] [32]
+Overfull \hbox (0.10147pt too wide) in paragraph at lines 542--544
+\OT1/ptm/m/n/12 The ad-van-tage is ex-actly the form de-scribed in (46[]). Thus, if we can es-ti-mate $\OML/cmm/m/it/12 A[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 s; a\OT1/cmr/m/n/12 )$\OT1/ptm/m/n/12 ,
+ []
+
+[33] [34] [35]
+Overfull \hbox (16.2493pt too wide) detected at line 617
+[]
+ []
+
+[36] [37] [38]
+<fig/clipped-objective-a-gtz.pdf, id=580, 303.05219pt x 276.07141pt>
+File: fig/clipped-objective-a-gtz.pdf Graphic file (type pdf)
+<use fig/clipped-objective-a-gtz.pdf>
+Package pdftex.def Info: fig/clipped-objective-a-gtz.pdf  used on input line 678.
+(pdftex.def)             Requested size: 227.28857pt x 207.05304pt.
+ [39 <./fig/clipped-objective-a-gtz.pdf
+
+pdfTeX warning: pdflatex (file ./fig/clipped-objective-a-gtz.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
+>]
+<fig/clipped-objective-a-ltz.pdf, id=632, 303.05219pt x 276.07141pt>
+File: fig/clipped-objective-a-ltz.pdf Graphic file (type pdf)
+<use fig/clipped-objective-a-ltz.pdf>
+Package pdftex.def Info: fig/clipped-objective-a-ltz.pdf  used on input line 692.
+(pdftex.def)             Requested size: 227.28857pt x 207.05304pt.
+ [40 <./fig/clipped-objective-a-ltz.pdf
+
+pdfTeX warning: pdflatex (file ./fig/clipped-objective-a-ltz.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
+>] [41] [42] [43] [44] [45] [46]
+<fig/ICM.pdf, id=705, 174.6525pt x 257.04028pt>
+File: fig/ICM.pdf Graphic file (type pdf)
+<use fig/ICM.pdf>
+Package pdftex.def Info: fig/ICM.pdf  used on input line 814.
+(pdftex.def)             Requested size: 174.65207pt x 257.03966pt.
+ [47 <./fig/ICM.pdf
+
+pdfTeX warning: pdflatex (file ./fig/ICM.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
+>] [48] [49] [50]
+<fig/RAM.png, id=756, 648.4225pt x 637.38126pt>
+File: fig/RAM.png Graphic file (type png)
+<use fig/RAM.png>
+Package pdftex.def Info: fig/RAM.png  used on input line 887.
+(pdftex.def)             Requested size: 324.21045pt x 318.68985pt.
+ [51] [52 <./fig/RAM.png>]
+<fig/SDM.png, id=766, 701.62125pt x 687.56876pt>
+File: fig/SDM.png Graphic file (type png)
+<use fig/SDM.png>
+Package pdftex.def Info: fig/SDM.png  used on input line 909.
+(pdftex.def)             Requested size: 350.80975pt x 343.78354pt.
+ [53] [54 <./fig/SDM.png>] [55]
+<fig/sdm-iterative-retrieval.png, id=778, 663.47874pt x 700.6175pt>
+File: fig/sdm-iterative-retrieval.png Graphic file (type png)
+<use fig/sdm-iterative-retrieval.png>
+Package pdftex.def Info: fig/sdm-iterative-retrieval.png  used on input line 942.
+(pdftex.def)             Requested size: 398.0903pt x 420.37373pt.
+<fig/sdm-linked-list.png, id=779, 725.71124pt x 621.32124pt>
+File: fig/sdm-linked-list.png Graphic file (type png)
+<use fig/sdm-linked-list.png>
+Package pdftex.def Info: fig/sdm-linked-list.png  used on input line 951.
+(pdftex.def)             Requested size: 435.4301pt x 372.79562pt.
+
+Overfull \hbox (18.5972pt too wide) in paragraph at lines 951--952
+ [] 
+ []
+
+[56] [57 <./fig/sdm-iterative-retrieval.png>] [58 <./fig/sdm-linked-list.png>] [59]
+<fig/mr.png, id=794, 162.6075pt x 201.75375pt>
+File: fig/mr.png Graphic file (type png)
+<use fig/mr.png>
+Package pdftex.def Info: fig/mr.png  used on input line 985.
+(pdftex.def)             Requested size: 162.6071pt x 201.75325pt.
+ [60 <./fig/mr.png>] [61]
+<fig/policy-architecture.pdf, id=803, 1015.87526pt x 355.3275pt>
+File: fig/policy-architecture.pdf Graphic file (type pdf)
+<use fig/policy-architecture.pdf>
+Package pdftex.def Info: fig/policy-architecture.pdf  used on input line 1001.
+(pdftex.def)             Requested size: 406.34291pt x 142.12846pt.
+ [62 <./fig/policy-architecture.pdf
+
+pdfTeX warning: pdflatex (file ./fig/policy-architecture.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
+>] [63] [64] [65]
+<fig/hash-network.pdf, id=867, 1249.7892pt x 582.25531pt>
+File: fig/hash-network.pdf Graphic file (type pdf)
+<use fig/hash-network.pdf>
+Package pdftex.def Info: fig/hash-network.pdf  used on input line 1056.
+(pdftex.def)             Requested size: 374.93965pt x 174.67793pt.
+<fig/MontezumeRevenge-v0-hashes.jpg, id=868, 513.92pt x 513.92pt>
+File: fig/MontezumeRevenge-v0-hashes.jpg Graphic file (type jpg)
+<use fig/MontezumeRevenge-v0-hashes.jpg>
+Package pdftex.def Info: fig/MontezumeRevenge-v0-hashes.jpg  used on input line 1072.
+(pdftex.def)             Requested size: 385.43904pt x 385.43904pt.
+ [66 <./fig/hash-network.pdf
+
+pdfTeX warning: pdflatex (file ./fig/hash-network.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
+>] [67 <./fig/MontezumeRevenge-v0-hashes.jpg>]
+<fig/MontezumeRevenge-v0-xor-diffs.jpg, id=925, 513.92pt x 513.92pt>
+File: fig/MontezumeRevenge-v0-xor-diffs.jpg Graphic file (type jpg)
+<use fig/MontezumeRevenge-v0-xor-diffs.jpg>
+Package pdftex.def Info: fig/MontezumeRevenge-v0-xor-diffs.jpg  used on input line 1083.
+(pdftex.def)             Requested size: 385.43904pt x 385.43904pt.
+ [68] [69 <./fig/MontezumeRevenge-v0-xor-diffs.jpg>] [70] [71]
+Underfull \hbox (badness 10000) in paragraph at lines 1167--1167
+[]\OT1/ptm/m/n/12 Cumulative
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1167--1167
+[]\OT1/ptm/m/n/12 RND-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1167--1167
+[]\OT1/ptm/m/n/12 PPO-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1167--1167
+[]\OT1/ptm/m/n/12 Random-
+ []
+
+[72] [73]
+<fig/training-curve.pdf, id=945, 462.52798pt x 346.89601pt>
+File: fig/training-curve.pdf Graphic file (type pdf)
+<use fig/training-curve.pdf>
+Package pdftex.def Info: fig/training-curve.pdf  used on input line 1190.
+(pdftex.def)             Requested size: 462.52684pt x 346.89516pt.
+
+Overfull \hbox (45.69394pt too wide) in paragraph at lines 1190--1191
+ [][] 
+ []
+
+[74] [75 <./fig/training-curve.pdf>] [76] [77] [78] [79] [80] (./thesis.bbl) [81] [82] [83] (./thesis.aux) ) 
+Here is how much of TeX's memory you used:
+ 4687 strings out of 492649
+ 72792 string characters out of 6129622
+ 151310 words of memory out of 5000000
+ 8445 multiletter control sequences out of 15000+600000
+ 45246 words of font info for 96 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 41i,19n,25p,2527b,341s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr9.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on thesis.pdf (83 pages, 1888793 bytes).
+PDF statistics:
+ 1086 PDF objects out of 1200 (max. 8388607)
+ 485 compressed objects within 5 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 106 words of extra memory for PDF output out of 10000 (max. 10000000)
+

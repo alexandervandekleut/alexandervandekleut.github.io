@@ -1,0 +1,56 @@
+Background:
+	Reinforcement learning basics (x)
+	Inspiration from psychology  (x)
+	Basics (state, action reward)  (x)
+	Markov decision process (x)
+		Mathematical/theoretical formalization (x)
+ 
+	Q learning (x)
+		Table learning (x)
+			Intractability (x)
+	 	Proof of convergence ( )
+		Deep Q learning (x)
+		 	Techniques
+				Reward Clipping (Huber loss)
+				Action Replay
+					Catastrophic forgetting
+				Target Network (x)
+				Duelling Network
+				Double Deep Q learning
+				Exploration-Exploitation
+					Epsilon-greedy			(x)
+					Entropy Regularization	(this is for policy gradient)
+
+	 Policy gradient
+		Policy gradient theorem
+		Deterministic policy gradient (maybe not)
+			Deep Deterministic Policy Gradient  (maybe not)
+	Actor-Critic models
+		 Basics (combines both models)
+		Advantage Actor Critic Models
+		PPO
+
+	#Potentially
+	Partially Observable MDPs (POMDP)
+		Temporal Integration using recurrent connections (LSTM cells)
+
+ 
+> My model
+>> Explanations and justifications
+ 
+> Experiments
+>> Environments used
+>>> Justifications
+>> Results compared to other existing techniques (built up from above)
+
+
+
+
+
+
+1) store chains of memory for reachability
+2) use reward as radius for remembering
+3) only remember on high reward
+4) episodic vs non episodic
+5) remembering actions as well as states
+6) sticky actions

@@ -1,0 +1,280 @@
+\relax 
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The basic loop of interactions between an agent and its environment in reinforcement learning.}}{7}}
+\newlabel{fig:rl}{{1}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{7}}
+\newlabel{sec:intro}{{I}{7}}
+\citation{operant_conditioning}
+\citation{reward_hypothesis}
+\citation{rl}
+\@writefile{toc}{\contentsline {section}{\numberline {II}Background}{9}}
+\newlabel{sec:background}{{II}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-A}}Markov Processes}{9}}
+\newlabel{eqn:state_transition_probability}{{1}{9}}
+\newlabel{eqn:markov_property}{{2}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-B}}Markov Reward Processes}{10}}
+\newlabel{eqn:reward_process}{{3}{10}}
+\newlabel{eqn:undiscounted_rewards}{{4}{10}}
+\newlabel{eqn:G}{{5}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-C}}Value Function}{11}}
+\newlabel{eqn:value}{{6}{11}}
+\newlabel{eqn:bellman}{{7}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-D}}Markov Decision Processes}{11}}
+\newlabel{eqn:decision_process}{{8}{11}}
+\newlabel{eqn:state_transition_probability_MDP}{{9}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-E}}Policies}{12}}
+\newlabel{eqn:mu-deterministic-policy}{{10}{12}}
+\newlabel{eqn:pi-nondeterministic-policy}{{11}{12}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces An example of a Markov Decision Process with four states: $s_0, s_1, s_2, s_3$ and two actions, in green and blue. For each action, we show the probability of transitioning to another state given the current state and the chosen action, as well as the associated reward for that transition. For transitions with probability $0$, we do not write an arrow. For many transitions, the probability of transitioning is $1$, but for some, the next state given the current state and the current action might be probabilistic, such as the transition from $s_0$ taking the green action.}}{13}}
+\newlabel{fig:mdp}{{2}{13}}
+\newlabel{eqn:value-return}{{12}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-F}}Action-Value Function}{13}}
+\newlabel{eqn:action-value}{{13}{13}}
+\newlabel{eqn:q_bellman}{{14}{14}}
+\newlabel{eqn:value-as-expectation-over-action-value}{{15}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-G}}Optimal Policy}{14}}
+\newlabel{eqn:optimal-value-function}{{16}{14}}
+\newlabel{eqn:greedy_policy}{{17}{14}}
+\citation{brain}
+\citation{brain}
+\citation{brain}
+\@writefile{toc}{\contentsline {section}{\numberline {III}Neuroscience}{15}}
+\newlabel{sec:neur}{{III}{15}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Temporal-difference learning in a Pavlovian learning task \cite  {brain}.}}{16}}
+\newlabel{fig:td-learning-dopamine}{{3}{16}}
+\newlabel{eqn:td-learning}{{18}{16}}
+\citation{brain}
+\citation{brain}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}$Q$-Learning}{19}}
+\newlabel{sec:q-learning}{{IV}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-A}}SARSA}{19}}
+\newlabel{eqn:td_target}{{19}{19}}
+\newlabel{eqn:sarsa_update_rule}{{20}{19}}
+\citation{rl}
+\citation{dqn}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}}$Q$-learning}{20}}
+\newlabel{eqn:q_update_rule}{{21}{20}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}}Deep $Q$-Learning}{20}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces A schematic representation of a deep neural network with an input layer, one hidden layer, and an output layer.}}{21}}
+\newlabel{fig:nn-blank}{{4}{21}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces A $Q$-network. The state is a 4-dimensional vector and there are 3 discrete actions available. The network takes a state $s_t$ as a parameter and for each action $a$ predicts the quality $Q_\theta (s_t,a_t)$ of that action.}}{22}}
+\newlabel{fig:q-network-state-to-many-actions}{{5}{22}}
+\newlabel{eqn:q_loss_no_target_network}{{22}{22}}
+\newlabel{eqn:y_i_no_target_network}{{23}{22}}
+\citation{dqn}
+\citation{dqn}
+\newlabel{eqn:q-learning-gradient-no-target}{{24}{23}}
+\newlabel{eqn:stochastic-gradient-descent}{{25}{23}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-D}}Target Networks}{23}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces A diagram showing how $Q$-learning gathers data for training.}}{24}}
+\newlabel{fig:state-transition-q-learning-loss}{{6}{24}}
+\newlabel{eqn:q_loss_target_network}{{26}{24}}
+\newlabel{eqn:y_i_target_network}{{27}{25}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces A diagram showing how $Q$-learning gathers data for training using the target network and behaviour network.}}{25}}
+\newlabel{fig:state-transition-q-learning-loss-target-networks}{{7}{25}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-E}}Exploration-Exploitation}{25}}
+\citation{dqn}
+\citation{dqn}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-F}}Experience Replay}{26}}
+\citation{ddqn}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-G}}Double $Q$-Learning}{27}}
+\newlabel{eqn:y_i_double}{{28}{27}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces A diagram showing how $Q$-learning gathers data for training using double $Q$-learning.}}{28}}
+\newlabel{fig:state-transition-q-learning-loss-double}{{8}{28}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Policy Gradients}{28}}
+\newlabel{sec:policy-gradients}{{V}{28}}
+\newlabel{eqn:policy-as-distribution}{{29}{28}}
+\newlabel{eqn:j-1-episodic}{{30}{29}}
+\newlabel{eqn:j-1-average-value}{{31}{29}}
+\newlabel{eqn:j-1-average-reward}{{32}{29}}
+\newlabel{eqn:j-1-step-MDP}{{33}{29}}
+\newlabel{eqn:gradient-ascent}{{34}{29}}
+\newlabel{eqn:gradient-of-j}{{35}{29}}
+\citation{rl}
+\newlabel{eqn:gradient-ascent-mult-div}{{36}{30}}
+\newlabel{eqn:log-identity}{{38}{30}}
+\newlabel{eqn:the-policy-gradient-theorem}{{39}{30}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-A}}REINFORCE}{30}}
+\newlabel{eqn:reinforce-gradient-ascent}{{40}{30}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-B}}Actor-Critic (AC)}{31}}
+\newlabel{eqn:action-value-critic-appx-equal}{{41}{31}}
+\newlabel{eqn:compatible}{{42}{31}}
+\newlabel{eqn:minimize-mean-squared-error}{{43}{31}}
+\newlabel{eqn:proof-of-exactness}{{44}{32}}
+\newlabel{eqn:policy-gradient-theorem-with-approximator}{{45}{32}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-C}}Advantage Actor-Critic (A2C)}{32}}
+\newlabel{eqn:proof-of-baseline-no-differece}{{46}{33}}
+\newlabel{eqn:advantage}{{47}{33}}
+\newlabel{eqn:j-gradient-with-advantage}{{49}{33}}
+\newlabel{eqn:td-target-error-true-v}{{50}{34}}
+\newlabel{eqn:j-gradient-with-delta}{{52}{34}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-D}}Generalized Advantage Estimation (GAE)}{35}}
+\newlabel{eqn:generalized-gradient}{{53}{35}}
+\newlabel{eqn:psi-options}{{54}{35}}
+\newlabel{eqn:generalized-advantage}{{55}{35}}
+\newlabel{eqn:gradient-estimator}{{56}{36}}
+\citation{gae}
+\citation{gae}
+\citation{ppo}
+\newlabel{eqn:g-gamma-estimate}{{58}{37}}
+\citation{ppo}
+\citation{ppo}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-E}}Proximal Policy Optimization (PPO)}{38}}
+\newlabel{eqn:CPI}{{59}{38}}
+\newlabel{eqn:ratio-of-policies}{{60}{38}}
+\newlabel{eqn:CPI-using-rho}{{61}{38}}
+\citation{ppo}
+\citation{ppo}
+\newlabel{eqn:clipped-objective-function}{{62}{39}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces How the objective changes as $\rho (\theta )$ changes when $A^{\pi _\theta }(s,a) > 0$. Adapted from \cite  {ppo}. The red dot indicates $\rho (\theta ) = 1$.}}{39}}
+\newlabel{fig:clipped-objective-a-gtz}{{9}{39}}
+\citation{ppo}
+\citation{ppo}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces How the objective changes as $\rho (\theta )$ changes when $A^{\pi _\theta }(s,a) < 0$. Adapted from \cite  {ppo}. The red dot indicates $\rho (\theta ) = 1$.}}{40}}
+\newlabel{fig:clipped-objective-a-ltz}{{10}{40}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-F}}Deep Deterministic Policy Gradients (DDPG)}{41}}
+\newlabel{eqn:optimal-action}{{63}{41}}
+\newlabel{eqn:dqn}{{64}{41}}
+\newlabel{eqn:dqn-gradient}{{66}{42}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-G}}Kinds of Policies}{42}}
+\newlabel{eqn:softmax}{{67}{42}}
+\newlabel{eqn:log-prob-discrete}{{68}{42}}
+\newlabel{eqn:action-from-diagonal-Gaussian-policy}{{69}{43}}
+\newlabel{eqn:log-prob-diagonal-Gaussian}{{71}{43}}
+\citation{novelty}
+\citation{novelty}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Intrinsic Motivation}{44}}
+\newlabel{sec:intrinsic-motivation}{{VI}{44}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VI-A}}Sparse Rewards}{44}}
+\citation{large-scale-study}
+\citation{icm}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VI-B}}ICM}{45}}
+\citation{icm}
+\citation{icm}
+\citation{selective}
+\newlabel{eqn:encoding}{{74}{46}}
+\newlabel{eqn:forward}{{76}{46}}
+\newlabel{eqn:inverse}{{78}{47}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces A schematic representing the intrinsic curiosity module. The module encodes the states $s_t$ and $s_{t+1}$ into encoded vectors $e_t$ and $e_{t+1}$. It uses these vectors in its inverse model $I$ to predict the action taken between $s_t$ and $s_{t+1}$, and it uses the forward dynamics model $F$ to try to predict the encoded next state given the encoded current state and the current action.}}{47}}
+\newlabel{fig:ICM}{{11}{47}}
+\newlabel{eqn:forward-loss}{{80}{47}}
+\citation{icm}
+\citation{rnd}
+\citation{icm}
+\newlabel{eqn:inverse-loss}{{81}{48}}
+\newlabel{eqn:encoding-loss}{{82}{48}}
+\newlabel{eqn:inverse-loss-gradient}{{84}{48}}
+\newlabel{eqn:forward-loss-grad}{{85}{48}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VI-C}}RND}{48}}
+\citation{rnd}
+\citation{icm}
+\citation{rnd}
+\newlabel{eqn:rnd-loss}{{86}{49}}
+\citation{sdm}
+\citation{sdm}
+\citation{sdm}
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Sparse Distributed Memory}{51}}
+\newlabel{sec:sdm}{{VII}{51}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VII-A}}RAM}{51}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces A schematic representing the layout of RAM. Reproduced from \cite  {sdm} with permission.}}{52}}
+\newlabel{fig:RAM}{{12}{52}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VII-B}}SDM}{52}}
+\citation{sdm}
+\citation{sdm}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces A schematic representing the layout and function of SDM. Reproduced from \cite  {sdm} with permission.}}{54}}
+\newlabel{fig:SDM}{{13}{54}}
+\citation{sdm}
+\citation{sdm}
+\citation{sdm}
+\citation{sdm}
+\citation{sdm}
+\citation{sdm}
+\newlabel{eqn:optimal-h}{{90}{56}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VII-C}}Autoassociative Memory}{56}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VII-D}}Intrinsic Motivation}{56}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Using an SDM to store noisy version of a pattern, then iteratively reading from the memory to denoise the stored patterns. We unravel the image into a binary vector of length 256, using this vector as both the address and the data. By repeatedly storing similar data at similar addresses, we store a denoised version that can then be read back from memory. Reproduced from \cite  {sdm} with permission.}}{57}}
+\newlabel{fig:SDM-denoise-iterative-retrieval}{{14}{57}}
+\newlabel{eqn:hash}{{92}{57}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Using an SDM to retrieve a sequence of stored patterns. Given a sequence of data words, we can use the current word as the address for the next word, forming a linked-list. During retrieval, the sequence can be reconstructed by iteratively retrieving a data word and using it as the address to retrieve the next word. Reproduced from \cite  {sdm} with permission.}}{58}}
+\newlabel{fig:SDM-linked-list}{{15}{58}}
+\newlabel{eqn:intrinsic-reward-sdm}{{93}{58}}
+\citation{rnd}
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces An image of the starting position of the agent in Montezuma's Revenge.}}{60}}
+\newlabel{fig:mr}{{16}{60}}
+\@writefile{toc}{\contentsline {section}{\numberline {VIII}Methods}{60}}
+\newlabel{sec:methods}{{VIII}{60}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VIII-A}}Environments}{60}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VIII-B}}RND as a comparison}{61}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VIII-B}1}Policy}{61}}
+\citation{rnd}
+\citation{rnd}
+\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces The neural network used as a policy. The inputs are four resized, greyscaled, and framestacked consecutive observations from the environment. The first layer is a convolutional layer that learns 16 kernels of size $8 \times 8 \times 4$ with stride $4$. A ReLU (Rectified Linear Unit) nonlinearity is applied ($\text  {ReLU}(x) = \qopname  \relax m{max}(0, x))$. The second layer is similar, and learns $32$ kernels of size $4 \times 4 \times 16$ with stride $2$. Again, a ReLU nonlinearity is applied. The output of this layer is flattened into a vector and is connected by a dense layer to an intermediate layer of $256$ outputs, to which a ReLU nonlinearity is applied. Finally, this is connected to an output layer of size $18$ (the number of discrete actions available to the agent) and a softmax nonlinearity is applied to generate a probability distribution from the outputs. A similar network is used for the critic, with the exception that the final layer has a single output rather than $18$, and no activation function is used. This network is exactly the one defined in \cite  {rnd}.}}{62}}
+\newlabel{fig:policy-architecture}{{17}{62}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VIII-B}2}Reward Scale}{62}}
+\citation{ppo}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VIII-B}3}Observation Scale}{63}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VIII-B}4}Exploration-Exploitation}{64}}
+\newlabel{eqn:entropy}{{94}{64}}
+\newlabel{eqn:clipped-objective-function-with-entropy}{{95}{64}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VIII-B}5}Combining Episodic and Non-Episodic Rewards}{64}}
+\newlabel{eqn:advantage-linear-combination}{{96}{65}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VIII-B}6}Batched Environments}{65}}
+\citation{rnd}
+\citation{rnd}
+\@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces The hash network used by the agent to map states to binary vectors and to calculate intrinsic reward. It is similar to the policy network from figure 17\hbox {} in architecture, except there is no intermediate dense layer, and the output corresponds to random features. Furthermore, ReLU activations in the convolutional layers are replaced with leaky ReLU activations ($\text  {Leaky ReLU}(x) = x \text  { if } x\geq 0, 0.01x \text  { if } x<0$). We provide the network with a single resized and normalized observation rather than the framestacked observations used in the policy and the critic. This network is the exact same that is used in \cite  {rnd} for generating features, except that no hashing is performed in RND and the output of the last layer is used directly instead.}}{66}}
+\newlabel{fig:nn-hash}{{18}{66}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VIII-C}}Implementation Details for using SDM}{66}}
+\newlabel{eqn:hash-mean}{{97}{66}}
+\citation{rnd}
+\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces Hashes for Montezuma's Revenge. Rows correspond to 512 bits computed for the hash. Columns are timesteps. Used $M = 100000, N=512, U=512, T=1000000$ as parameters for the memory.}}{67}}
+\newlabel{fig:hashes-montezuma-revenge}{{19}{67}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VIII-C}1}SDM Hyperparameters}{68}}
+\citation{rnd}
+\@writefile{lof}{\contentsline {figure}{\numberline {20}{\ignorespaces Bitwise differences between computed hashes and retrieved hashes. Used $M = 100000, N=512, U=512, T=1000000$ as parameters for the memory.}}{69}}
+\newlabel{fig:xor-diffs-montezuma-revenge}{{20}{69}}
+\newlabel{alg:pseudocode}{{\unhbox \voidb@x \hbox {VIII-C}1}{70}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Training SDM Agent}}{70}}
+\citation{ale}
+\citation{dqn}
+\citation{ddqn}
+\@writefile{toc}{\contentsline {section}{\numberline {IX}Results}{71}}
+\newlabel{sec:results}{{IX}{71}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IX-A}}Reporting Results}{71}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IX-A}1}Performance}{71}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IX-A}2}Training Curves}{72}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IX-B}}Varying SDM Parameters}{72}}
+\citation{rnd}
+\citation{rnd}
+\citation{rnd}
+\newlabel{tbl:results}{{\unhbox \voidb@x \hbox {IX-B}}{73}}
+\newlabel{fig:training-curve}{{\unhbox \voidb@x \hbox {IX-B}}{75}}
+\@writefile{toc}{\contentsline {section}{\numberline {X}Discussion}{75}}
+\newlabel{sec:discussion}{{X}{75}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {X-A}}Limitations}{75}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {X-B}}Reasons for Performance}{76}}
+\citation{rnd}
+\citation{rainbow}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {X-C}}Future Work}{78}}
+\@writefile{toc}{\contentsline {section}{\numberline {XI}Conclusion}{80}}
+\newlabel{sec:conclusion}{{XI}{80}}
+\bibstyle{apalike2}
+\bibdata{references}
+\bibcite{ale}{Bellemare et\nobreakspace  {}al., 2012}
+\bibcite{large-scale-study}{Burda et\nobreakspace  {}al., 2018}
+\bibcite{rainbow}{Hessel et\nobreakspace  {}al., 2017}
+\bibcite{sdm}{Kanerva, 1988}
+\bibcite{novelty}{Lehman \& Stanley, 2011}
+\bibcite{dqn}{Mnih et\nobreakspace  {}al., 2013}
+\bibcite{brain}{Niv, 2009}
+\bibcite{icm}{Pathak et\nobreakspace  {}al., 2017}
+\bibcite{rnd}{Savinov et\nobreakspace  {}al., 2018}
+\bibcite{gae}{Schulman et\nobreakspace  {}al., 2015}
+\bibcite{ppo}{Schulman et\nobreakspace  {}al., 2017}
+\bibcite{reward_hypothesis}{Sutton, 2019}
+\bibcite{rl}{Sutton \& Barto, 1998}
+\bibcite{operant_conditioning}{Thorndike, 1901}
+\bibcite{ddqn}{van Hasselt et\nobreakspace  {}al., 2015}
+\bibcite{selective}{Yantis, 2009}
+\@writefile{toc}{\contentsline {section}{References}{81}}
+\@writefile{toc}{\contentsline {section}{Appendix\nobreakspace  A: Hyperparameters}{82}}
+\newlabel{app:hyperparameters}{{A}{82}}
+\newlabel{tbl:hyperparameters}{{A}{82}}

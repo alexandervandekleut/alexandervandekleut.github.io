@@ -1,0 +1,58 @@
+\contentsline {section}{\numberline {I}Introduction}{7}
+\contentsline {section}{\numberline {II}Background}{9}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-A}}Markov Processes}{9}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-B}}Markov Reward Processes}{10}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-C}}Value Function}{11}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-D}}Markov Decision Processes}{11}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-E}}Policies}{12}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-F}}Action-Value Function}{13}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-G}}Optimal Policy}{14}
+\contentsline {section}{\numberline {III}Neuroscience}{15}
+\contentsline {section}{\numberline {IV}$Q$-Learning}{19}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-A}}SARSA}{19}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}}$Q$-learning}{20}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}}Deep $Q$-Learning}{20}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-D}}Target Networks}{23}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-E}}Exploration-Exploitation}{25}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-F}}Experience Replay}{26}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-G}}Double $Q$-Learning}{27}
+\contentsline {section}{\numberline {V}Policy Gradients}{28}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-A}}REINFORCE}{30}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-B}}Actor-Critic (AC)}{31}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-C}}Advantage Actor-Critic (A2C)}{32}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-D}}Generalized Advantage Estimation (GAE)}{35}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-E}}Proximal Policy Optimization (PPO)}{38}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-F}}Deep Deterministic Policy Gradients (DDPG)}{41}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-G}}Kinds of Policies}{42}
+\contentsline {section}{\numberline {VI}Intrinsic Motivation}{44}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VI-A}}Sparse Rewards}{44}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VI-B}}ICM}{45}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VI-C}}RND}{48}
+\contentsline {section}{\numberline {VII}Sparse Distributed Memory}{51}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VII-A}}RAM}{51}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VII-B}}SDM}{52}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VII-C}}Autoassociative Memory}{56}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VII-D}}Intrinsic Motivation}{56}
+\contentsline {section}{\numberline {VIII}Methods}{60}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VIII-A}}Environments}{60}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VIII-B}}RND as a comparison}{61}
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VIII-B}1}Policy}{61}
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VIII-B}2}Reward Scale}{62}
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VIII-B}3}Observation Scale}{63}
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VIII-B}4}Exploration-Exploitation}{64}
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VIII-B}5}Combining Episodic and Non-Episodic Rewards}{64}
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VIII-B}6}Batched Environments}{65}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VIII-C}}Implementation Details for using SDM}{66}
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VIII-C}1}SDM Hyperparameters}{68}
+\contentsline {section}{\numberline {IX}Results}{71}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IX-A}}Reporting Results}{71}
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IX-A}1}Performance}{71}
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IX-A}2}Training Curves}{72}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IX-B}}Varying SDM Parameters}{72}
+\contentsline {section}{\numberline {X}Discussion}{75}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {X-A}}Limitations}{75}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {X-B}}Reasons for Performance}{76}
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {X-C}}Future Work}{78}
+\contentsline {section}{\numberline {XI}Conclusion}{80}
+\contentsline {section}{References}{81}
+\contentsline {section}{Appendix\nobreakspace A: Hyperparameters}{82}

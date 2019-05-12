@@ -1,0 +1,53 @@
+This is BibTeX, Version 0.99d (TeX Live 2018)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: thesis.aux
+The style file: apalike2.bst
+Database file #1: references.bib
+Warning--I'm ignoring novelty's extra "year" field
+--line 45 of file references.bib
+Warning--I'm ignoring ale's extra "howpublished" field
+--line 76 of file references.bib
+Warning--empty journal in ale
+Warning--empty publisher in brain
+You've used 16 entries,
+            2229 wiz_defined-function locations,
+            591 strings with 6384 characters,
+and the built_in function-call counts, 5626 in all, are:
+= -- 520
+> -- 343
+< -- 7
++ -- 126
+- -- 120
+* -- 470
+:= -- 1076
+add.period$ -- 44
+call.type$ -- 16
+change.case$ -- 137
+chr.to.int$ -- 16
+cite$ -- 18
+duplicate$ -- 183
+empty$ -- 294
+format.name$ -- 140
+if$ -- 1023
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 9
+newline$ -- 79
+num.names$ -- 48
+pop$ -- 123
+preamble$ -- 1
+purify$ -- 140
+quote$ -- 0
+skip$ -- 145
+stack$ -- 0
+substring$ -- 228
+swap$ -- 5
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 90
+warning$ -- 2
+while$ -- 34
+width$ -- 0
+write$ -- 188
+(There were 4 warnings)
