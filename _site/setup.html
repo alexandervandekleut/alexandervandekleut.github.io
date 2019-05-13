@@ -5,8 +5,8 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,maximum-scale=2">
-    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=f0b562fee437d05ce75ae6c07bacc1b55c122087">
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=950426d0c45d871d12e5f0c38dc50215d29b526b">
+    <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script> -->
 
 <!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>Setting up your Reinforcement Learning Environment | alexandervandekleut.github.io</title>
@@ -111,8 +111,10 @@
 
 <p>There are some python packages we will need throughout our lessons. <a href="https://www.tensorflow.org/">Tensorflow</a> will be responsible for doing much of the heavy lifting for us. Conda automatically installs any dependencies for tensorflow, including other libraries that we will make use of.</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">conda install tensorflow opencv seaborn
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">conda install tensorflow opencv seaborn jupyter
 </span></code></pre></div></div>
+
+<p><em>(This will probably take a while).</em></p>
 
 <h5 id="openai-gym">OpenAI Gym</h5>
 
@@ -125,6 +127,12 @@
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">pip install gym[atari]
 </span></code></pre></div></div>
+
+<h3 id="jupyter-notebooks">Jupyter Notebooks</h3>
+
+<p>Jupyter notebooks are great tools because they allow you to combine <a href="">markdown</a> and python code in a single, interactive, runnable document. There are some <a href="https://hub.mybinder.org/user/ipython-ipython-in-depth-hecv84xa/notebooks/examples/Notebook/Notebook%20Basics.ipynb">great resources</a> on using jupyter notebooks, which you are encouraged to check out. Most of the lessons in this series will be jupyter notebooks that you can either view or download and run yourself.</p>
+
+<script type="math/tex; mode=display">t</script>
 
       </section>
     </div>
