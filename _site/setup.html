@@ -5,7 +5,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,maximum-scale=2">
-    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=c41cef2b6a127e41af827e1d8a105c2ca8e37e39">
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=f0b562fee437d05ce75ae6c07bacc1b55c122087">
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 
 <!-- Begin Jekyll SEO tag v2.5.0 -->
@@ -104,6 +104,27 @@
 </span></code></pre></div></div>
 
 <p>It is good practice to always deactivate the current environment before activating another.</p>
+
+<hr />
+
+<h3 id="python-libraries">Python Libraries</h3>
+
+<p>There are some python packages we will need throughout our lessons. <a href="https://www.tensorflow.org/">Tensorflow</a> will be responsible for doing much of the heavy lifting for us. Conda automatically installs any dependencies for tensorflow, including other libraries that we will make use of.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">conda install tensorflow opencv seaborn
+</span></code></pre></div></div>
+
+<h5 id="openai-gym">OpenAI Gym</h5>
+
+<p>We will make extensive use of OpenAI’s <a href="https://gym.openai.com/"><code class="highlighter-rouge">gym</code></a> library as our main interface to reinforcement learning. To have access some of <code class="highlighter-rouge">gym</code>’s environments, we need to install <code class="highlighter-rouge">cmake</code> and <code class="highlighter-rouge">zlib</code></p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">brew install cmake zlib
+</span></code></pre></div></div>
+
+<p>Then, we can install <code class="highlighter-rouge">gym</code> using pip. Conda allows us to mix packages installed via <code class="highlighter-rouge">pip</code> and via <code class="highlighter-rouge">conda install</code>.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">pip install gym[atari]
+</span></code></pre></div></div>
 
       </section>
     </div>
