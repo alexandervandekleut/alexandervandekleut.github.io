@@ -1,66 +1,8 @@
-<!DOCTYPE html>
-<html lang="en-US">
-
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,maximum-scale=2">
-    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=2ad97d6118fda7cc7bac30d6ff7d019b8c787605">
-    <!-- Mathjax Support -->
-    <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-<script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-<!-- Begin Jekyll SEO tag v2.5.0 -->
-<title>Markov Processes | alexandervandekleut.github.io</title>
-<meta name="generator" content="Jekyll v3.8.5" />
-<meta property="og:title" content="Markov Processes" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="Download the notebook or follow along. Images aren’t currently supported in the notebook file." />
-<meta property="og:description" content="Download the notebook or follow along. Images aren’t currently supported in the notebook file." />
-<link rel="canonical" href="http://localhost:4000/mdp/" />
-<meta property="og:url" content="http://localhost:4000/mdp/" />
-<meta property="og:site_name" content="alexandervandekleut.github.io" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2019-05-12T00:00:00-04:00" />
-<script type="application/ld+json">
-{"description":"Download the notebook or follow along. Images aren’t currently supported in the notebook file.","@type":"BlogPosting","url":"http://localhost:4000/mdp/","headline":"Markov Processes","dateModified":"2019-05-12T00:00:00-04:00","datePublished":"2019-05-12T00:00:00-04:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/mdp/"},"@context":"http://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
-
-  </head>
-
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          
-            <a id="forkme_banner" href="https://github.com/alexandervandekleut/alexandervandekleut.github.io">View on GitHub</a>
-          
-
-          <h1 id="project_title">alexandervandekleut.github.io</h1>
-          <h2 id="project_tagline"></h2>
-
-          
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <p>Download the <a href="http://localhost:4000/assets/notebooks/mdp.ipynb">notebook</a> or follow along. Images aren’t currently supported in the notebook file.</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
 <h1 id="Markov-Processes">Markov Processes<a class="anchor-link" href="#Markov-Processes">&#182;</a></h1><p>A <strong>Markov Process</strong> is a tuple $ \langle \mathcal{S}, \mathcal{P} \rangle $ where $\mathcal{S}$ is a set of <strong>states</strong> called the <strong>observation space</strong> or <strong>state space</strong> that the agent can be in, and $ \mathcal{P} : \mathcal{S}^2 \to \left[ 0, 1 \right]$ is a function describing the probability of transitioning from one state to another.
 $$
 \mathcal{P}(s_t, s_{t+1}) = \mathbb{P} \left[s_{t+1} \vert s_t \right]
@@ -240,7 +182,7 @@ The probability of generating particular trajectories depends on the underlying 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
 <h1 id="Markov-Reward-Processes">Markov Reward Processes<a class="anchor-link" href="#Markov-Reward-Processes">&#182;</a></h1><p>A <strong>Markov Reward Process</strong>  is an extension of a Markov Process that allows us to associate rewards with states. Formally, it is a tuple $\langle \mathcal{S}, \mathcal{P}, \mathcal{R} \rangle$ that allows us to associate with each state transition $\langle s_t, s_{t+1} \rangle$ some reward
 $$
 \mathcal{R}(s_t, s_{t+1}) = \mathbb{E}\left[r_t \vert s_t, s_{t+1} \right]
@@ -468,7 +410,7 @@ which is often simplified to being $\mathcal{R}(s_t)$, the reward of being in a 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
 <h4 id="Return-and-Discounted-Return">Return and Discounted Return<a class="anchor-link" href="#Return-and-Discounted-Return">&#182;</a></h4><p>We are interested in trajectories that maximize the <strong>return</strong> $R_t$:
 $$
 \begin{align}
@@ -485,7 +427,7 @@ $$
 \end{align}
 $$<p>where $\gamma$ is a discount factor between $0$ and $1$ (often close to $1$).</p>
 <p>We sometimes refer to both the discounted and undiscounted return as just "return" for brevity, and write $G_t$ where for some episodic environments it may be more appropriate to use $R_t$. In fact, it should not be hard to see that $R_t$ is just $G_t$ with $r_t = 0$ for $t &gt; T$ and $\gamma = 1$.</p>
-<hr />
+<hr>
 <h4 id="Value-Function">Value Function<a class="anchor-link" href="#Value-Function">&#182;</a></h4><p>We can use the expected value of $G_t$ to determine the <strong>value</strong> of being a certain state $s_t$:</p>
 $$
 V(s_t) = \mathbb{E}\left[ G_t \big\vert s_t \right]
@@ -499,7 +441,7 @@ $$<p>We can decompose $V(s_t)$ into two parts: the immediate reward $r_t$ and th
                 &amp;= \mathbb{E} \left[ r_{t} + \gamma V(s_{t+1}) \big\vert s_t \right] \\
     \end{split}
 \end{align}<p>This last form of $V(s_t)$ is known as the <strong>Bellman Equation</strong>.</p>
-<hr />
+<hr>
 <h4 id="TD(0)">TD(0)<a class="anchor-link" href="#TD(0)">&#182;</a></h4><p>Say we are interesting in learning to predict $V(s_t)$. We can use a simple method called <strong>TD(0)</strong> to approximate $V(s_t)$ when our observation space $\mathcal{S}$ is <strong>discrete</strong> (i.e., finite). We begin by initializing a vector $V$ with random values, which will serve as our initial predictions for what $V(s_t)$ is.</p>
 <p>According to the Bellman Equation, we can use $r_t + \gamma V(s_{t+1})$ (which we call the <strong>TD-target</strong>) as an unbiased estimator for $V(s_t)$. Then we can modify our estimate of $V(s_t)$ to more closely match $r_t + \gamma V(s_{t+1})$ according to a learning rate $\alpha$ as follows:
 $$
@@ -597,7 +539,7 @@ $$</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
 <h1 id="Markov-Decision-Processes">Markov Decision Processes<a class="anchor-link" href="#Markov-Decision-Processes">&#182;</a></h1><p>A <strong>Markov Decision Process</strong> (MDP) is an extension of a Markov Reward Process that allows state transitions to be conditional upon some action. Formally, it is a tuple $\langle \mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R} \rangle $ where $\mathcal{A}$ is a set of actions available to an agent in a state $s_t$. Our reward conditional now upon both the state $s_t$ we are in and the action $a_t$ that we took:</p>
 $$
 \mathcal{R}(s_t, a_t) = \mathbb{E} \left[ r_t \vert s_t, a_t \right]
@@ -606,9 +548,9 @@ $$
 \mathcal{P}(s_t, a_t, s_{t+1}) = \mathbb{P} \left[ s_{t+1} \vert s_t, a_t \right]
 $$<p>Whereas in an MRP the probability of generating trajectories is dependant upon only the dynamics of the underlying Markov process, in an MDP trajectories also depend on the actions of an agent.</p>
 <p>This is an MDP with four states and two actions.</p>
-<p><img src="../images/mdp.png" alt="MDP" /></p>
+<p><img src="../images/mdp.png" alt="MDP"></p>
 <p>In this case, $\mathcal{P}$ is a <strong>tensor</strong> of shape $4 \times 2 \times 4$ where $\mathcal{P}(i, j, k)$ is the probability of transitioning from state $i$ to state $k$ given action $j$. Furthermore, $\mathcal{R}$ is a matrix of shape $4 \times 2$ where $\mathcal{R}(i, j)$ is the reward associated with choosing action $j$ in state $i$.</p>
-<hr />
+<hr>
 <h3 id="Policies">Policies<a class="anchor-link" href="#Policies">&#182;</a></h3><p>Our goal is to define a <strong>policy</strong> $\pi$, which can be thought of as a set of rules for choosing actions based on the state. Typically, we represent $\pi$ as a probability distribution:
 $$
 \pi: \mathcal{S} \times \mathcal{A} \to \left[ 0, 1 \right]
@@ -954,21 +896,5 @@ For discrete action spaces and observation spaces, we can think of this as a tab
 </div>
 
 </div>
+ 
 
-
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        
-        <p class="copyright">alexandervandekleut.github.io maintained by <a href="https://github.com/alexandervandekleut">alexandervandekleut</a></p>
-        
-        <!-- <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p> -->
-      </footer>
-    </div>
-
-    
-  </body>
-</html>

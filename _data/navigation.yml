@@ -25,19 +25,19 @@ lessons:
   code: yes
   url: /gym
 
-- title: \( Q \) learning
+- title: $$ Q $$ learning
   math: yes
   theory: yes
   code: yes
   url: /q-learning
 
-- title: Deep \( Q \)-learning
+- title: Deep $$Q$$-learning
   math: yes
   theory: yes
   code: yes
   url: /deep-q-learning
 
-- title: Rainbow - Improvements to Deep \( Q \)-learning
+- title: Rainbow - Improvements to Deep $$ Q $$-learning
   math: yes
   theory: yes
   code: yes

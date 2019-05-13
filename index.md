@@ -1,10 +1,8 @@
 ---
 title: Index
-
 ---
+# {{page.title}}
 
-<ul>
-  {% for item in site.data.navigation.lessons %}
-      <li><a href="{{ item.url }}">{{ item.title }}</a></li>
-  {% endfor %}
-</ul>
+{% for item in site.data.navigation.lessons %}
+[{{item.title}}]({{item.url}})
+{% endfor %}
