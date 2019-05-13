@@ -1,0 +1,299 @@
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h1 id="Introduction-to-the-OpenAI-Gym-Interface">Introduction to the OpenAI Gym Interface<a class="anchor-link" href="#Introduction-to-the-OpenAI-Gym-Interface">&#182;</a></h1><p>OpenAI has been developing the <code>gym</code> library to help reinforcement learning researchers get started with pre-implemented environments. In the lesson on Markov decision processes, we explicitly implemented $\mathcal{S}, \mathcal{A}, \mathcal{P}$ and $\mathcal{R}$ using matrices and tensors in <code>numpy</code>.</p>
+<p>Recall the <strong>environment</strong> and <strong>agent</strong> that we discussed in the introduction. When we specified an MDP and a policy, we were abstractly representing the environment and the agent. <code>gym</code> gives us access to predefined environments that are more meaningful than our essentially random environments.</p>
+<p>Thus far we have been using <strong>discrete</strong> observation spaces (i.e., our state is representable by an integer). In keeping with this, we will start by considering a <code>gym</code> environment that also has a discrete observation space.</p>
+<p>From <a href="https://gym.openai.com/envs/FrozenLake-v0/">the documentation</a>:</p>
+<blockquote><p>The agent controls the movement of a character in a grid world. Some tiles of the grid are walkable, and others lead to the agent falling into the water. Additionally, the movement direction of the agent is uncertain and only partially depends on the chosen direction. The agent is rewarded for finding a walkable path to a goal tile.</p>
+</blockquote>
+<p>The grid is $4 \times 4$, giving us a total of $16$ states.</p>
+
+<pre><code>SFFF       (S: starting point, safe)
+FHFH       (F: frozen surface, safe)
+FFFH       (H: hole, fall to your doom)
+HFFG       (G: goal, where the frisbee is located)</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">gym</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;FrozenLake-v0&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can inspect information about <code>gym</code> environments. Every environment has an <code>observation_space</code> (corresponding to $\mathcal{S}$) and an <code>action_space</code> (corresponding to $\mathcal{A}$). There are many categories of $spaces$ available, but the two that are most common and most important are:</p>
+<ol>
+<li><code>Discrete</code>: When observation spaces or action spaces are discrete, they expect integers. This is what we used in our notebook on Markov decision processes.<ul>
+<li>Every <code>Discrete</code> space has an attribute <code>n</code> corresponding to the number of discrete elements in the space (i.e., number of states or number of actions).</li>
+</ul>
+</li>
+<li><code>Box</code>: Some observations or action spaces instead take on real values, and can be of various shapes.<ul>
+<li>Every <code>Box</code> space has an attribute <code>shape</code> corresponding to the dimensions of the space. For example, an observation space with shape $(84, 84, 3)$ might correspond to an $84 \times 84 \times 3$ RGB image.</li>
+</ul>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Discrete(16)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Discrete(4)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Most environments have a finite time limit corresponding to the time horizon $T$. An environment can become <strong>terminal</strong> if we exceed this time horizon, or if something else happens that causes the environment to end. In the context of an MDP, this is a state where any action we take returns us to the same state. This often happens when our agent "dies".</p>
+<p>Environments, when created via <code>gym.make</code>, start out terminal. Whenever an environment is terminal, we need to <code>reset</code> it:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[17]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see that this returned something. Resetting the environment is used to provide the initial state $s_0$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s_0</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to generate the next state and rewards, we call the <code>env</code>'s <code>step</code> function. The <code>step</code> function accepts an action, and returns four things:</p>
+<ol>
+<li>The next state</li>
+<li>The reward for the transition</li>
+<li>A boolean indicating whether or not the environment is terminal</li>
+<li>Additional info that may be relevant for logging but is not intended to be used by the agent.}</li>
+</ol>
+<p>Since we do not have a way of generating actions yet, we can call the <code>sample</code> method of the <code>env</code>'s <code>action_space</code>:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s_t_next</span><span class="p">,</span> <span class="n">r_t</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>While we can log trajectories, we can get a better idea on how the environment is changing by calling its <code>render</code> function:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>  (Left)
+SFFF
+<span class="ansi-red-bg">F</span>HFH
+FFFH
+HFFG
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's consider an agent who's policy is to choose actions uniformly randomly. We can emulate this by using <code>env.action_space.sample()</code> as our action.</p>
+<p>Then the basic agent-environment interaction loop using <code>gym</code> looks something like this:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">s_t</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="n">a_t</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+    <span class="n">s_t</span><span class="p">,</span> <span class="n">r_t</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">a_t</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
+        <span class="n">s_t</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We will be using <code>gym</code> for its wide range of available environments.</p>
+
+</div>
+</div>
+</div>
+ 
+

@@ -1,5 +1,6 @@
 ---
 title: Index
+id: index
 ---
 # {{page.title}}
 
