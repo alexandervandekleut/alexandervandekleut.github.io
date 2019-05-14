@@ -1,0 +1,1 @@
+jupyter nbconvert --to html --template basic assets/notebooks/mdp.ipynb --output-dir _includes --output mdp.html

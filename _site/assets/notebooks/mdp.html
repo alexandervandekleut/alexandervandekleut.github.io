@@ -445,7 +445,7 @@ $$<p>We can decompose $V(s_t)$ into two parts: the immediate reward $r_t$ and th
 <h4 id="TD(0)">TD(0)<a class="anchor-link" href="#TD(0)">&#182;</a></h4><p>Say we are interesting in learning to predict $V(s_t)$. We can use a simple method called <strong>TD(0)</strong> to approximate $V(s_t)$ when our observation space $\mathcal{S}$ is <strong>discrete</strong> (i.e., finite). We begin by initializing a vector $V$ with random values, which will serve as our initial predictions for what $V(s_t)$ is.</p>
 <p>According to the Bellman Equation, we can use $r_t + \gamma V(s_{t+1})$ (which we call the <strong>TD-target</strong>) as an unbiased estimator for $V(s_t)$. Then we can modify our estimate of $V(s_t)$ to more closely match $r_t + \gamma V(s_{t+1})$ according to a learning rate $\alpha$ as follows:
 $$
-V(s_t) \gets V(s_t) + \alpha \left( r_t + V(s_{t+1}) - V(s_t) \right)
+V(s_t) \gets V(s_t) + \alpha \left( r_t + \gamma V(s_{t+1}) - V(s_t) \right)
 $$</p>
 <p>Let's use the TD(0) algorithm to attempt to learn the value function of this Markov reward process.</p>
 
@@ -878,7 +878,6 @@ For discrete action spaces and observation spaces, we can think of this as a tab
 <li>Returns, the value function $V(s_t)$ and how we can learn to approximate it using the TD(0) algorithm.</li>
 <li>Markov decision processes and how we can use a policy $\pi$ to guide our trajectories by choosing actions $a_t$ conditioned on the state $s_t$.</li>
 </ul>
-<p>In the next notebook, we will learn about how to improve our policy to maximize returns by using $Q$-learning.</p>
 
 </div>
 </div>
