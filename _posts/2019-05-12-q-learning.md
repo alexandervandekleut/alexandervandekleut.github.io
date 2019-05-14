@@ -1,6 +1,6 @@
 ---
 permalink: /q-learning/
-title: $Q$-learning
+title: Q-learning
 layout: default
 notebook: true
 ---
