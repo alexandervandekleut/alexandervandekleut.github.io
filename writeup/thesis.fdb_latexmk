@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex thesis"] 1557593196 "thesis.aux" "thesis.bbl" "thesis" 1557683154
+["bibtex thesis"] 1557593196 "thesis.aux" "thesis.bbl" "thesis" 1557716504
   "/usr/local/texlive/2018/texmf-dist/bibtex/bst/apalike2/apalike2.bst" 1480098433 26644 77647ad43a99e9d8b2661f2ca815cba7 ""
   "references.bib" 1557538511 3691 c565b59cdab579d56221288519856ce9 ""
   "thesis.aux" 1557594573 19875 e5fcca531f03a6d821648569ca10fe85 ""
   (generated)
-  "thesis.bbl"
   "thesis.blg"
-["pdflatex"] 1557594569 "thesis.tex" "thesis.pdf" "thesis" 1557683154
+  "thesis.bbl"
+["pdflatex"] 1557594569 "thesis.tex" "thesis.pdf" "thesis" 1557716504
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmb7t.tfm" 1480098689 2172 fd0c924230362ff848a33632ed45dc23 ""
@@ -135,10 +135,10 @@
   "fig/training-curve.pdf" 1557517312 22393 45b64be78469f9daac1491d79cd71843 ""
   "thesis.aux" 1557594573 19875 e5fcca531f03a6d821648569ca10fe85 ""
   "thesis.bbl" 1557593197 3109 bb0ef4d07102402bd3ebf5543265ef88 "bibtex thesis"
-  "thesis.tex" 1557683154 144319 633d77fe0b25f3538794afa9af82167e ""
+  "thesis.tex" 1557716503 144319 633d77fe0b25f3538794afa9af82167e ""
   "thesis.toc" 1557594573 5026 7a24c098d2186f62f5b8f9fd7a2c07a6 ""
   (generated)
-  "thesis.log"
   "thesis.pdf"
-  "thesis.aux"
+  "thesis.log"
   "thesis.toc"
+  "thesis.aux"
