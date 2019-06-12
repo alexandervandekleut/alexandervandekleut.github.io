@@ -1,8 +1,6 @@
 ---
 permalink: /q-learning/
-title: Q-learning
-layout: default
-notebook: true
+notebook: q-learning.ipynb
 ---
 
 {% include q-learning.html %}

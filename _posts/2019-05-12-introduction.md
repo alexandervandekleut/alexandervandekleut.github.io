@@ -1,10 +1,8 @@
 ---
 permalink: /introduction/
-title: Introduction
-layout: default
 ---
 
-# {{page.title}}
+# Introduction
 
 Reinforcement learning has become extremely popular lately. Advances in techniques and distributed processing has allowed reinforcement learning agents to [beat the world champion at Go](https://deepmind.com/research/alphago/) and [play competitively against world leaders at Dota 2](https://openai.com/five/).
 

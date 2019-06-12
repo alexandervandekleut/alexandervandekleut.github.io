@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=e88ea2ad56e95913e172df6f31c1ff82889ac891">
+    <!-- Mathjax Support -->
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Gym Wrappers | alexandervandekleut.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Gym Wrappers" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Gym Wrappers&#182;In this lesson, we will be learning about the extremely powerful feature of wrappers made available to us courtesy of OpenAI&#39;s gym. Wrappers will allow us to add functionality to environments, such as modifying observations and rewards to be fed to our agent. It is common in reinforcement learning to preprocess observations in order to make them more easy to learn from. A common example is when using image-based inputs, to ensure that all values are between $0$ and $1$ rather than between $0$ and $255$, as is more common with RGB images. The gym.Wrapper class inherits from the gym.Env class, which defines environments according to the OpenAI API for reinforcement learning. Implementing the gym.Wrapper class requires defining an __init__ method that accepts the environment to be extended as a parameter. In&nbsp;[9]: import gym import numpy as np In&nbsp;[38]: class BasicWrapper(gym.Wrapper): def __init__(self, env): super().__init__(env) def step(self, action): pass # ... # return next_state, reward, done, info In&nbsp;[6]: env = BasicWrapper(gym.make(&quot;CartPole-v0&quot;)) We can modify specific aspects of the environment by using subclasses of gym.Wrapper that override how the environment processes observations, rewards, and action. The following three classes provide this functionality: gym.ObservationWrapper: Used to modify the observations returned by the environment. To do this, override the observation method of the environment. This method accepts a single parameter (the observation to be modified) and returns the modified observation. gym.RewardWrapper: Used to modify the rewards returned by the environment. To do this, override the reward method of the environment. This method accepts a single parameter (the reward to be modified) and returns the modified reward. gym.ActionWrapper: Used to modify the actions passed to the environment. To do this, override the action method of the environment. This method accepts a single parameter (the action to be modified) and returns the modified action. In&nbsp;[10]: class ObservationWrapper(gym.ObservationWrapper): def __init__(self, env): super().__init__(env) def observation(self, obs): # modify obs return obs class RewardWrapper(gym.RewardWrapper): def __init__(self, env): super().__init__(env) def reward(self, rew): # modify rew return rew class ActionWrapper(gym.ActionWrapper): def __init__(self, env): super().__init__(env) def action(self, act): # modify act return act Wrappers can be used to modify how an environment works to meet the preprocessing criteria of published papers. The OpenAI Baselines implementations include wrappers that reproduce preprocessing used in the original DQN paper and susbequent Deepmind publications. Here we define a wrapper that takes an environment with a gym.Discrete observation space and generates a new environment with a one-hot encoding of the discrete states, for use in, for example, neural networks. In&nbsp;[12]: class DiscreteToBoxWrapper(gym.ObservationWrapper): def __init__(self, env): super().__init__(env) assert isinstance(env.observation_space, gym.spaces.Discrete), \ &quot;Should only be used to wrap Discrete envs.&quot; self.n = self.observation_space.n self.observation_space = gym.spaces.Box(0, 1, (self.n,)) def observation(self, obs): new_obs = np.zeros(self.n) new_obs[obs] = 1 return new_obs In&nbsp;[19]: env = DiscreteToBoxWrapper(gym.make(&quot;FrozenLake-v0&quot;)) T = 10 s_t = env.reset() for t in range(T): a_t = env.action_space.sample() s_t, r_t, done, info = env.step(a_t) print(s_t) if done: s_t = env.reset() [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] Going Beyond the Wrapper Class&#182;It is possible to apply the concept of wrappers beyond what is defined here to add functionality to the environment, such as providing auxillary observation functions that allow for multiple preprocessing streams to occur. In more complex applications of deep reinforcement learning, evaluating the policy can take significantly longer than stepping the environment. This means that the majority of computational time is spent choosing actions, which makes data collection slow. Since deep reinforcement learning is extremely data intensive (often requiring millions of timesteps of experience to achieve good performance), we should prioritize rapidly acquiring data. The following class accepts a function that returns an environment, and returns a vectorized version of the environment. It essentially generates $n$ copies of the environment. Its step function expects a vector of $n$ actions, and returns vectors of $n$ next states, $n$ rewards, $n$ done flags, and $n$ infos. In&nbsp;[43]: class VectorizedEnvWrapper(gym.Wrapper): def __init__(self, make_env, num_envs=1): super().__init__(make_env()) self.num_envs = num_envs self.envs = [make_env() for env_index in range(num_envs)] def reset(self): return np.asarray([env.reset() for env in self.envs]) def reset_at(self, env_index): return self.envs[env_index].reset() def step(self, actions): next_states, rewards, dones, infos = [], [], [], [] for env, action in zip(self.envs, actions): next_state, reward, done, info = env.step(action) next_states.append(next_state) rewards.append(reward) dones.append(done) infos.append(info) return np.asarray(next_states), np.asarray(rewards), \ np.asarray(dones), np.asarray(infos) In&nbsp;[51]: num_envs = 128 env = VectorizedEnvWrapper(lambda: gym.make(&quot;CartPole-v0&quot;), num_envs=num_envs) T = 10 observations = env.reset() for t in range(T): actions = np.random.randint(env.action_space.n, size=num_envs) observations, rewards, dones, infos = env.step(actions) for i in range(len(dones)): if dones[i]: observations[i] = env.reset_at(i) In&nbsp;[52]: print(observations.shape) print(rewards.shape) print(dones.shape) (128, 4) (128,) (128,) References&#182;Extending OpenAI Gym environments with Wrappers and Monitors" />
+<meta property="og:description" content="Gym Wrappers&#182;In this lesson, we will be learning about the extremely powerful feature of wrappers made available to us courtesy of OpenAI&#39;s gym. Wrappers will allow us to add functionality to environments, such as modifying observations and rewards to be fed to our agent. It is common in reinforcement learning to preprocess observations in order to make them more easy to learn from. A common example is when using image-based inputs, to ensure that all values are between $0$ and $1$ rather than between $0$ and $255$, as is more common with RGB images. The gym.Wrapper class inherits from the gym.Env class, which defines environments according to the OpenAI API for reinforcement learning. Implementing the gym.Wrapper class requires defining an __init__ method that accepts the environment to be extended as a parameter. In&nbsp;[9]: import gym import numpy as np In&nbsp;[38]: class BasicWrapper(gym.Wrapper): def __init__(self, env): super().__init__(env) def step(self, action): pass # ... # return next_state, reward, done, info In&nbsp;[6]: env = BasicWrapper(gym.make(&quot;CartPole-v0&quot;)) We can modify specific aspects of the environment by using subclasses of gym.Wrapper that override how the environment processes observations, rewards, and action. The following three classes provide this functionality: gym.ObservationWrapper: Used to modify the observations returned by the environment. To do this, override the observation method of the environment. This method accepts a single parameter (the observation to be modified) and returns the modified observation. gym.RewardWrapper: Used to modify the rewards returned by the environment. To do this, override the reward method of the environment. This method accepts a single parameter (the reward to be modified) and returns the modified reward. gym.ActionWrapper: Used to modify the actions passed to the environment. To do this, override the action method of the environment. This method accepts a single parameter (the action to be modified) and returns the modified action. In&nbsp;[10]: class ObservationWrapper(gym.ObservationWrapper): def __init__(self, env): super().__init__(env) def observation(self, obs): # modify obs return obs class RewardWrapper(gym.RewardWrapper): def __init__(self, env): super().__init__(env) def reward(self, rew): # modify rew return rew class ActionWrapper(gym.ActionWrapper): def __init__(self, env): super().__init__(env) def action(self, act): # modify act return act Wrappers can be used to modify how an environment works to meet the preprocessing criteria of published papers. The OpenAI Baselines implementations include wrappers that reproduce preprocessing used in the original DQN paper and susbequent Deepmind publications. Here we define a wrapper that takes an environment with a gym.Discrete observation space and generates a new environment with a one-hot encoding of the discrete states, for use in, for example, neural networks. In&nbsp;[12]: class DiscreteToBoxWrapper(gym.ObservationWrapper): def __init__(self, env): super().__init__(env) assert isinstance(env.observation_space, gym.spaces.Discrete), \ &quot;Should only be used to wrap Discrete envs.&quot; self.n = self.observation_space.n self.observation_space = gym.spaces.Box(0, 1, (self.n,)) def observation(self, obs): new_obs = np.zeros(self.n) new_obs[obs] = 1 return new_obs In&nbsp;[19]: env = DiscreteToBoxWrapper(gym.make(&quot;FrozenLake-v0&quot;)) T = 10 s_t = env.reset() for t in range(T): a_t = env.action_space.sample() s_t, r_t, done, info = env.step(a_t) print(s_t) if done: s_t = env.reset() [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] Going Beyond the Wrapper Class&#182;It is possible to apply the concept of wrappers beyond what is defined here to add functionality to the environment, such as providing auxillary observation functions that allow for multiple preprocessing streams to occur. In more complex applications of deep reinforcement learning, evaluating the policy can take significantly longer than stepping the environment. This means that the majority of computational time is spent choosing actions, which makes data collection slow. Since deep reinforcement learning is extremely data intensive (often requiring millions of timesteps of experience to achieve good performance), we should prioritize rapidly acquiring data. The following class accepts a function that returns an environment, and returns a vectorized version of the environment. It essentially generates $n$ copies of the environment. Its step function expects a vector of $n$ actions, and returns vectors of $n$ next states, $n$ rewards, $n$ done flags, and $n$ infos. In&nbsp;[43]: class VectorizedEnvWrapper(gym.Wrapper): def __init__(self, make_env, num_envs=1): super().__init__(make_env()) self.num_envs = num_envs self.envs = [make_env() for env_index in range(num_envs)] def reset(self): return np.asarray([env.reset() for env in self.envs]) def reset_at(self, env_index): return self.envs[env_index].reset() def step(self, actions): next_states, rewards, dones, infos = [], [], [], [] for env, action in zip(self.envs, actions): next_state, reward, done, info = env.step(action) next_states.append(next_state) rewards.append(reward) dones.append(done) infos.append(info) return np.asarray(next_states), np.asarray(rewards), \ np.asarray(dones), np.asarray(infos) In&nbsp;[51]: num_envs = 128 env = VectorizedEnvWrapper(lambda: gym.make(&quot;CartPole-v0&quot;), num_envs=num_envs) T = 10 observations = env.reset() for t in range(T): actions = np.random.randint(env.action_space.n, size=num_envs) observations, rewards, dones, infos = env.step(actions) for i in range(len(dones)): if dones[i]: observations[i] = env.reset_at(i) In&nbsp;[52]: print(observations.shape) print(rewards.shape) print(dones.shape) (128, 4) (128,) (128,) References&#182;Extending OpenAI Gym environments with Wrappers and Monitors" />
+<link rel="canonical" href="http://localhost:4000/gym-wrappers/" />
+<meta property="og:url" content="http://localhost:4000/gym-wrappers/" />
+<meta property="og:site_name" content="alexandervandekleut.github.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-05-21T00:00:00-04:00" />
+<script type="application/ld+json">
+{"description":"Gym Wrappers&#182;In this lesson, we will be learning about the extremely powerful feature of wrappers made available to us courtesy of OpenAI&#39;s gym. Wrappers will allow us to add functionality to environments, such as modifying observations and rewards to be fed to our agent. It is common in reinforcement learning to preprocess observations in order to make them more easy to learn from. A common example is when using image-based inputs, to ensure that all values are between $0$ and $1$ rather than between $0$ and $255$, as is more common with RGB images. The gym.Wrapper class inherits from the gym.Env class, which defines environments according to the OpenAI API for reinforcement learning. Implementing the gym.Wrapper class requires defining an __init__ method that accepts the environment to be extended as a parameter. In&nbsp;[9]: import gym import numpy as np In&nbsp;[38]: class BasicWrapper(gym.Wrapper): def __init__(self, env): super().__init__(env) def step(self, action): pass # ... # return next_state, reward, done, info In&nbsp;[6]: env = BasicWrapper(gym.make(&quot;CartPole-v0&quot;)) We can modify specific aspects of the environment by using subclasses of gym.Wrapper that override how the environment processes observations, rewards, and action. The following three classes provide this functionality: gym.ObservationWrapper: Used to modify the observations returned by the environment. To do this, override the observation method of the environment. This method accepts a single parameter (the observation to be modified) and returns the modified observation. gym.RewardWrapper: Used to modify the rewards returned by the environment. To do this, override the reward method of the environment. This method accepts a single parameter (the reward to be modified) and returns the modified reward. gym.ActionWrapper: Used to modify the actions passed to the environment. To do this, override the action method of the environment. This method accepts a single parameter (the action to be modified) and returns the modified action. In&nbsp;[10]: class ObservationWrapper(gym.ObservationWrapper): def __init__(self, env): super().__init__(env) def observation(self, obs): # modify obs return obs class RewardWrapper(gym.RewardWrapper): def __init__(self, env): super().__init__(env) def reward(self, rew): # modify rew return rew class ActionWrapper(gym.ActionWrapper): def __init__(self, env): super().__init__(env) def action(self, act): # modify act return act Wrappers can be used to modify how an environment works to meet the preprocessing criteria of published papers. The OpenAI Baselines implementations include wrappers that reproduce preprocessing used in the original DQN paper and susbequent Deepmind publications. Here we define a wrapper that takes an environment with a gym.Discrete observation space and generates a new environment with a one-hot encoding of the discrete states, for use in, for example, neural networks. In&nbsp;[12]: class DiscreteToBoxWrapper(gym.ObservationWrapper): def __init__(self, env): super().__init__(env) assert isinstance(env.observation_space, gym.spaces.Discrete), \\ &quot;Should only be used to wrap Discrete envs.&quot; self.n = self.observation_space.n self.observation_space = gym.spaces.Box(0, 1, (self.n,)) def observation(self, obs): new_obs = np.zeros(self.n) new_obs[obs] = 1 return new_obs In&nbsp;[19]: env = DiscreteToBoxWrapper(gym.make(&quot;FrozenLake-v0&quot;)) T = 10 s_t = env.reset() for t in range(T): a_t = env.action_space.sample() s_t, r_t, done, info = env.step(a_t) print(s_t) if done: s_t = env.reset() [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] Going Beyond the Wrapper Class&#182;It is possible to apply the concept of wrappers beyond what is defined here to add functionality to the environment, such as providing auxillary observation functions that allow for multiple preprocessing streams to occur. In more complex applications of deep reinforcement learning, evaluating the policy can take significantly longer than stepping the environment. This means that the majority of computational time is spent choosing actions, which makes data collection slow. Since deep reinforcement learning is extremely data intensive (often requiring millions of timesteps of experience to achieve good performance), we should prioritize rapidly acquiring data. The following class accepts a function that returns an environment, and returns a vectorized version of the environment. It essentially generates $n$ copies of the environment. Its step function expects a vector of $n$ actions, and returns vectors of $n$ next states, $n$ rewards, $n$ done flags, and $n$ infos. In&nbsp;[43]: class VectorizedEnvWrapper(gym.Wrapper): def __init__(self, make_env, num_envs=1): super().__init__(make_env()) self.num_envs = num_envs self.envs = [make_env() for env_index in range(num_envs)] def reset(self): return np.asarray([env.reset() for env in self.envs]) def reset_at(self, env_index): return self.envs[env_index].reset() def step(self, actions): next_states, rewards, dones, infos = [], [], [], [] for env, action in zip(self.envs, actions): next_state, reward, done, info = env.step(action) next_states.append(next_state) rewards.append(reward) dones.append(done) infos.append(info) return np.asarray(next_states), np.asarray(rewards), \\ np.asarray(dones), np.asarray(infos) In&nbsp;[51]: num_envs = 128 env = VectorizedEnvWrapper(lambda: gym.make(&quot;CartPole-v0&quot;), num_envs=num_envs) T = 10 observations = env.reset() for t in range(T): actions = np.random.randint(env.action_space.n, size=num_envs) observations, rewards, dones, infos = env.step(actions) for i in range(len(dones)): if dones[i]: observations[i] = env.reset_at(i) In&nbsp;[52]: print(observations.shape) print(rewards.shape) print(dones.shape) (128, 4) (128,) (128,) References&#182;Extending OpenAI Gym environments with Wrappers and Monitors","@type":"BlogPosting","url":"http://localhost:4000/gym-wrappers/","headline":"Gym Wrappers","dateModified":"2019-05-21T00:00:00-04:00","datePublished":"2019-05-21T00:00:00-04:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/gym-wrappers/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <h1 id="project_title"> A Complete Guide to Reinforcement Learning with Tensorflow </h1>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        
+        <h4>
+          <a href="http://localhost:4000">Home</a>
+        </h4>
+        
+        
+        <p> Download the <a href="http://localhost:4000/assets/notebooks/gym-wrappers.ipynb"> notebook </a> or follow along. </p>
+        
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h1 id="Gym-Wrappers">Gym Wrappers<a class="anchor-link" href="#Gym-Wrappers">&#182;</a></h1><p>In this lesson, we will be learning about the extremely powerful feature of <strong>wrappers</strong> made available to us courtesy of OpenAI's <code>gym</code>. Wrappers will allow us to add functionality to environments, such as modifying observations and rewards to be fed to our agent. It is common in reinforcement learning to preprocess observations in order to make them more easy to learn from. A common example is when using image-based inputs, to ensure that all values are between $0$ and $1$ rather than between $0$ and $255$, as is more common with RGB images.</p>
+<p>The <code>gym.Wrapper</code> class inherits from the <code>gym.Env</code> class, which defines environments according to the OpenAI API for reinforcement learning. Implementing the <code>gym.Wrapper</code> class requires defining an <code>__init__</code> method that accepts the environment to be extended as a parameter.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">gym</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">BasicWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">Wrapper</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="k">pass</span>
+        <span class="c1"># ...</span>
+        <span class="c1"># return next_state, reward, done, info</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">env</span> <span class="o">=</span> <span class="n">BasicWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;CartPole-v0&quot;</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can modify specific aspects of the environment by using subclasses of <code>gym.Wrapper</code> that override how the environment processes observations, rewards, and action.</p>
+<p>The following three classes provide this functionality:</p>
+<ol>
+<li><code>gym.ObservationWrapper</code>: Used to modify the observations returned by the environment. To do this, override the <code>observation</code> method of the environment. This method accepts a single parameter (the observation to be modified) and returns the modified observation.</li>
+<li><code>gym.RewardWrapper</code>: Used to modify the rewards returned by the environment. To do this, override the <code>reward</code> method of the environment. This method accepts a single parameter (the reward to be modified) and returns the modified reward.</li>
+<li><code>gym.ActionWrapper</code>: Used to modify the actions passed to the environment. To do this, override the <code>action</code> method of the environment. This method accepts a single parameter (the action to be modified) and returns the modified action.</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">ObservationWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">ObservationWrapper</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">observation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">):</span>
+        <span class="c1"># modify obs</span>
+        <span class="k">return</span> <span class="n">obs</span>
+
+<span class="k">class</span> <span class="nc">RewardWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">RewardWrapper</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">reward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rew</span><span class="p">):</span>
+        <span class="c1"># modify rew</span>
+        <span class="k">return</span> <span class="n">rew</span>
+
+<span class="k">class</span> <span class="nc">ActionWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">ActionWrapper</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">act</span><span class="p">):</span>
+        <span class="c1"># modify act</span>
+        <span class="k">return</span> <span class="n">act</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Wrappers can be used to modify how an environment works to meet the preprocessing criteria of published papers. The <a href="https://github.com/openai/baselines/blob/master/baselines/common/atari_wrappers.py">OpenAI Baselines implementations</a> include wrappers that reproduce preprocessing used in the original DQN paper and susbequent Deepmind publications.</p>
+<p>Here we define a wrapper that takes an environment with a <code>gym.Discrete</code> observation space and generates a new environment with a one-hot encoding of the discrete states, for use in, for example, neural networks.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">DiscreteToBoxWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">ObservationWrapper</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="p">,</span> <span class="n">gym</span><span class="o">.</span><span class="n">spaces</span><span class="o">.</span><span class="n">Discrete</span><span class="p">),</span> \
+            <span class="s2">&quot;Should only be used to wrap Discrete envs.&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">n</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,))</span>
+
+    <span class="k">def</span> <span class="nf">observation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">):</span>
+        <span class="n">new_obs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">new_obs</span><span class="p">[</span><span class="n">obs</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">new_obs</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">env</span> <span class="o">=</span> <span class="n">DiscreteToBoxWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;FrozenLake-v0&quot;</span><span class="p">))</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">s_t</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="n">a_t</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+    <span class="n">s_t</span><span class="p">,</span> <span class="n">r_t</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">a_t</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s_t</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
+        <span class="n">s_t</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+[0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+[1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+[1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+[0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+[1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+[1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+[0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+[0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+[1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Going-Beyond-the-Wrapper-Class">Going Beyond the Wrapper Class<a class="anchor-link" href="#Going-Beyond-the-Wrapper-Class">&#182;</a></h3><p>It is possible to apply the concept of wrappers beyond what is defined here to add functionality to the environment, such as providing auxillary <code>observation</code> functions that allow for multiple preprocessing streams to occur.</p>
+<p>In more complex applications of deep reinforcement learning, evaluating the policy can take significantly longer than stepping the environment. This means that the majority of computational time is spent choosing actions, which makes data collection slow. Since deep reinforcement learning is extremely data intensive (often requiring millions of timesteps of experience to achieve good performance), we should prioritize rapidly acquiring data.</p>
+<p>The following class accepts a function that returns an environment, and returns a <strong>vectorized</strong> version of the environment. It essentially generates $n$ copies of the environment. Its <code>step</code> function expects a vector of $n$ actions, and returns vectors of $n$ next states, $n$ rewards, $n$ done flags, and $n$ infos.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">VectorizedEnvWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">Wrapper</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">make_env</span><span class="p">,</span> <span class="n">num_envs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">make_env</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_envs</span> <span class="o">=</span> <span class="n">num_envs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">envs</span> <span class="o">=</span> <span class="p">[</span><span class="n">make_env</span><span class="p">()</span> <span class="k">for</span> <span class="n">env_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_envs</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span> <span class="k">for</span> <span class="n">env</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">envs</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">reset_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env_index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">envs</span><span class="p">[</span><span class="n">env_index</span><span class="p">]</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actions</span><span class="p">):</span>
+        <span class="n">next_states</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">dones</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">env</span><span class="p">,</span> <span class="n">action</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">envs</span><span class="p">,</span> <span class="n">actions</span><span class="p">):</span>
+            <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="n">next_states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">next_state</span><span class="p">)</span>
+            <span class="n">rewards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reward</span><span class="p">)</span>
+            <span class="n">dones</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">done</span><span class="p">)</span>
+            <span class="n">infos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">next_states</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">rewards</span><span class="p">),</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dones</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">infos</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_envs</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">VectorizedEnvWrapper</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;CartPole-v0&quot;</span><span class="p">),</span> <span class="n">num_envs</span><span class="o">=</span><span class="n">num_envs</span><span class="p">)</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">observations</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_envs</span><span class="p">)</span>
+    <span class="n">observations</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">dones</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dones</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">dones</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">observations</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset_at</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">observations</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rewards</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dones</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(128, 4)
+(128,)
+(128,)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="References">References<a class="anchor-link" href="#References">&#182;</a></h3><p><a href="https://hub.packtpub.com/openai-gym-environments-wrappers-and-monitors-tutorial/">Extending OpenAI Gym environments with Wrappers and Monitors</a></p>
+
+</div>
+</div>
+</div>
+
+
+        
+        <h4>
+          <a href="http://localhost:4000">Home</a>
+        </h4>
+        
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        
+        <p class="copyright">alexandervandekleut.github.io maintained by <a href="https://github.com/alexandervandekleut">alexandervandekleut</a></p>
+        
+      </footer>
+    </div>
+
+    
+  </body>
+</html>

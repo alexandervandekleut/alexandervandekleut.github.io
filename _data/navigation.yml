@@ -3,121 +3,101 @@ lessons:
 
 - title: Introduction
   math: no
-  theory: yes
   code: no
   url: /introduction/
 
 - title: Setting up your Reinforcement Learning Environment
   math: no
-  theory: no
   code: yes
   url: /setup/
 
 - title: Markov Decision Processes
   math: yes
-  theory: yes
   code: yes
   url: /mdp/
-  topics:
-    - Markov Processes
-    - Trajectories
-    - Markov Reward Processes
-    - Return and Discounted Return
-    - Value Function
-    - TD(0)
-    - Markov Decision Processes
 
 - title: Introduction to the OpenAI Gym Interface
   math: no
-  theory: no
   code: yes
   url: /gym/
 
 - title: $$ Q $$ learning
   math: yes
-  theory: yes
   code: yes
   url: /q-learning/
-  topics:
-    - Value Function
-    - Action-Value Function
-    - $Q$-learning
-    - $\epsilon$-greedy
+
+- title: Gym Wrappers
+  math: no
+  code: yes
+  url: /gym-wrappers/
+
+- title: Function Approximation and Tensorflow
+  math: yes
+  code: yes
+  url: /function-approximation/
+
+- title: $$Q$$-learning with Tensorflow
+  math: yes
+  code: yes
+  url: /q-learning-tensorflow/
+
+- title: Tensorboard
+  math: no
+  code: yes
+  url: /tensorboard/
 
 - title: Deep $$Q$$-learning
   math: yes
-  theory: yes
   code: yes
   url: /deep-q-learning/
-  topics:
-    - Function Approximation
-    - Gradient Descent
-    - Tensorflow and Autodifferentiation
-    - Deep $Q$-learning
 
 - title: Rainbow - Improvements to Deep $$ Q $$-learning
   math: yes
-  theory: yes
   code: yes
   url: /rainbow/
 
-- title: Extending Gym Functionality with Wrappers
-  math: no
-  theory: yes
-  code: yes
-  url: /wrappers/
-
 - title: Policy Gradients
   math: yes
-  theory: yes
   code: yes
   url: /policy-gradients/
 
 - title: Advantage Actor-Critic (A2C)
   math: yes
-  theory: yes
   code: yes
   url: /a2c/
 
-- title: Generalizaed Advantage Estimation (GAE)
+- title: Generalized Advantage Estimation (GAE)
   math: yes
-  theory: yes
   code: yes
   url: /gae/
 
 - title: Trust Region Policy Optimization (TRPO)
   math: yes
-  theory: yes
   code: yes
   url: /trpo/
 
 - title: Proximal Policy Optimization (PPO)
   math: yes
-  theory: yes
   code: yes
   url: /ppo/
 
 - title: Entropy
   math: yes
-  theory: yes
   code: yes
   url: /entropy/
 
 - title: KL-Divergence
   math: yes
-  theory: yes
   code: yes
   url: /kl/
 
 - title: List of Important Papers
   math: no
-  theory: yes
   code: no
   url: /papers/
 
 - title: Neural Network Design
   math: yes
-  theory: yes
   code: yes
   url: /neural-networks/
 

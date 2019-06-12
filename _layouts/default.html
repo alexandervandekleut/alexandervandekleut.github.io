@@ -39,10 +39,14 @@
         </h4>
         {% endif %}
         {% if page.notebook %}
-        {% assign size = page.url | size | minus: 1 %}
-        <p> Download the <a href="{{site.url}}/assets/notebooks{{ page.url | slice: 0, size }}.ipynb"> notebook </a> or follow along. </p>
+        <p> Download the <a href="{{site.url}}/assets/notebooks/{{ page.notebook }}"> notebook </a> or follow along. </p>
         {% endif %}
         {{ content }}
+        {% if page.id != "index" %}
+        <h4>
+          <a href="{{ site.url }}">Home</a>
+        </h4>
+        {% endif %}
       </section>
     </div>
 

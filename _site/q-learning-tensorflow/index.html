@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=e88ea2ad56e95913e172df6f31c1ff82889ac891">
+    <!-- Mathjax Support -->
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Q Learning Tensorflow | alexandervandekleut.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Q Learning Tensorflow" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Q-Learning with Tensorflow&#182; In&nbsp;[1]: import numpy as np import seaborn as sns import pandas as pd import gym import tensorflow as tf import matplotlib.pyplot as plt sns.set() $Q$-learning as a Regression Problem&#182;When we first learned about $Q$-learning, we used the Bellman equation to learn the $Q$ function: $$ Q(s_t, a_t) \gets Q(s_t, a_t) - \alpha \left(r_t + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t) \right) $$ Compare this to gradient descent for a regression problem: $$ \theta \gets \theta - \alpha 2 \left( \hat{y} - y \right) \nabla_\theta \hat{y} $$ These methods are essentially analogous: we update parameters about our function in a manner proportional to the difference between our prediction and the &#39;true&#39; value. The difference for tabular $Q$-learning is that we essentially have a different parameter for each state-action pair. FrozenLake with Tensorflow&#182;Before diving deep into using techniques like deep neural networks, I want to show you how we might do $Q$-learning in tensorflow using the same FrozenLake-v0 environment from earlier. We make many changes: rather than calling functions like act() and update(), instead we make this functionality available as a tensorflow op that is a member variable of the class. This way, we can do things like sess.run(agent.update, ... to update, rather than call agent.update(). Tensorflow requires a different kind of understanding of a program. Every statement in a normal python program (if-else blocks, assignment, indexing an array, etc) should be converted into an equivalent tensorflow op, so that the entire computation graph represents the program in an abstract way. For now, this may seem unnecessarily obtuse, but the truth is that when we get into more advanced techniques, it will be advantageous for us to define as much of the program in tensorflow as possible. In&nbsp;[2]: class Agent: def __init__(self, num_states, num_actions, epsilon_i=1.0, epsilon_f=0.0, n_epsilon=10000, alpha=0.1, gamma = 0.99): tf.reset_default_graph() self.epsilon = tf.get_variable(&quot;epsilon&quot;, initializer=tf.constant(epsilon_i, dtype=tf.float32)) self.Q = Q = tf.get_variable(&quot;Q&quot;, initializer = tf.zeros(shape=(num_states, num_actions))) self.s_t_ph = s_t = tf.placeholder(dtype=tf.int32, shape=(), name=&quot;s_t_ph&quot;) p = tf.random_uniform(shape=(), minval=0, maxval=1, dtype=tf.float32) self.act = tf.cond(p &lt; self.epsilon, lambda: tf.random_uniform(shape=(), minval=0, maxval=num_actions, dtype=tf.int32), lambda: tf.argmax(Q[s_t], output_type=tf.int32)) self.r_t_ph = r_t = tf.placeholder(dtype=tf.float32, shape=(), name=&quot;r_t_ph&quot;) self.a_t_ph = a_t = tf.placeholder(dtype=tf.int32, shape=(), name=&quot;a_t_ph&quot;) self.s_t_next_ph = s_t_next = tf.placeholder(dtype=tf.int32, shape=(), name=&quot;s_t_next_ph&quot;) a_t_next = tf.cond(p &lt; self.epsilon, lambda: tf.random_uniform(shape=(), minval=0, maxval=num_actions, dtype=tf.int32), lambda: tf.argmax(Q[s_t_next], output_type=tf.int32)) TD = r_t + gamma*Q[s_t_next, a_t_next] TD = tf.stop_gradient(TD) predicted_Q = Q[s_t, a_t] self.loss = 0.5*(predicted_Q - TD)**2 self.update = tf.train.GradientDescentOptimizer(alpha).minimize(self.loss) self.decay_epsilon = tf.assign(self.epsilon, tf.maximum( epsilon_f, self.epsilon - (epsilon_i - epsilon_f)/n_epsilon)) In&nbsp;[3]: import gym env = gym.make(&quot;FrozenLake-v0&quot;) In&nbsp;[4]: num_states = env.observation_space.n num_actions = env.action_space.n agent = Agent(num_states, num_actions, epsilon_i = 1.0, epsilon_f = 0.0, alpha=0.5, gamma=0.95) WARNING:tensorflow:From /anaconda3/envs/rl-lessons/lib/python3.6/site-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version. Instructions for updating: Colocations handled automatically by placer. Our agent will be run using the same parameters as the one from the original $Q$-learning notebook. However, for now, this will take significantly longer than just using numpy alone. We are making calls to sess.run but we are not doing a signicant amount of work, making the calls relatively expensive compared to the amount of work that they are doing. We will see later that the more work that is done in a sess.run call, the more efficient it becomes. Be patient as the following cell will likely take a few minutes to run. In&nbsp;[5]: with tf.Session() as sess: sess.run(tf.global_variables_initializer()) T = 100000 s_t = env.reset() rewards = [] episode_rewards = 0 for t in range(T): if t%1000 == 0: print(f&#39;{100*t/T}%&#39;, end=&#39;\r&#39;) a_t = sess.run(agent.act, feed_dict = { agent.s_t_ph: s_t }) s_t_next, r_t, done, info = env.step(a_t) sess.run(agent.update, feed_dict = { agent.s_t_ph:s_t, agent.a_t_ph:a_t, agent.s_t_next_ph:s_t_next, agent.r_t_ph:r_t }) sess.run(agent.decay_epsilon) s_t = s_t_next episode_rewards += r_t if done: rewards.append(episode_rewards) episode_rewards = 0 s_t = env.reset() 99.0% In&nbsp;[7]: rewards = np.asarray(rewards) window = 100 running_mean_rewards = pd.Series(rewards, name=&#39;q-learning&#39;).rolling(window=window).mean()[window-1:] # this slicing is because the first window-1 elements are NaN from the rolling operation. sns.lineplot(data=running_mean_rewards) Out[7]: &lt;matplotlib.axes._subplots.AxesSubplot at 0x1a3ef8acc0&gt; In&nbsp;[&nbsp;]:" />
+<meta property="og:description" content="Q-Learning with Tensorflow&#182; In&nbsp;[1]: import numpy as np import seaborn as sns import pandas as pd import gym import tensorflow as tf import matplotlib.pyplot as plt sns.set() $Q$-learning as a Regression Problem&#182;When we first learned about $Q$-learning, we used the Bellman equation to learn the $Q$ function: $$ Q(s_t, a_t) \gets Q(s_t, a_t) - \alpha \left(r_t + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t) \right) $$ Compare this to gradient descent for a regression problem: $$ \theta \gets \theta - \alpha 2 \left( \hat{y} - y \right) \nabla_\theta \hat{y} $$ These methods are essentially analogous: we update parameters about our function in a manner proportional to the difference between our prediction and the &#39;true&#39; value. The difference for tabular $Q$-learning is that we essentially have a different parameter for each state-action pair. FrozenLake with Tensorflow&#182;Before diving deep into using techniques like deep neural networks, I want to show you how we might do $Q$-learning in tensorflow using the same FrozenLake-v0 environment from earlier. We make many changes: rather than calling functions like act() and update(), instead we make this functionality available as a tensorflow op that is a member variable of the class. This way, we can do things like sess.run(agent.update, ... to update, rather than call agent.update(). Tensorflow requires a different kind of understanding of a program. Every statement in a normal python program (if-else blocks, assignment, indexing an array, etc) should be converted into an equivalent tensorflow op, so that the entire computation graph represents the program in an abstract way. For now, this may seem unnecessarily obtuse, but the truth is that when we get into more advanced techniques, it will be advantageous for us to define as much of the program in tensorflow as possible. In&nbsp;[2]: class Agent: def __init__(self, num_states, num_actions, epsilon_i=1.0, epsilon_f=0.0, n_epsilon=10000, alpha=0.1, gamma = 0.99): tf.reset_default_graph() self.epsilon = tf.get_variable(&quot;epsilon&quot;, initializer=tf.constant(epsilon_i, dtype=tf.float32)) self.Q = Q = tf.get_variable(&quot;Q&quot;, initializer = tf.zeros(shape=(num_states, num_actions))) self.s_t_ph = s_t = tf.placeholder(dtype=tf.int32, shape=(), name=&quot;s_t_ph&quot;) p = tf.random_uniform(shape=(), minval=0, maxval=1, dtype=tf.float32) self.act = tf.cond(p &lt; self.epsilon, lambda: tf.random_uniform(shape=(), minval=0, maxval=num_actions, dtype=tf.int32), lambda: tf.argmax(Q[s_t], output_type=tf.int32)) self.r_t_ph = r_t = tf.placeholder(dtype=tf.float32, shape=(), name=&quot;r_t_ph&quot;) self.a_t_ph = a_t = tf.placeholder(dtype=tf.int32, shape=(), name=&quot;a_t_ph&quot;) self.s_t_next_ph = s_t_next = tf.placeholder(dtype=tf.int32, shape=(), name=&quot;s_t_next_ph&quot;) a_t_next = tf.cond(p &lt; self.epsilon, lambda: tf.random_uniform(shape=(), minval=0, maxval=num_actions, dtype=tf.int32), lambda: tf.argmax(Q[s_t_next], output_type=tf.int32)) TD = r_t + gamma*Q[s_t_next, a_t_next] TD = tf.stop_gradient(TD) predicted_Q = Q[s_t, a_t] self.loss = 0.5*(predicted_Q - TD)**2 self.update = tf.train.GradientDescentOptimizer(alpha).minimize(self.loss) self.decay_epsilon = tf.assign(self.epsilon, tf.maximum( epsilon_f, self.epsilon - (epsilon_i - epsilon_f)/n_epsilon)) In&nbsp;[3]: import gym env = gym.make(&quot;FrozenLake-v0&quot;) In&nbsp;[4]: num_states = env.observation_space.n num_actions = env.action_space.n agent = Agent(num_states, num_actions, epsilon_i = 1.0, epsilon_f = 0.0, alpha=0.5, gamma=0.95) WARNING:tensorflow:From /anaconda3/envs/rl-lessons/lib/python3.6/site-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version. Instructions for updating: Colocations handled automatically by placer. Our agent will be run using the same parameters as the one from the original $Q$-learning notebook. However, for now, this will take significantly longer than just using numpy alone. We are making calls to sess.run but we are not doing a signicant amount of work, making the calls relatively expensive compared to the amount of work that they are doing. We will see later that the more work that is done in a sess.run call, the more efficient it becomes. Be patient as the following cell will likely take a few minutes to run. In&nbsp;[5]: with tf.Session() as sess: sess.run(tf.global_variables_initializer()) T = 100000 s_t = env.reset() rewards = [] episode_rewards = 0 for t in range(T): if t%1000 == 0: print(f&#39;{100*t/T}%&#39;, end=&#39;\r&#39;) a_t = sess.run(agent.act, feed_dict = { agent.s_t_ph: s_t }) s_t_next, r_t, done, info = env.step(a_t) sess.run(agent.update, feed_dict = { agent.s_t_ph:s_t, agent.a_t_ph:a_t, agent.s_t_next_ph:s_t_next, agent.r_t_ph:r_t }) sess.run(agent.decay_epsilon) s_t = s_t_next episode_rewards += r_t if done: rewards.append(episode_rewards) episode_rewards = 0 s_t = env.reset() 99.0% In&nbsp;[7]: rewards = np.asarray(rewards) window = 100 running_mean_rewards = pd.Series(rewards, name=&#39;q-learning&#39;).rolling(window=window).mean()[window-1:] # this slicing is because the first window-1 elements are NaN from the rolling operation. sns.lineplot(data=running_mean_rewards) Out[7]: &lt;matplotlib.axes._subplots.AxesSubplot at 0x1a3ef8acc0&gt; In&nbsp;[&nbsp;]:" />
+<link rel="canonical" href="http://localhost:4000/q-learning-tensorflow/" />
+<meta property="og:url" content="http://localhost:4000/q-learning-tensorflow/" />
+<meta property="og:site_name" content="alexandervandekleut.github.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-05-21T00:00:00-04:00" />
+<script type="application/ld+json">
+{"description":"Q-Learning with Tensorflow&#182; In&nbsp;[1]: import numpy as np import seaborn as sns import pandas as pd import gym import tensorflow as tf import matplotlib.pyplot as plt sns.set() $Q$-learning as a Regression Problem&#182;When we first learned about $Q$-learning, we used the Bellman equation to learn the $Q$ function: $$ Q(s_t, a_t) \\gets Q(s_t, a_t) - \\alpha \\left(r_t + \\gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t) \\right) $$ Compare this to gradient descent for a regression problem: $$ \\theta \\gets \\theta - \\alpha 2 \\left( \\hat{y} - y \\right) \\nabla_\\theta \\hat{y} $$ These methods are essentially analogous: we update parameters about our function in a manner proportional to the difference between our prediction and the &#39;true&#39; value. The difference for tabular $Q$-learning is that we essentially have a different parameter for each state-action pair. FrozenLake with Tensorflow&#182;Before diving deep into using techniques like deep neural networks, I want to show you how we might do $Q$-learning in tensorflow using the same FrozenLake-v0 environment from earlier. We make many changes: rather than calling functions like act() and update(), instead we make this functionality available as a tensorflow op that is a member variable of the class. This way, we can do things like sess.run(agent.update, ... to update, rather than call agent.update(). Tensorflow requires a different kind of understanding of a program. Every statement in a normal python program (if-else blocks, assignment, indexing an array, etc) should be converted into an equivalent tensorflow op, so that the entire computation graph represents the program in an abstract way. For now, this may seem unnecessarily obtuse, but the truth is that when we get into more advanced techniques, it will be advantageous for us to define as much of the program in tensorflow as possible. In&nbsp;[2]: class Agent: def __init__(self, num_states, num_actions, epsilon_i=1.0, epsilon_f=0.0, n_epsilon=10000, alpha=0.1, gamma = 0.99): tf.reset_default_graph() self.epsilon = tf.get_variable(&quot;epsilon&quot;, initializer=tf.constant(epsilon_i, dtype=tf.float32)) self.Q = Q = tf.get_variable(&quot;Q&quot;, initializer = tf.zeros(shape=(num_states, num_actions))) self.s_t_ph = s_t = tf.placeholder(dtype=tf.int32, shape=(), name=&quot;s_t_ph&quot;) p = tf.random_uniform(shape=(), minval=0, maxval=1, dtype=tf.float32) self.act = tf.cond(p &lt; self.epsilon, lambda: tf.random_uniform(shape=(), minval=0, maxval=num_actions, dtype=tf.int32), lambda: tf.argmax(Q[s_t], output_type=tf.int32)) self.r_t_ph = r_t = tf.placeholder(dtype=tf.float32, shape=(), name=&quot;r_t_ph&quot;) self.a_t_ph = a_t = tf.placeholder(dtype=tf.int32, shape=(), name=&quot;a_t_ph&quot;) self.s_t_next_ph = s_t_next = tf.placeholder(dtype=tf.int32, shape=(), name=&quot;s_t_next_ph&quot;) a_t_next = tf.cond(p &lt; self.epsilon, lambda: tf.random_uniform(shape=(), minval=0, maxval=num_actions, dtype=tf.int32), lambda: tf.argmax(Q[s_t_next], output_type=tf.int32)) TD = r_t + gamma*Q[s_t_next, a_t_next] TD = tf.stop_gradient(TD) predicted_Q = Q[s_t, a_t] self.loss = 0.5*(predicted_Q - TD)**2 self.update = tf.train.GradientDescentOptimizer(alpha).minimize(self.loss) self.decay_epsilon = tf.assign(self.epsilon, tf.maximum( epsilon_f, self.epsilon - (epsilon_i - epsilon_f)/n_epsilon)) In&nbsp;[3]: import gym env = gym.make(&quot;FrozenLake-v0&quot;) In&nbsp;[4]: num_states = env.observation_space.n num_actions = env.action_space.n agent = Agent(num_states, num_actions, epsilon_i = 1.0, epsilon_f = 0.0, alpha=0.5, gamma=0.95) WARNING:tensorflow:From /anaconda3/envs/rl-lessons/lib/python3.6/site-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version. Instructions for updating: Colocations handled automatically by placer. Our agent will be run using the same parameters as the one from the original $Q$-learning notebook. However, for now, this will take significantly longer than just using numpy alone. We are making calls to sess.run but we are not doing a signicant amount of work, making the calls relatively expensive compared to the amount of work that they are doing. We will see later that the more work that is done in a sess.run call, the more efficient it becomes. Be patient as the following cell will likely take a few minutes to run. In&nbsp;[5]: with tf.Session() as sess: sess.run(tf.global_variables_initializer()) T = 100000 s_t = env.reset() rewards = [] episode_rewards = 0 for t in range(T): if t%1000 == 0: print(f&#39;{100*t/T}%&#39;, end=&#39;\\r&#39;) a_t = sess.run(agent.act, feed_dict = { agent.s_t_ph: s_t }) s_t_next, r_t, done, info = env.step(a_t) sess.run(agent.update, feed_dict = { agent.s_t_ph:s_t, agent.a_t_ph:a_t, agent.s_t_next_ph:s_t_next, agent.r_t_ph:r_t }) sess.run(agent.decay_epsilon) s_t = s_t_next episode_rewards += r_t if done: rewards.append(episode_rewards) episode_rewards = 0 s_t = env.reset() 99.0% In&nbsp;[7]: rewards = np.asarray(rewards) window = 100 running_mean_rewards = pd.Series(rewards, name=&#39;q-learning&#39;).rolling(window=window).mean()[window-1:] # this slicing is because the first window-1 elements are NaN from the rolling operation. sns.lineplot(data=running_mean_rewards) Out[7]: &lt;matplotlib.axes._subplots.AxesSubplot at 0x1a3ef8acc0&gt; In&nbsp;[&nbsp;]:","@type":"BlogPosting","url":"http://localhost:4000/q-learning-tensorflow/","headline":"Q Learning Tensorflow","dateModified":"2019-05-21T00:00:00-04:00","datePublished":"2019-05-21T00:00:00-04:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/q-learning-tensorflow/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <h1 id="project_title"> A Complete Guide to Reinforcement Learning with Tensorflow </h1>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        
+        <h4>
+          <a href="http://localhost:4000">Home</a>
+        </h4>
+        
+        
+        <p> Download the <a href="http://localhost:4000/assets/notebooks/q-learning-tensorflow.ipynb"> notebook </a> or follow along. </p>
+        
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Q-Learning-with-Tensorflow">Q-Learning with Tensorflow<a class="anchor-link" href="#Q-Learning-with-Tensorflow">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">gym</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="$Q$-learning-as-a-Regression-Problem">$Q$-learning as a Regression Problem<a class="anchor-link" href="#$Q$-learning-as-a-Regression-Problem">&#182;</a></h3><p>When we first learned about $Q$-learning, we used the Bellman equation to learn the $Q$ function:
+$$
+Q(s_t, a_t) \gets Q(s_t, a_t) - \alpha \left(r_t + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t) \right)
+$$</p>
+<p>Compare this to gradient descent for a regression problem:
+$$
+\theta \gets \theta - \alpha 2 \left( \hat{y} - y \right) \nabla_\theta \hat{y}
+$$</p>
+<p>These methods are essentially analogous: we update parameters about our function in a manner proportional to the difference between our prediction and the 'true' value. The difference for tabular $Q$-learning is that we essentially have a different parameter for each state-action pair.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="FrozenLake-with-Tensorflow">FrozenLake with Tensorflow<a class="anchor-link" href="#FrozenLake-with-Tensorflow">&#182;</a></h3><p>Before diving deep into using techniques like deep neural networks, I want to show you how we might do $Q$-learning in tensorflow using the same <code>FrozenLake-v0</code> environment from earlier.</p>
+<p>We make many changes: rather than calling functions like <code>act()</code> and <code>update()</code>, instead we make this functionality available as a tensorflow op that is a member variable of the class. This way, we can do things like <code>sess.run(agent.update, ...</code> to update, rather than call <code>agent.update()</code>.</p>
+<p>Tensorflow requires a different kind of understanding of a program. Every statement in a normal python program (<code>if-else</code> blocks, assignment, indexing an array, etc) should be converted into an equivalent tensorflow op, so that the entire computation graph represents the program in an abstract way. For now, this may seem unnecessarily obtuse, but the truth is that when we get into more advanced techniques, it will be advantageous for us to define as much of the program in tensorflow as possible.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Agent</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">num_states</span><span class="p">,</span> 
+                 <span class="n">num_actions</span><span class="p">,</span> 
+                 <span class="n">epsilon_i</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> 
+                 <span class="n">epsilon_f</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> 
+                 <span class="n">n_epsilon</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> 
+                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> 
+                 <span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.99</span><span class="p">):</span>
+        
+        <span class="n">tf</span><span class="o">.</span><span class="n">reset_default_graph</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;epsilon&quot;</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">epsilon_i</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="n">initializer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">num_states</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">s_t_ph</span> <span class="o">=</span> <span class="n">s_t</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;s_t_ph&quot;</span><span class="p">)</span>
+
+        <span class="n">p</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_uniform</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">minval</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">act</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">p</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span><span class="p">,</span>
+                          <span class="k">lambda</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_uniform</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">minval</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="n">num_actions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span>
+                          <span class="k">lambda</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">s_t</span><span class="p">],</span> <span class="n">output_type</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">r_t_ph</span> <span class="o">=</span> <span class="n">r_t</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;r_t_ph&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a_t_ph</span> <span class="o">=</span> <span class="n">a_t</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;a_t_ph&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s_t_next_ph</span> <span class="o">=</span> <span class="n">s_t_next</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;s_t_next_ph&quot;</span><span class="p">)</span>
+        <span class="n">a_t_next</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">p</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span><span class="p">,</span>
+                          <span class="k">lambda</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_uniform</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">minval</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="n">num_actions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span>
+                          <span class="k">lambda</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">s_t_next</span><span class="p">],</span> <span class="n">output_type</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">))</span>
+
+        <span class="n">TD</span> <span class="o">=</span> <span class="n">r_t</span> <span class="o">+</span> <span class="n">gamma</span><span class="o">*</span><span class="n">Q</span><span class="p">[</span><span class="n">s_t_next</span><span class="p">,</span> <span class="n">a_t_next</span><span class="p">]</span>
+        <span class="n">TD</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stop_gradient</span><span class="p">(</span><span class="n">TD</span><span class="p">)</span>
+        <span class="n">predicted_Q</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[</span><span class="n">s_t</span><span class="p">,</span> <span class="n">a_t</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">predicted_Q</span> <span class="o">-</span> <span class="n">TD</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">)</span> 
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">decay_epsilon</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span><span class="p">,</span>
+                                      <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span> 
+                                          <span class="n">epsilon_f</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">-</span> <span class="p">(</span><span class="n">epsilon_i</span> <span class="o">-</span> <span class="n">epsilon_f</span><span class="p">)</span><span class="o">/</span><span class="n">n_epsilon</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">gym</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;FrozenLake-v0&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_states</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">n</span>
+<span class="n">num_actions</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">num_states</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">,</span> <span class="n">epsilon_i</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">epsilon_f</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>WARNING:tensorflow:From /anaconda3/envs/rl-lessons/lib/python3.6/site-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Our agent will be run using the same parameters as the one from the original $Q$-learning notebook. However, for now, this will take significantly longer than just using numpy alone.  We are making calls to <code>sess.run</code> but we are not doing a signicant amount of work, making the calls relatively expensive compared to the amount of work that they are doing. We will see later that the more work that is done in a <code>sess.run</code> call, the more efficient it becomes. Be patient as the following cell will likely take a few minutes to run.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="mi">100000</span>
+    <span class="n">s_t</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="n">rewards</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">episode_rewards</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">t</span><span class="o">%</span><span class="k">1000</span> == 0:
+            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;{100*t/T}%&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">a_t</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">act</span><span class="p">,</span> 
+                       <span class="n">feed_dict</span> <span class="o">=</span> <span class="p">{</span>
+                            <span class="n">agent</span><span class="o">.</span><span class="n">s_t_ph</span><span class="p">:</span> <span class="n">s_t</span>
+        <span class="p">})</span>
+
+        <span class="n">s_t_next</span><span class="p">,</span> <span class="n">r_t</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">a_t</span><span class="p">)</span>
+
+        <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">update</span><span class="p">,</span>
+                <span class="n">feed_dict</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="n">agent</span><span class="o">.</span><span class="n">s_t_ph</span><span class="p">:</span><span class="n">s_t</span><span class="p">,</span>
+                    <span class="n">agent</span><span class="o">.</span><span class="n">a_t_ph</span><span class="p">:</span><span class="n">a_t</span><span class="p">,</span>
+                    <span class="n">agent</span><span class="o">.</span><span class="n">s_t_next_ph</span><span class="p">:</span><span class="n">s_t_next</span><span class="p">,</span>
+                    <span class="n">agent</span><span class="o">.</span><span class="n">r_t_ph</span><span class="p">:</span><span class="n">r_t</span>
+                <span class="p">})</span>
+
+        <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">decay_epsilon</span><span class="p">)</span>
+
+        <span class="n">s_t</span> <span class="o">=</span> <span class="n">s_t_next</span>
+        <span class="n">episode_rewards</span> <span class="o">+=</span> <span class="n">r_t</span>
+
+        <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
+            <span class="n">rewards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">episode_rewards</span><span class="p">)</span>
+            <span class="n">episode_rewards</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">s_t</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>99.0%
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rewards</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">rewards</span><span class="p">)</span>
+<span class="n">window</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">running_mean_rewards</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">rewards</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;q-learning&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()[</span><span class="n">window</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span> <span class="c1"># this slicing is because the first window-1 elements are NaN from the rolling operation.</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">running_mean_rewards</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[7]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a3ef8acc0&gt;</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+" />
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+
+
+        
+        <h4>
+          <a href="http://localhost:4000">Home</a>
+        </h4>
+        
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        
+        <p class="copyright">alexandervandekleut.github.io maintained by <a href="https://github.com/alexandervandekleut">alexandervandekleut</a></p>
+        
+      </footer>
+    </div>
+
+    
+  </body>
+</html>

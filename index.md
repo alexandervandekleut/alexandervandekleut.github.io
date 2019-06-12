@@ -1,12 +1,8 @@
 ---
-title: Index
 id: index
 ---
-# {{page.title}}
+# Lessons
 
 {% for item in site.data.navigation.lessons %}
-##### [{{item.title}}]({{item.url}})
-{% for topic in item.topics %}
-- {{topic}}
-{% endfor %}
+1. [{{item.title}}]({{item.url}})
 {% endfor %}
