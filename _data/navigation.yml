@@ -24,7 +24,7 @@ lessons:
 - title: $$ Q $$ learning
   math: yes
   code: yes
-  url: /q-learning/
+  url: /q-learning-numpy/
 
 - title: Gym Wrappers
   math: no
@@ -40,11 +40,6 @@ lessons:
   math: yes
   code: yes
   url: /q-learning-tensorflow/
-
-- title: Tensorboard
-  math: no
-  code: yes
-  url: /tensorboard/
 
 - title: Deep $$Q$$-learning
   math: yes
