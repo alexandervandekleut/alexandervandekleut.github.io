@@ -49,52 +49,66 @@ lessons:
 - title: Rainbow - Improvements to Deep $$ Q $$-learning
   math: yes
   code: yes
-  url: /rainbow/
+  tempurl: /rainbow/
+  url: /coming-soon/
+
 
 - title: Policy Gradients
   math: yes
   code: yes
-  url: /policy-gradients/
+  tempurl: /policy-gradients/
+  url: /coming-soon/
 
 - title: Advantage Actor-Critic (A2C)
   math: yes
   code: yes
-  url: /a2c/
+  tempurl: /a2c/
+  url: /coming-soon/
+
 
 - title: Generalized Advantage Estimation (GAE)
   math: yes
   code: yes
-  url: /gae/
+  tempurl: /gae/
+  url: /coming-soon/
+
 
 - title: Trust Region Policy Optimization (TRPO)
   math: yes
   code: yes
-  url: /trpo/
+  tempurl: /trpo/
+  url: /coming-soon/
+
 
 - title: Proximal Policy Optimization (PPO)
   math: yes
   code: yes
-  url: /ppo/
+  tempurl: /ppo/
+  url: /coming-soon/
 
 - title: Entropy
   math: yes
   code: yes
-  url: /entropy/
+  tempurl: /entropy/
+  url: /coming-soon/
 
 - title: KL-Divergence
   math: yes
   code: yes
-  url: /kl/
+  tempurl: /kl/
+  url: /coming-soon/
 
 - title: List of Important Papers
   math: no
   code: no
-  url: /papers/
+  tempurl: /papers/
+  url: /coming-soon/
 
 - title: Neural Network Design
   math: yes
   code: yes
-  url: /neural-networks/
+  tempurl: /neural-networks/
+  url: /coming-soon/
 
 meta_title: Meta
 meta:
