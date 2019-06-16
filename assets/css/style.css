@@ -124,6 +124,8 @@
 
 .highlight { background-color: #f8f8f8; }
 
+.anchor-link { color: #e5e5e5}
+
 /*******************************************************************************
 MeyerWeb Reset
 *******************************************************************************/
@@ -233,6 +235,7 @@ Full-Width Styles
 .tar_download_link:hover { background: url(../images/sprite_download.png) no-repeat top right; }
 
 #main_content_wrap { background: #f2f2f2; border-top: 1px solid #111; border-bottom: 1px solid #111; }
+
 
 #main_content { padding-top: 40px; }
 

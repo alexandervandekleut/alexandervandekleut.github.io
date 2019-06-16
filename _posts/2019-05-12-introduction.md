@@ -25,12 +25,14 @@ The driving idea behind reinforcement learning is the **reward hypothesis**:
 
 Our goal is for the agent to learn a **policy**, a set of rules for choosing actions based on the current state, that maximizes the cumulative rewards.
 
-Over the course of several lessons, we will build up an understanding of two main classes of policies: [**$$ Q $$ -learning**]({{site.url}}/q-learning) and [**policy gradients**]({{site.url}}/policy-gradients).
+Over the course of several lessons, we will build up an understanding of two main classes of policies:**$Q$-learning$$** and **policy gradients**.
 
 ***
 ### Who is this for?
 
 When writing my undergraduate thesis in reinforcement learning, I found plenty of resources spread across the internet. [Some pages](https://medium.com/@jonathan_hui) were extremely helpful in understanding the theoretical underpinnings of reinforcement learning, whereas [others](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-0-q-learning-with-tables-and-neural-networks-d195264329d0) focused mostly on code and spent very little time on theory. Furthermore, there are [open source implementations](https://github.com/openai/baselines) of many reinforcement learning techniques with little explanation as to how the code actually *works*. I decided to put together a comprehensive resource that provides clear explanations of the theory behind reinforcement learning, combined with high-quality implementations of each algorithm to help you go from theory to implementation when you decide to try something out for yourself.
+
+Most resources out there use `tensorflow 1.x`, but since that is going to be phased out this year (2019), I have decided to learn and use `tensorflow 2.0a` instead. `tensorflow 2` is written with the imperative nature of python in mind, so it runs using 'eager execution' and 'gradient tapes' rather than using predefined 'sessions' (as you will often see in older implementations). Most of this guide was written during the alpha and beta release.
 
 I assume you have the required mathematical background to understand machine learning concepts:
 

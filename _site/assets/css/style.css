@@ -124,6 +124,8 @@
 
 .highlight { background-color: #f8f8f8; }
 
+.anchor-link { color: #e5e5e5}
+
 /*******************************************************************************
 MeyerWeb Reset
 *******************************************************************************/
@@ -208,9 +210,9 @@ form { background: #f2f2f2; padding: 20px; }
 /*******************************************************************************
 Full-Width Styles
 *******************************************************************************/
-.outer { width: 100%; }
+.outer { width: 100%;}
 
-.inner { position: relative; max-width: 640px; padding: 20px 10px; margin: 0 auto; }
+.inner { position: relative; width: 50%; padding: 20px 10px; margin: 0 auto; }
 
 #forkme_banner { display: block; position: absolute; top: 0; right: 10px; z-index: 10; padding: 10px 50px 10px 10px; color: #fff; background: url("../images/blacktocat.png") #0090ff no-repeat 95% 50%; font-weight: 700; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; }
 
@@ -233,6 +235,7 @@ Full-Width Styles
 .tar_download_link:hover { background: url(../images/sprite_download.png) no-repeat top right; }
 
 #main_content_wrap { background: #f2f2f2; border-top: 1px solid #111; border-bottom: 1px solid #111; }
+
 
 #main_content { padding-top: 40px; }
 

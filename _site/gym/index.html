@@ -23,15 +23,15 @@
 <meta name="generator" content="Jekyll v3.8.5" />
 <meta property="og:title" content="Gym" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Introduction to the OpenAI Gym Interface&#182;OpenAI has been developing the gym library to help reinforcement learning researchers get started with pre-implemented environments. In the lesson on Markov decision processes, we explicitly implemented $\mathcal{S}, \mathcal{A}, \mathcal{P}$ and $\mathcal{R}$ using matrices and tensors in numpy. Recall the environment and agent that we discussed in the introduction. When we specified an MDP and a policy, we were abstractly representing the environment and the agent. gym gives us access to predefined environments that are more meaningful than our essentially random environments. Thus far we have been using discrete observation spaces (i.e., our state is representable by an integer). In keeping with this, we will start by considering a gym environment that also has a discrete observation space. From the documentation: The agent controls the movement of a character in a grid world. Some tiles of the grid are walkable, and others lead to the agent falling into the water. Additionally, the movement direction of the agent is uncertain and only partially depends on the chosen direction. The agent is rewarded for finding a walkable path to a goal tile. The grid is $4 \times 4$, giving us a total of $16$ states. SFFF (S: starting point, safe) FHFH (F: frozen surface, safe) FFFH (H: hole, fall to your doom) HFFG (G: goal, where the frisbee is located) In&nbsp;[13]: import gym In&nbsp;[14]: env = gym.make(&quot;FrozenLake-v0&quot;) We can inspect information about gym environments. Every environment has an observation_space (corresponding to $\mathcal{S}$) and an action_space (corresponding to $\mathcal{A}$). There are many categories of $spaces$ available, but the two that are most common and most important are: Discrete: When observation spaces or action spaces are discrete, they expect integers. This is what we used in our notebook on Markov decision processes. Every Discrete space has an attribute n corresponding to the number of discrete elements in the space (i.e., number of states or number of actions). Box: Some observations or action spaces instead take on real values, and can be of various shapes. Every Box space has an attribute shape corresponding to the dimensions of the space. For example, an observation space with shape $(84, 84, 3)$ might correspond to an $84 \times 84 \times 3$ RGB image. In&nbsp;[15]: print(env.observation_space) Discrete(16) In&nbsp;[16]: print(env.action_space) Discrete(4) Most environments have a finite time limit corresponding to the time horizon $T$. An environment can become terminal if we exceed this time horizon, or if something else happens that causes the environment to end. In the context of an MDP, this is a state where any action we take returns us to the same state. This often happens when our agent &quot;dies&quot;. Environments, when created via gym.make, start out terminal. Whenever an environment is terminal, we need to reset it: In&nbsp;[17]: env.reset() Out[17]: 0 We can see that this returned something. Resetting the environment is used to provide the initial state $s_0$. In&nbsp;[18]: s_0 = env.reset() In order to generate the next state and rewards, we call the env&#39;s step function. The step function accepts an action, and returns four things: The next state The reward for the transition A boolean indicating whether or not the environment is terminal Additional info that may be relevant for logging but is not intended to be used by the agent.} Since we do not have a way of generating actions yet, we can call the sample method of the env&#39;s action_space: In&nbsp;[19]: s_t_next, r_t, done, info = env.step(env.action_space.sample()) While we can log trajectories, we can get a better idea on how the environment is changing by calling its render function: In&nbsp;[20]: env.render() (Left) SFFF FHFH FFFH HFFG Let&#39;s consider an agent who&#39;s policy is to choose actions uniformly randomly. We can emulate this by using env.action_space.sample() as our action. Then the basic agent-environment interaction loop using gym looks something like this: In&nbsp;[21]: T = 100 s_t = env.reset() for t in range(T): a_t = env.action_space.sample() s_t, r_t, done, info = env.step(a_t) if done: s_t = env.reset() We will be using gym for its wide range of available environments." />
-<meta property="og:description" content="Introduction to the OpenAI Gym Interface&#182;OpenAI has been developing the gym library to help reinforcement learning researchers get started with pre-implemented environments. In the lesson on Markov decision processes, we explicitly implemented $\mathcal{S}, \mathcal{A}, \mathcal{P}$ and $\mathcal{R}$ using matrices and tensors in numpy. Recall the environment and agent that we discussed in the introduction. When we specified an MDP and a policy, we were abstractly representing the environment and the agent. gym gives us access to predefined environments that are more meaningful than our essentially random environments. Thus far we have been using discrete observation spaces (i.e., our state is representable by an integer). In keeping with this, we will start by considering a gym environment that also has a discrete observation space. From the documentation: The agent controls the movement of a character in a grid world. Some tiles of the grid are walkable, and others lead to the agent falling into the water. Additionally, the movement direction of the agent is uncertain and only partially depends on the chosen direction. The agent is rewarded for finding a walkable path to a goal tile. The grid is $4 \times 4$, giving us a total of $16$ states. SFFF (S: starting point, safe) FHFH (F: frozen surface, safe) FFFH (H: hole, fall to your doom) HFFG (G: goal, where the frisbee is located) In&nbsp;[13]: import gym In&nbsp;[14]: env = gym.make(&quot;FrozenLake-v0&quot;) We can inspect information about gym environments. Every environment has an observation_space (corresponding to $\mathcal{S}$) and an action_space (corresponding to $\mathcal{A}$). There are many categories of $spaces$ available, but the two that are most common and most important are: Discrete: When observation spaces or action spaces are discrete, they expect integers. This is what we used in our notebook on Markov decision processes. Every Discrete space has an attribute n corresponding to the number of discrete elements in the space (i.e., number of states or number of actions). Box: Some observations or action spaces instead take on real values, and can be of various shapes. Every Box space has an attribute shape corresponding to the dimensions of the space. For example, an observation space with shape $(84, 84, 3)$ might correspond to an $84 \times 84 \times 3$ RGB image. In&nbsp;[15]: print(env.observation_space) Discrete(16) In&nbsp;[16]: print(env.action_space) Discrete(4) Most environments have a finite time limit corresponding to the time horizon $T$. An environment can become terminal if we exceed this time horizon, or if something else happens that causes the environment to end. In the context of an MDP, this is a state where any action we take returns us to the same state. This often happens when our agent &quot;dies&quot;. Environments, when created via gym.make, start out terminal. Whenever an environment is terminal, we need to reset it: In&nbsp;[17]: env.reset() Out[17]: 0 We can see that this returned something. Resetting the environment is used to provide the initial state $s_0$. In&nbsp;[18]: s_0 = env.reset() In order to generate the next state and rewards, we call the env&#39;s step function. The step function accepts an action, and returns four things: The next state The reward for the transition A boolean indicating whether or not the environment is terminal Additional info that may be relevant for logging but is not intended to be used by the agent.} Since we do not have a way of generating actions yet, we can call the sample method of the env&#39;s action_space: In&nbsp;[19]: s_t_next, r_t, done, info = env.step(env.action_space.sample()) While we can log trajectories, we can get a better idea on how the environment is changing by calling its render function: In&nbsp;[20]: env.render() (Left) SFFF FHFH FFFH HFFG Let&#39;s consider an agent who&#39;s policy is to choose actions uniformly randomly. We can emulate this by using env.action_space.sample() as our action. Then the basic agent-environment interaction loop using gym looks something like this: In&nbsp;[21]: T = 100 s_t = env.reset() for t in range(T): a_t = env.action_space.sample() s_t, r_t, done, info = env.step(a_t) if done: s_t = env.reset() We will be using gym for its wide range of available environments." />
+<meta name="description" content="In&nbsp;[1]: import gym Introduction to the OpenAI Gym Interface&#182;OpenAI has been developing the gym library to help reinforcement learning researchers get started with pre-implemented environments. In the lesson on Markov decision processes, we explicitly implemented $\mathcal{S}, \mathcal{A}, \mathcal{P}$ and $\mathcal{R}$ using matrices and tensors in numpy. Recall the environment and agent that we discussed in the introduction. When we specified an MDP and a policy, we were abstractly representing the environment and the agent. gym gives us access to predefined environments that are more meaningful than our essentially random environments. Thus far we have been using discrete observation spaces (i.e., our state is representable by an integer). In keeping with this, we will start by considering a gym environment that also has a discrete observation space: FrozenLake-v0. From the documentation: The agent controls the movement of a character in a grid world. Some tiles of the grid are walkable, and others lead to the agent falling into the water. Additionally, the movement direction of the agent is uncertain and only partially depends on the chosen direction. The agent is rewarded for finding a walkable path to a goal tile. The grid is $4 \times 4$, giving us a total of $16$ states. SFFF (S: starting point, safe) FHFH (F: frozen surface, safe) FFFH (H: hole, fall to your doom) HFFG (G: goal, where the frisbee is located) In&nbsp;[2]: env = gym.make(&quot;FrozenLake-v0&quot;) We can inspect information about gym environments. Every environment has an observation_space (corresponding to $\mathcal{S}$) and an action_space (corresponding to $\mathcal{A}$). There are many categories of $spaces$ available, but the two that are most common and most important are: Discrete: When observation spaces or action spaces are discrete, they expect integers. This is what we used in our notebook on Markov decision processes. Every Discrete space has an attribute n corresponding to the number of discrete elements in the space (i.e., number of states or number of actions). Box: Some observations or action spaces instead take on real values, and can be of various shapes. Every Box space has an attribute shape corresponding to the dimensions of the space. For example, an observation space with shape $(84, 84, 3)$ might correspond to an $84 \times 84 \times 3$ RGB image. In&nbsp;[3]: print(f&#39;observation space: \n{env.observation_space} \naction space: \n{env.action_space}&#39;) observation space: Discrete(16) action space: Discrete(4) Most environments have a finite time limit corresponding to the time horizon $T$. An environment can become terminal if we exceed this time horizon, or if something else happens that causes the environment to end. In the context of an MDP, this is a state where any action we take returns us to the same state. This often happens when our agent &quot;dies&quot;. Environments, when created via gym.make, start out terminal. Whenever an environment is terminal, we need to reset it: In&nbsp;[4]: env.reset() Out[4]: 0 We can see that this returned something. Resetting the environment is used to provide the initial state $s_0$ without requiring some initial action. In&nbsp;[5]: observation = env.reset() In order to generate the next state and rewards, we call the env&#39;s step function. The step function accepts an action, and returns four things: The next state The reward for the transition A boolean indicating whether or not the environment is terminal Additional info that may be relevant for logging but is not intended to be used by the agent. Since we do not have a way of generating actions yet, we can call the sample method of the env&#39;s action_space: In&nbsp;[6]: observation_next, reward, done, info = env.step(env.action_space.sample()) print(f&#39;observation: \n{observation} \nreward: \n{reward} \ndone: \n{done} \ninfo: \n{info}&#39;) observation: 0 reward: 0.0 done: False info: {&#39;prob&#39;: 0.3333333333333333} While we can log trajectories, we can get a better idea on how the environment is changing by calling its render function. Unfortunately, routing the output of this function to a jupyter notebook is not trivial, so for most environments it will pop up in a new window. In&nbsp;[7]: env.render() (Left) SFFF FHFH FFFH HFFG Let&#39;s consider an agent who&#39;s policy is to choose actions uniformly randomly. We can emulate this by using env.action_space.sample() as our action. Then the basic agent-environment interaction loop using gym looks something like this: In&nbsp;[8]: T = 100 observation = env.reset() for t in range(T): action = env.action_space.sample() observation, reward, done, info = env.step(action) if done: observation = env.reset() We will be using gym for its wide range of available environments. As we will see in later lessons, we can also extend the functionality of gym environments by using Wrappers." />
+<meta property="og:description" content="In&nbsp;[1]: import gym Introduction to the OpenAI Gym Interface&#182;OpenAI has been developing the gym library to help reinforcement learning researchers get started with pre-implemented environments. In the lesson on Markov decision processes, we explicitly implemented $\mathcal{S}, \mathcal{A}, \mathcal{P}$ and $\mathcal{R}$ using matrices and tensors in numpy. Recall the environment and agent that we discussed in the introduction. When we specified an MDP and a policy, we were abstractly representing the environment and the agent. gym gives us access to predefined environments that are more meaningful than our essentially random environments. Thus far we have been using discrete observation spaces (i.e., our state is representable by an integer). In keeping with this, we will start by considering a gym environment that also has a discrete observation space: FrozenLake-v0. From the documentation: The agent controls the movement of a character in a grid world. Some tiles of the grid are walkable, and others lead to the agent falling into the water. Additionally, the movement direction of the agent is uncertain and only partially depends on the chosen direction. The agent is rewarded for finding a walkable path to a goal tile. The grid is $4 \times 4$, giving us a total of $16$ states. SFFF (S: starting point, safe) FHFH (F: frozen surface, safe) FFFH (H: hole, fall to your doom) HFFG (G: goal, where the frisbee is located) In&nbsp;[2]: env = gym.make(&quot;FrozenLake-v0&quot;) We can inspect information about gym environments. Every environment has an observation_space (corresponding to $\mathcal{S}$) and an action_space (corresponding to $\mathcal{A}$). There are many categories of $spaces$ available, but the two that are most common and most important are: Discrete: When observation spaces or action spaces are discrete, they expect integers. This is what we used in our notebook on Markov decision processes. Every Discrete space has an attribute n corresponding to the number of discrete elements in the space (i.e., number of states or number of actions). Box: Some observations or action spaces instead take on real values, and can be of various shapes. Every Box space has an attribute shape corresponding to the dimensions of the space. For example, an observation space with shape $(84, 84, 3)$ might correspond to an $84 \times 84 \times 3$ RGB image. In&nbsp;[3]: print(f&#39;observation space: \n{env.observation_space} \naction space: \n{env.action_space}&#39;) observation space: Discrete(16) action space: Discrete(4) Most environments have a finite time limit corresponding to the time horizon $T$. An environment can become terminal if we exceed this time horizon, or if something else happens that causes the environment to end. In the context of an MDP, this is a state where any action we take returns us to the same state. This often happens when our agent &quot;dies&quot;. Environments, when created via gym.make, start out terminal. Whenever an environment is terminal, we need to reset it: In&nbsp;[4]: env.reset() Out[4]: 0 We can see that this returned something. Resetting the environment is used to provide the initial state $s_0$ without requiring some initial action. In&nbsp;[5]: observation = env.reset() In order to generate the next state and rewards, we call the env&#39;s step function. The step function accepts an action, and returns four things: The next state The reward for the transition A boolean indicating whether or not the environment is terminal Additional info that may be relevant for logging but is not intended to be used by the agent. Since we do not have a way of generating actions yet, we can call the sample method of the env&#39;s action_space: In&nbsp;[6]: observation_next, reward, done, info = env.step(env.action_space.sample()) print(f&#39;observation: \n{observation} \nreward: \n{reward} \ndone: \n{done} \ninfo: \n{info}&#39;) observation: 0 reward: 0.0 done: False info: {&#39;prob&#39;: 0.3333333333333333} While we can log trajectories, we can get a better idea on how the environment is changing by calling its render function. Unfortunately, routing the output of this function to a jupyter notebook is not trivial, so for most environments it will pop up in a new window. In&nbsp;[7]: env.render() (Left) SFFF FHFH FFFH HFFG Let&#39;s consider an agent who&#39;s policy is to choose actions uniformly randomly. We can emulate this by using env.action_space.sample() as our action. Then the basic agent-environment interaction loop using gym looks something like this: In&nbsp;[8]: T = 100 observation = env.reset() for t in range(T): action = env.action_space.sample() observation, reward, done, info = env.step(action) if done: observation = env.reset() We will be using gym for its wide range of available environments. As we will see in later lessons, we can also extend the functionality of gym environments by using Wrappers." />
 <link rel="canonical" href="http://localhost:4000/gym/" />
 <meta property="og:url" content="http://localhost:4000/gym/" />
 <meta property="og:site_name" content="alexandervandekleut.github.io" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-05-13T00:00:00-04:00" />
 <script type="application/ld+json">
-{"description":"Introduction to the OpenAI Gym Interface&#182;OpenAI has been developing the gym library to help reinforcement learning researchers get started with pre-implemented environments. In the lesson on Markov decision processes, we explicitly implemented $\\mathcal{S}, \\mathcal{A}, \\mathcal{P}$ and $\\mathcal{R}$ using matrices and tensors in numpy. Recall the environment and agent that we discussed in the introduction. When we specified an MDP and a policy, we were abstractly representing the environment and the agent. gym gives us access to predefined environments that are more meaningful than our essentially random environments. Thus far we have been using discrete observation spaces (i.e., our state is representable by an integer). In keeping with this, we will start by considering a gym environment that also has a discrete observation space. From the documentation: The agent controls the movement of a character in a grid world. Some tiles of the grid are walkable, and others lead to the agent falling into the water. Additionally, the movement direction of the agent is uncertain and only partially depends on the chosen direction. The agent is rewarded for finding a walkable path to a goal tile. The grid is $4 \\times 4$, giving us a total of $16$ states. SFFF (S: starting point, safe) FHFH (F: frozen surface, safe) FFFH (H: hole, fall to your doom) HFFG (G: goal, where the frisbee is located) In&nbsp;[13]: import gym In&nbsp;[14]: env = gym.make(&quot;FrozenLake-v0&quot;) We can inspect information about gym environments. Every environment has an observation_space (corresponding to $\\mathcal{S}$) and an action_space (corresponding to $\\mathcal{A}$). There are many categories of $spaces$ available, but the two that are most common and most important are: Discrete: When observation spaces or action spaces are discrete, they expect integers. This is what we used in our notebook on Markov decision processes. Every Discrete space has an attribute n corresponding to the number of discrete elements in the space (i.e., number of states or number of actions). Box: Some observations or action spaces instead take on real values, and can be of various shapes. Every Box space has an attribute shape corresponding to the dimensions of the space. For example, an observation space with shape $(84, 84, 3)$ might correspond to an $84 \\times 84 \\times 3$ RGB image. In&nbsp;[15]: print(env.observation_space) Discrete(16) In&nbsp;[16]: print(env.action_space) Discrete(4) Most environments have a finite time limit corresponding to the time horizon $T$. An environment can become terminal if we exceed this time horizon, or if something else happens that causes the environment to end. In the context of an MDP, this is a state where any action we take returns us to the same state. This often happens when our agent &quot;dies&quot;. Environments, when created via gym.make, start out terminal. Whenever an environment is terminal, we need to reset it: In&nbsp;[17]: env.reset() Out[17]: 0 We can see that this returned something. Resetting the environment is used to provide the initial state $s_0$. In&nbsp;[18]: s_0 = env.reset() In order to generate the next state and rewards, we call the env&#39;s step function. The step function accepts an action, and returns four things: The next state The reward for the transition A boolean indicating whether or not the environment is terminal Additional info that may be relevant for logging but is not intended to be used by the agent.} Since we do not have a way of generating actions yet, we can call the sample method of the env&#39;s action_space: In&nbsp;[19]: s_t_next, r_t, done, info = env.step(env.action_space.sample()) While we can log trajectories, we can get a better idea on how the environment is changing by calling its render function: In&nbsp;[20]: env.render() (Left) SFFF FHFH FFFH HFFG Let&#39;s consider an agent who&#39;s policy is to choose actions uniformly randomly. We can emulate this by using env.action_space.sample() as our action. Then the basic agent-environment interaction loop using gym looks something like this: In&nbsp;[21]: T = 100 s_t = env.reset() for t in range(T): a_t = env.action_space.sample() s_t, r_t, done, info = env.step(a_t) if done: s_t = env.reset() We will be using gym for its wide range of available environments.","@type":"BlogPosting","url":"http://localhost:4000/gym/","headline":"Gym","dateModified":"2019-05-13T00:00:00-04:00","datePublished":"2019-05-13T00:00:00-04:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/gym/"},"@context":"http://schema.org"}</script>
+{"description":"In&nbsp;[1]: import gym Introduction to the OpenAI Gym Interface&#182;OpenAI has been developing the gym library to help reinforcement learning researchers get started with pre-implemented environments. In the lesson on Markov decision processes, we explicitly implemented $\\mathcal{S}, \\mathcal{A}, \\mathcal{P}$ and $\\mathcal{R}$ using matrices and tensors in numpy. Recall the environment and agent that we discussed in the introduction. When we specified an MDP and a policy, we were abstractly representing the environment and the agent. gym gives us access to predefined environments that are more meaningful than our essentially random environments. Thus far we have been using discrete observation spaces (i.e., our state is representable by an integer). In keeping with this, we will start by considering a gym environment that also has a discrete observation space: FrozenLake-v0. From the documentation: The agent controls the movement of a character in a grid world. Some tiles of the grid are walkable, and others lead to the agent falling into the water. Additionally, the movement direction of the agent is uncertain and only partially depends on the chosen direction. The agent is rewarded for finding a walkable path to a goal tile. The grid is $4 \\times 4$, giving us a total of $16$ states. SFFF (S: starting point, safe) FHFH (F: frozen surface, safe) FFFH (H: hole, fall to your doom) HFFG (G: goal, where the frisbee is located) In&nbsp;[2]: env = gym.make(&quot;FrozenLake-v0&quot;) We can inspect information about gym environments. Every environment has an observation_space (corresponding to $\\mathcal{S}$) and an action_space (corresponding to $\\mathcal{A}$). There are many categories of $spaces$ available, but the two that are most common and most important are: Discrete: When observation spaces or action spaces are discrete, they expect integers. This is what we used in our notebook on Markov decision processes. Every Discrete space has an attribute n corresponding to the number of discrete elements in the space (i.e., number of states or number of actions). Box: Some observations or action spaces instead take on real values, and can be of various shapes. Every Box space has an attribute shape corresponding to the dimensions of the space. For example, an observation space with shape $(84, 84, 3)$ might correspond to an $84 \\times 84 \\times 3$ RGB image. In&nbsp;[3]: print(f&#39;observation space: \\n{env.observation_space} \\naction space: \\n{env.action_space}&#39;) observation space: Discrete(16) action space: Discrete(4) Most environments have a finite time limit corresponding to the time horizon $T$. An environment can become terminal if we exceed this time horizon, or if something else happens that causes the environment to end. In the context of an MDP, this is a state where any action we take returns us to the same state. This often happens when our agent &quot;dies&quot;. Environments, when created via gym.make, start out terminal. Whenever an environment is terminal, we need to reset it: In&nbsp;[4]: env.reset() Out[4]: 0 We can see that this returned something. Resetting the environment is used to provide the initial state $s_0$ without requiring some initial action. In&nbsp;[5]: observation = env.reset() In order to generate the next state and rewards, we call the env&#39;s step function. The step function accepts an action, and returns four things: The next state The reward for the transition A boolean indicating whether or not the environment is terminal Additional info that may be relevant for logging but is not intended to be used by the agent. Since we do not have a way of generating actions yet, we can call the sample method of the env&#39;s action_space: In&nbsp;[6]: observation_next, reward, done, info = env.step(env.action_space.sample()) print(f&#39;observation: \\n{observation} \\nreward: \\n{reward} \\ndone: \\n{done} \\ninfo: \\n{info}&#39;) observation: 0 reward: 0.0 done: False info: {&#39;prob&#39;: 0.3333333333333333} While we can log trajectories, we can get a better idea on how the environment is changing by calling its render function. Unfortunately, routing the output of this function to a jupyter notebook is not trivial, so for most environments it will pop up in a new window. In&nbsp;[7]: env.render() (Left) SFFF FHFH FFFH HFFG Let&#39;s consider an agent who&#39;s policy is to choose actions uniformly randomly. We can emulate this by using env.action_space.sample() as our action. Then the basic agent-environment interaction loop using gym looks something like this: In&nbsp;[8]: T = 100 observation = env.reset() for t in range(T): action = env.action_space.sample() observation, reward, done, info = env.step(action) if done: observation = env.reset() We will be using gym for its wide range of available environments. As we will see in later lessons, we can also extend the functionality of gym environments by using Wrappers.","@type":"BlogPosting","url":"http://localhost:4000/gym/","headline":"Gym","dateModified":"2019-05-13T00:00:00-04:00","datePublished":"2019-05-13T00:00:00-04:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/gym/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   </head>
@@ -57,13 +57,26 @@
         <p> Download the <a href="http://localhost:4000/assets/notebooks/gym.ipynb"> notebook </a> or follow along. </p>
         
         
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">gym</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr />
 <h1 id="Introduction-to-the-OpenAI-Gym-Interface">Introduction to the OpenAI Gym Interface<a class="anchor-link" href="#Introduction-to-the-OpenAI-Gym-Interface">&#182;</a></h1><p>OpenAI has been developing the <code>gym</code> library to help reinforcement learning researchers get started with pre-implemented environments. In the lesson on Markov decision processes, we explicitly implemented $\mathcal{S}, \mathcal{A}, \mathcal{P}$ and $\mathcal{R}$ using matrices and tensors in <code>numpy</code>.</p>
 <p>Recall the <strong>environment</strong> and <strong>agent</strong> that we discussed in the introduction. When we specified an MDP and a policy, we were abstractly representing the environment and the agent. <code>gym</code> gives us access to predefined environments that are more meaningful than our essentially random environments.</p>
-<p>Thus far we have been using <strong>discrete</strong> observation spaces (i.e., our state is representable by an integer). In keeping with this, we will start by considering a <code>gym</code> environment that also has a discrete observation space.</p>
+<p>Thus far we have been using <strong>discrete</strong> observation spaces (i.e., our state is representable by an integer). In keeping with this, we will start by considering a <code>gym</code> environment that also has a discrete observation space: <code>FrozenLake-v0</code>.</p>
 <p>From <a href="https://gym.openai.com/envs/FrozenLake-v0/">the documentation</a>:</p>
 <blockquote><p>The agent controls the movement of a character in a grid world. Some tiles of the grid are walkable, and others lead to the agent falling into the water. Additionally, the movement direction of the agent is uncertain and only partially depends on the chosen direction. The agent is rewarded for finding a walkable path to a goal tile.</p>
 </blockquote>
@@ -79,20 +92,7 @@ HFFG       (G: goal, where the frisbee is located)</code></pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">gym</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;FrozenLake-v0&quot;</span><span class="p">)</span>
@@ -123,10 +123,10 @@ HFFG       (G: goal, where the frisbee is located)</code></pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;observation space: </span><span class="se">\n</span><span class="si">{env.observation_space}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">action space: </span><span class="se">\n</span><span class="si">{env.action_space}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -143,38 +143,10 @@ HFFG       (G: goal, where the frisbee is located)</code></pre>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Discrete(16)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Discrete(4)
+<pre>observation space: 
+Discrete(16) 
+action space: 
+Discrete(4)
 </pre>
 </div>
 </div>
@@ -194,7 +166,7 @@ HFFG       (G: goal, where the frisbee is located)</code></pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
@@ -210,7 +182,7 @@ HFFG       (G: goal, where the frisbee is located)</code></pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -228,17 +200,17 @@ HFFG       (G: goal, where the frisbee is located)</code></pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can see that this returned something. Resetting the environment is used to provide the initial state $s_0$.</p>
+<p>We can see that this returned something. Resetting the environment is used to provide the initial state $s_0$ without requiring some initial action.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s_0</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">observation</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -254,7 +226,7 @@ HFFG       (G: goal, where the frisbee is located)</code></pre>
 <li>The next state</li>
 <li>The reward for the transition</li>
 <li>A boolean indicating whether or not the environment is terminal</li>
-<li>Additional info that may be relevant for logging but is not intended to be used by the agent.}</li>
+<li>Additional info that may be relevant for logging but is not intended to be used by the agent.</li>
 </ol>
 <p>Since we do not have a way of generating actions yet, we can call the <code>sample</code> method of the <code>env</code>'s <code>action_space</code>:</p>
 
@@ -263,13 +235,39 @@ HFFG       (G: goal, where the frisbee is located)</code></pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s_t_next</span><span class="p">,</span> <span class="n">r_t</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">())</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">observation_next</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;observation: </span><span class="se">\n</span><span class="si">{observation}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">reward: </span><span class="se">\n</span><span class="si">{reward}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">done: </span><span class="se">\n</span><span class="si">{done}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">info: </span><span class="se">\n</span><span class="si">{info}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>observation: 
+0 
+reward: 
+0.0 
+done: 
+False 
+info: 
+{&#39;prob&#39;: 0.3333333333333333}
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -277,14 +275,14 @@ HFFG       (G: goal, where the frisbee is located)</code></pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>While we can log trajectories, we can get a better idea on how the environment is changing by calling its <code>render</code> function:</p>
+<p>While we can log trajectories, we can get a better idea on how the environment is changing by calling its <code>render</code> function. Unfortunately, routing the output of this function to a jupyter notebook is not trivial, so for most environments it will pop up in a new window.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
@@ -328,16 +326,16 @@ HFFG
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">s_t</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">observation</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
-    <span class="n">a_t</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
-    <span class="n">s_t</span><span class="p">,</span> <span class="n">r_t</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">a_t</span><span class="p">)</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+    <span class="n">observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
-        <span class="n">s_t</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="n">observation</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -348,7 +346,7 @@ HFFG
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We will be using <code>gym</code> for its wide range of available environments.</p>
+<p>We will be using <code>gym</code> for its wide range of available environments. As we will see in later lessons, we can also extend the functionality of <code>gym</code> environments by using <code>Wrappers</code>.</p>
 
 </div>
 </div>

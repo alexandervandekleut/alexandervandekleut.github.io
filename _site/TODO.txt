@@ -1,2 +1,0 @@
-- consistent naming s_t vs state
-- probably going to use s_t

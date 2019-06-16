@@ -1,4 +1,17 @@
 
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -15,19 +28,6 @@ that is, the probability of transitioning from state $s_t$ to state $s_{t+1}$ is
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1"># library for fast array, matrix, and tensor-based operations</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -51,22 +51,9 @@ that is, the probability of transitioning from state $s_t$ to state $s_{t+1}$ is
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_states</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># the number of states in our Markov Process. Our current state is just an integer from 0 to 9.</span>
-
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_states</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">P</span> <span class="o">=</span> <span class="n">generate_state_transition_matrix</span><span class="p">(</span><span class="n">num_states</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;P: </span><span class="se">\n</span><span class="si">{P}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -83,10 +70,11 @@ that is, the probability of transitioning from state $s_t$ to state $s_{t+1}$ is
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[[0.55272815 0.04475917 0.14218126 0.26033141]
- [0.03411832 0.37640154 0.38290273 0.20657742]
- [0.32542139 0.27574838 0.23509567 0.16373456]
- [0.10293776 0.29808926 0.51091154 0.08806144]]
+<pre>P: 
+[[0.43365075 0.43263699 0.09132303 0.04238923]
+ [0.19473963 0.39793109 0.13873556 0.26859372]
+ [0.17437947 0.33206503 0.29333298 0.20022252]
+ [0.08424129 0.22288814 0.38442623 0.30844435]]
 </pre>
 </div>
 </div>
@@ -98,7 +86,7 @@ that is, the probability of transitioning from state $s_t$ to state $s_{t+1}$ is
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Trajectories">Trajectories<a class="anchor-link" href="#Trajectories">&#182;</a></h4><p>A <strong>trajectory</strong> (denoted $\tau$) for a Markov process is a (potentially infinite) sequence of states
+<h3 id="Trajectories">Trajectories<a class="anchor-link" href="#Trajectories">&#182;</a></h3><p>A <strong>trajectory</strong> (denoted $\tau$) for a Markov process is a (potentially infinite) sequence of states
 $$
 \tau = \langle s_0, s_1, \dots, s_T \rangle
 $$
@@ -109,18 +97,20 @@ The probability of generating particular trajectories depends on the underlying 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">generate_trajectory</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">s_0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-    <span class="n">num_states</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span> <span class="c1"># the number of next states we may go to</span>
-    <span class="n">s_t</span> <span class="o">=</span> <span class="n">s_0</span> <span class="c1"># the current state is the starting state</span>
-    <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span> <span class="c1"># the trajectory, a fixed-length array of length T</span>
-    <span class="n">tau</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_t</span> <span class="c1"># the first state is the starting state</span>
+    <span class="n">num_states</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+    <span class="n">s_t</span> <span class="o">=</span> <span class="n">s_0</span>
+    <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">tau</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_t</span>
     
-    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span> <span class="c1"># the length of the rest of the trajectory</span>
-        <span class="n">s_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_states</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">s_t</span><span class="p">])</span> <span class="c1"># randomly select a state using P, where every entry j in P[s_t] is the probability of transitioning from state s_t ot state j</span>
-        <span class="n">tau</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_t</span> <span class="c1"># add this state to our trajectory.</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+        <span class="c1"># Choose the next state using P[s_t] as the state </span>
+        <span class="c1"># transition probability distribution.</span>
+        <span class="n">s_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_states</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">s_t</span><span class="p">])</span>
+        <span class="n">tau</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_t</span>
         
     <span class="k">return</span> <span class="n">tau</span>
 </pre></div>
@@ -132,25 +122,13 @@ The probability of generating particular trajectories depends on the underlying 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">s_0</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">tau</span> <span class="o">=</span> <span class="n">generate_trajectory</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">s_0</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tau</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;tau: </span><span class="se">\n</span><span class="si">{tau}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -167,9 +145,10 @@ The probability of generating particular trajectories depends on the underlying 
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[0 3 2 0 3 1 3 1 2 2 2 3 2 1 1 2 0 0 0 3 2 3 1 3 1 2 2 3 1 2 0 2 3 2 2 2 2
- 0 3 2 2 2 1 2 0 0 0 0 2 3 1 1 1 2 1 2 3 2 1 1 1 2 1 1 1 3 0 0 0 0 2 0 3 2
- 0 3 2 1 0 2 1 2 2 0 1 1 2 2 1 1 3 2 0 0 0 3 0 0 2 3]
+<pre>tau: 
+[0 3 3 3 1 3 1 3 3 1 3 3 3 1 3 3 3 1 2 2 3 1 3 3 3 2 3 3 1 1 2 0 0 0 0 0 3
+ 3 1 1 1 2 2 2 1 3 1 2 0 1 1 3 3 0 1 1 2 1 2 3 2 1 0 1 0 0 0 1 1 2 1 0 0 1
+ 0 0 1 1 0 0 0 3 1 3 0 1 0 2 2 3 1 3 2 2 1 3 1 1 3 3]
 </pre>
 </div>
 </div>
@@ -186,14 +165,14 @@ The probability of generating particular trajectories depends on the underlying 
 $$
 \mathcal{R}(s_t, s_{t+1}) = \mathbb{E}\left[r_t \vert s_t, s_{t+1} \right]
 $$
-which is often simplified to being $\mathcal{R}(s_t)$, the reward of being in a particular state $s_t$. For the purpose of this lesson and essentially all implementations, we make this simplification.</p>
+which is often simplified to being $\mathcal{R}(s_t)$, the reward of being in a particular state $s_t$. For the purpose of this lesson and essentially all implementations, we make this simplification. The reward $r_t$ can be though of as a measure of how good a certain state $s_t$ is.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">generate_reward_matrix</span><span class="p">(</span><span class="n">num_states</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
@@ -207,7 +186,7 @@ which is often simplified to being $\mathcal{R}(s_t)$, the reward of being in a 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_states</span> <span class="o">=</span> <span class="mi">4</span>
@@ -215,19 +194,7 @@ which is often simplified to being $\mathcal{R}(s_t)$, the reward of being in a 
 <span class="n">sigma</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">P</span> <span class="o">=</span> <span class="n">generate_state_transition_matrix</span><span class="p">(</span><span class="n">num_states</span><span class="p">)</span>
 <span class="n">R</span> <span class="o">=</span> <span class="n">generate_reward_matrix</span><span class="p">(</span><span class="n">num_states</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;P: </span><span class="se">\n</span><span class="si">{P}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">R: </span><span class="se">\n</span><span class="si">{R}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -244,10 +211,13 @@ which is often simplified to being $\mathcal{R}(s_t)$, the reward of being in a 
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[[0.21214239 0.19165747 0.30648369 0.28971645]
- [0.35588867 0.23368871 0.1097489  0.30067371]
- [0.29478104 0.34486025 0.03001059 0.33034813]
- [0.27003305 0.25583252 0.17196308 0.30217135]]
+<pre>P: 
+[[0.55250389 0.13600516 0.11977055 0.19172041]
+ [0.08087023 0.21183225 0.56513127 0.14216626]
+ [0.24059129 0.1108827  0.32471353 0.32381248]
+ [0.36334941 0.43350296 0.05657077 0.14657686]] 
+R: 
+[ 3.35937682  0.43814485  8.04725463 -5.48089562]
 </pre>
 </div>
 </div>
@@ -258,51 +228,20 @@ which is often simplified to being $\mathcal{R}(s_t)$, the reward of being in a 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[1.55093638 3.38500934 0.37532685 0.67692347]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">generate_trajectory</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">s_0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-    <span class="n">num_states</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span> <span class="c1"># the number of next states we may go to</span>
-    <span class="n">s_t</span> <span class="o">=</span> <span class="n">s_0</span> <span class="c1"># the current state is the starting state</span>
-    <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span> <span class="c1"># the trajectory, a fixed-length array of length T</span>
-    <span class="n">tau</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_t</span> <span class="c1"># the first state is the starting state</span>
-    <span class="n">rewards</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="c1"># the rewards experiences, a fixed-length array of length T</span>
-    <span class="n">rewards</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">s_0</span><span class="p">]</span> <span class="c1"># the first reward is the reward for being in the first state</span>
+    <span class="n">num_states</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+    <span class="n">s_t</span> <span class="o">=</span> <span class="n">s_0</span>
+    <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">tau</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_t</span>
+    <span class="n">rewards</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">rewards</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">s_0</span><span class="p">]</span>
     
-    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span> <span class="c1"># the length of the rest of the trajectory</span>
-        <span class="n">s_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_states</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">s_t</span><span class="p">])</span> <span class="c1"># randomly select a state using P, where every entry j in P[s_t] is the probability of transitioning from state s_t ot state j</span>
-        <span class="n">tau</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_t</span> <span class="c1"># add this state to our trajectory.</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+        <span class="n">s_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_states</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">s_t</span><span class="p">])</span>
+        <span class="n">tau</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_t</span>
         <span class="n">rewards</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">s_t</span><span class="p">]</span>
         
     <span class="k">return</span> <span class="n">tau</span><span class="p">,</span> <span class="n">rewards</span>
@@ -315,23 +254,11 @@ which is often simplified to being $\mathcal{R}(s_t)$, the reward of being in a 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">tau</span><span class="p">,</span> <span class="n">rewards</span> <span class="o">=</span> <span class="n">generate_trajectory</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tau</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;tau: </span><span class="se">\n</span><span class="si">{tau}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">rewards: </span><span class="se">\n</span><span class="si">{rewards}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -348,56 +275,28 @@ which is often simplified to being $\mathcal{R}(s_t)$, the reward of being in a 
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[0 0 2 1 3 1 3 0 3 1 3 2 0 3 1 2 3 2 0 3 0 1 3 2 0 2 0 3 0 0 3 2 2 0 0 0 0
- 3 3 1 0 3 1 3 3 1 0 1 3 0 2 3 3 0 3 3 2 1 1 2 1 0 2 3 0 2 1 3 2 1 1 0 1 2
- 3 1 1 0 0 2 1 0 3 1 1 3 1 0 3 3 3 0 3 1 3 0 0 0 3 2]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">rewards</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[1.55093638 1.55093638 0.37532685 3.38500934 0.67692347 3.38500934
- 0.67692347 1.55093638 0.67692347 3.38500934 0.67692347 0.37532685
- 1.55093638 0.67692347 3.38500934 0.37532685 0.67692347 0.37532685
- 1.55093638 0.67692347 1.55093638 3.38500934 0.67692347 0.37532685
- 1.55093638 0.37532685 1.55093638 0.67692347 1.55093638 1.55093638
- 0.67692347 0.37532685 0.37532685 1.55093638 1.55093638 1.55093638
- 1.55093638 0.67692347 0.67692347 3.38500934 1.55093638 0.67692347
- 3.38500934 0.67692347 0.67692347 3.38500934 1.55093638 3.38500934
- 0.67692347 1.55093638 0.37532685 0.67692347 0.67692347 1.55093638
- 0.67692347 0.67692347 0.37532685 3.38500934 3.38500934 0.37532685
- 3.38500934 1.55093638 0.37532685 0.67692347 1.55093638 0.37532685
- 3.38500934 0.67692347 0.37532685 3.38500934 3.38500934 1.55093638
- 3.38500934 0.37532685 0.67692347 3.38500934 3.38500934 1.55093638
- 1.55093638 0.37532685 3.38500934 1.55093638 0.67692347 3.38500934
- 3.38500934 0.67692347 3.38500934 1.55093638 0.67692347 0.67692347
- 0.67692347 1.55093638 0.67692347 3.38500934 0.67692347 1.55093638
- 1.55093638 1.55093638 0.67692347 0.37532685]
+<pre>tau: 
+[0 3 0 0 0 0 0 0 0 0 0 0 1 2 3 1 3 1 2 3 1 1 2 0 1 3 1 2 0 0 0 3 0 0 3 1 0
+ 1 2 3 0 3 3 0 3 1 1 2 3 0 0 2 1 1 0 0 2 2 3 3 3 1 2 0 0 3 1 2 2 3 0 3 1 2
+ 2 0 1 2 2 2 0 0 0 0 0 0 0 0 0 0 3 2 2 2 0 0 0 0 3 1] 
+rewards: 
+[ 3.35937682 -5.48089562  3.35937682  3.35937682  3.35937682  3.35937682
+  3.35937682  3.35937682  3.35937682  3.35937682  3.35937682  3.35937682
+  0.43814485  8.04725463 -5.48089562  0.43814485 -5.48089562  0.43814485
+  8.04725463 -5.48089562  0.43814485  0.43814485  8.04725463  3.35937682
+  0.43814485 -5.48089562  0.43814485  8.04725463  3.35937682  3.35937682
+  3.35937682 -5.48089562  3.35937682  3.35937682 -5.48089562  0.43814485
+  3.35937682  0.43814485  8.04725463 -5.48089562  3.35937682 -5.48089562
+ -5.48089562  3.35937682 -5.48089562  0.43814485  0.43814485  8.04725463
+ -5.48089562  3.35937682  3.35937682  8.04725463  0.43814485  0.43814485
+  3.35937682  3.35937682  8.04725463  8.04725463 -5.48089562 -5.48089562
+ -5.48089562  0.43814485  8.04725463  3.35937682  3.35937682 -5.48089562
+  0.43814485  8.04725463  8.04725463 -5.48089562  3.35937682 -5.48089562
+  0.43814485  8.04725463  8.04725463  3.35937682  0.43814485  8.04725463
+  8.04725463  8.04725463  3.35937682  3.35937682  3.35937682  3.35937682
+  3.35937682  3.35937682  3.35937682  3.35937682  3.35937682  3.35937682
+ -5.48089562  8.04725463  8.04725463  8.04725463  3.35937682  3.35937682
+  3.35937682  3.35937682 -5.48089562  0.43814485]
 </pre>
 </div>
 </div>
@@ -410,7 +309,7 @@ which is often simplified to being $\mathcal{R}(s_t)$, the reward of being in a 
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h4 id="Return-and-Discounted-Return">Return and Discounted Return<a class="anchor-link" href="#Return-and-Discounted-Return">&#182;</a></h4><p>We are interested in trajectories that maximize the <strong>return</strong> $R_t$:
+<h3 id="Return-and-Discounted-Return">Return and Discounted Return<a class="anchor-link" href="#Return-and-Discounted-Return">&#182;</a></h3><p>If we think of an agent as living in a Markov Reward Process, and we think of the reward $r_t$ as measuring the 'goodness' of certain states $s_t$, then we are interested in trajectories that <strong>maximize</strong> the total rewards over a trajectory (think of it as planning a trip that visits the best tourist spots). We call the cumulative rewards over a trajectory the <strong>return</strong> $R_t$:
 $$
 \begin{align}
     R_t &amp;= r_t + r_{t+1} +  r_{t+2}+  \dots + r_T  \\
@@ -418,7 +317,8 @@ $$
 \end{align}
 $$</p>
 <p>When $T$ is finite, we say that the trajectory has a <strong>finite time horizon</strong> and that the environment is <strong>episodic</strong> (happens in episodes).</p>
-<p>For infinite time horizons, we cannot guarantee that $R_t$ converges. As a result, we might consider discounting rewards exponentially over time in order to guarantee convergence. This line of reasoning leads us to the <strong>discounted return</strong> $G_t$:</p>
+<p>In general, we say that Markov Reward Processes always have an infinite time horizon (i.e., $T = \infty$). Episodic environments are just a special case whereby $s_{t+1} = s_t$ for all $t&gt;T$.</p>
+<p>If we want to find trajectories that maximize the $R_t$ over an infinite time horizon, the math can get a little hairy without a guarantee that $R_t$ converges. As a result, we might consider discounting rewards exponentially over time in order to guarantee convergence. This line of reasoning leads us to the <strong>discounted return</strong> $G_t$:</p>
 $$
 \begin{align}
     G_t &amp;= r_{t} + \gamma r_{t+1} + \gamma^2 r_{t+2} + \dots \\
@@ -427,25 +327,33 @@ $$
 $$<p>where $\gamma$ is a discount factor between $0$ and $1$ (often close to $1$).</p>
 <p>We sometimes refer to both the discounted and undiscounted return as just "return" for brevity, and write $G_t$ where for some episodic environments it may be more appropriate to use $R_t$. In fact, it should not be hard to see that $R_t$ is just $G_t$ with $r_t = 0$ for $t &gt; T$ and $\gamma = 1$.</p>
 <hr>
-<h4 id="Value-Function">Value Function<a class="anchor-link" href="#Value-Function">&#182;</a></h4><p>We can use the expected value of $G_t$ to determine the <strong>value</strong> of being a certain state $s_t$:</p>
-$$
-V(s_t) = \mathbb{E}\left[ G_t \big\vert s_t \right]
-$$<p>We can decompose $V(s_t)$ into two parts: the immediate reward $r_t$ and the discounted value of being in the next state $s_{t+1}$:</p>
+<h3 id="Value-Function">Value Function<a class="anchor-link" href="#Value-Function">&#182;</a></h3><p>We can use the expected value of $G_t$ to determine the <strong>value</strong> of being a certain state $s_t$:</p>
+\begin{align}
+V(s_t) &amp;= \mathbb{E}\left[ G_t \big\vert s_t \right] \\
+        &amp;= \mathbb{E} \left[ r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} \dots\right]
+\end{align}<p>Essentially, the value tells us, given a Markov Reward Process with state transition dynamics $\mathcal{P}$, what should I expect $G_t$ to be from <strong>this state onwards</strong>?</p>
+<p>We can decompose $V(s_t)$ into two parts: the immediate reward $r_t$ and the discounted value of being in the next state $s_{t+1}$:</p>
 \begin{align}
     \begin{split}
         V(s_t) &amp;= \mathbb{E} \left[ G_t \big\vert s_t \right] \\
-                &amp;= \mathbb{E} \left[ r_{t} + \gamma r_{t+1} + \dots + \gamma^2 r_{t+2} \big\vert s_t \right] \\
+                &amp;= \mathbb{E} \left[ r_{t} + \gamma r_{t+1} + \gamma^2 r_{t+2} + \dots \big\vert s_t \right] \\
                 &amp;= \mathbb{E}\left[r_{t} + \gamma (r_{t+1} + \gamma r_{t+2} + \dots) \big\vert s_t \right] \\
                 &amp;= \mathbb{E}\left[ r_{t} + \gamma G_{t+1} \big\vert s_t \right] \\
                 &amp;= \mathbb{E} \left[ r_{t} + \gamma V(s_{t+1}) \big\vert s_t \right] \\
     \end{split}
 \end{align}<p>This last form of $V(s_t)$ is known as the <strong>Bellman Equation</strong>.</p>
 <hr>
-<h4 id="TD(0)">TD(0)<a class="anchor-link" href="#TD(0)">&#182;</a></h4><p>Say we are interesting in learning to predict $V(s_t)$. We can use a simple method called <strong>TD(0)</strong> to approximate $V(s_t)$ when our observation space $\mathcal{S}$ is <strong>discrete</strong> (i.e., finite). We begin by initializing a vector $V$ with random values, which will serve as our initial predictions for what $V(s_t)$ is.</p>
-<p>According to the Bellman Equation, we can use $r_t + \gamma V(s_{t+1})$ (which we call the <strong>TD-target</strong>) as an unbiased estimator for $V(s_t)$. Then we can modify our estimate of $V(s_t)$ to more closely match $r_t + \gamma V(s_{t+1})$ according to a learning rate $\alpha$ as follows:
+<h1 id="TD(0)">TD(0)<a class="anchor-link" href="#TD(0)">&#182;</a></h1><p>Say we are interesting in learning to predict $V(s_t)$. We can use a simple method called <strong>TD(0)</strong> to approximate $V(s_t)$ when our observation space $\mathcal{S}$ is <strong>discrete</strong> (i.e., finite). We begin by initializing a vector $V$ with zeros, which will serve as our initial predictions for what $V(s_t)$ is. Technically speaking, it can be seeded with random values and is guaranteed to converge to the right prediction given infinite data, but guessing all zeros is unbiased in terms of sign.</p>
+<p>According to the Bellman Equation, we can use</p>
+$$
+r_t + \gamma V(s_{t+1})
+$$<p>(which we call the <strong>TD-target</strong>) as an unbiased estimator for $V(s_t)$. This is because we have this form of the equation:</p>
+$$
+V(s_t) = \mathbb{E} \left[ r_{t} + \gamma V(s_{t+1}) \big\vert s_t \right]
+$$<p>Then we can modify our estimate of $V(s_t)$ to more closely match $r_t + \gamma V(s_{t+1})$ according to a learning rate $\alpha$ as follows:</p>
 $$
 V(s_t) \gets V(s_t) + \alpha \left( r_t + \gamma V(s_{t+1}) - V(s_t) \right)
-$$</p>
+$$<p>where $r_t + \gamma V(s_{t+1}) - V(s_t)$ is the difference between our current prediction $V(s_t)$ and the slightly better estimate: $r_t + V(s_{t+1})$. By adding this difference to our current prediction, scaled by some learning factor $\alpha$, our estimate $V(s_t)$ slowly converges to the correct value.</p>
 <p>Let's use the TD(0) algorithm to attempt to learn the value function of this Markov reward process.</p>
 
 </div>
@@ -453,35 +361,20 @@ $$</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">generate_value_predictions</span><span class="p">(</span><span class="n">num_states</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">num_states</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">TD_0</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">s_0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
-    <span class="n">num_states</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span> <span class="c1"># the number of next states we may go to</span>
-    <span class="n">s_t</span> <span class="o">=</span> <span class="n">s_0</span> <span class="c1"># the current state is the starting state</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">TD_0</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">s_0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+    <span class="n">num_states</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_states</span><span class="p">)</span>
+    <span class="n">s_t</span> <span class="o">=</span> <span class="n">s_0</span>
     <span class="n">r_t</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">s_t</span><span class="p">]</span>
     
-    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span> <span class="c1"># the length of the rest of the trajectory</span>
-        <span class="n">s_t_next</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_states</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">s_t</span><span class="p">])</span> <span class="c1"># randomly select a state using P, where every entry j in P[s_t] is the probability of transitioning from state s_t ot state j</span>
-<span class="c1">#         print(&#39;current state: {}\t next state: {}&#39;.format(s_t, s_t_next))</span>
-<span class="c1">#         print(&#39;current V: {} \t better V: {}&#39;.format( V[s_t], (r_t + gamma*V[s_t_next])))</span>
-        <span class="n">V</span><span class="p">[</span><span class="n">s_t</span><span class="p">]</span> <span class="o">=</span> <span class="n">V</span><span class="p">[</span><span class="n">s_t</span><span class="p">]</span> <span class="o">+</span> <span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">r_t</span> <span class="o">+</span> <span class="n">gamma</span><span class="o">*</span><span class="n">V</span><span class="p">[</span><span class="n">s_t_next</span><span class="p">]</span> <span class="o">-</span> <span class="n">V</span><span class="p">[</span><span class="n">s_t</span><span class="p">])</span> <span class="c1"># update our value function according to the bellman equation</span>
-        <span class="n">s_t</span> <span class="o">=</span> <span class="n">s_t_next</span> <span class="c1"># update our reference to s_t to point to the new state</span>
-        <span class="n">r_t</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">s_t</span><span class="p">]</span> <span class="c1"># update our reference to r_t to point to the new reward</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+        <span class="n">s_t_next</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_states</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">s_t</span><span class="p">])</span>
+        <span class="n">V</span><span class="p">[</span><span class="n">s_t</span><span class="p">]</span> <span class="o">=</span> <span class="n">V</span><span class="p">[</span><span class="n">s_t</span><span class="p">]</span> <span class="o">+</span> <span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">r_t</span> <span class="o">+</span> <span class="n">gamma</span><span class="o">*</span><span class="n">V</span><span class="p">[</span><span class="n">s_t_next</span><span class="p">]</span> <span class="o">-</span> <span class="n">V</span><span class="p">[</span><span class="n">s_t</span><span class="p">])</span>
+        <span class="n">s_t</span> <span class="o">=</span> <span class="n">s_t_next</span>
+        <span class="n">r_t</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">s_t</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">V</span>
 </pre></div>
 
@@ -492,24 +385,11 @@ $$</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">V</span> <span class="o">=</span> <span class="n">generate_value_predictions</span><span class="p">(</span><span class="n">num_states</span><span class="p">)</span>
-<span class="n">V</span> <span class="o">=</span> <span class="n">TD_0</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">V</span> <span class="o">=</span> <span class="n">TD_0</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;V: </span><span class="se">\n</span><span class="si">{V}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -526,7 +406,8 @@ $$</p>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[139.77772911 141.75740034 139.31011323 139.49375314]
+<pre>V: 
+[189.26912044 188.4107677  194.03474576 181.27714373]
 </pre>
 </div>
 </div>
@@ -539,7 +420,7 @@ $$</p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h1 id="Markov-Decision-Processes">Markov Decision Processes<a class="anchor-link" href="#Markov-Decision-Processes">&#182;</a></h1><p>A <strong>Markov Decision Process</strong> (MDP) is an extension of a Markov Reward Process that allows state transitions to be conditional upon some action. Formally, it is a tuple $\langle \mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R} \rangle $ where $\mathcal{A}$ is a set of actions available to an agent in a state $s_t$. Our reward conditional now upon both the state $s_t$ we are in and the action $a_t$ that we took:</p>
+<h1 id="Markov-Decision-Processes">Markov Decision Processes<a class="anchor-link" href="#Markov-Decision-Processes">&#182;</a></h1><p>A <strong>Markov Decision Process</strong> (MDP) is an extension of a Markov Reward Process that allows state transitions to be conditional upon some action. Formally, it is a tuple $\langle \mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R} \rangle $ where $\mathcal{A}$ is a set of actions available to an agent in a state $s_t$. Our reward is conditional now upon both the state $s_t$ we are in and the action $a_t$ that we took:</p>
 $$
 \mathcal{R}(s_t, a_t) = \mathbb{E} \left[ r_t \vert s_t, a_t \right]
 $$<p>Also, $\mathcal{P}$ is the probability of transitioning to state $s_{t+1}$ given that the current state is $s_t$ and the current action is $a_t$:</p>
@@ -547,7 +428,7 @@ $$
 \mathcal{P}(s_t, a_t, s_{t+1}) = \mathbb{P} \left[ s_{t+1} \vert s_t, a_t \right]
 $$<p>Whereas in an MRP the probability of generating trajectories is dependant upon only the dynamics of the underlying Markov process, in an MDP trajectories also depend on the actions of an agent.</p>
 <p>This is an MDP with four states and two actions.</p>
-<p><img src="../images/mdp.png" alt="MDP"></p>
+<p><img src="images/mdp.png" alt="**missing image (MDP)**"></p>
 <p>In this case, $\mathcal{P}$ is a <strong>tensor</strong> of shape $4 \times 2 \times 4$ where $\mathcal{P}(i, j, k)$ is the probability of transitioning from state $i$ to state $k$ given action $j$. Furthermore, $\mathcal{R}$ is a matrix of shape $4 \times 2$ where $\mathcal{R}(i, j)$ is the reward associated with choosing action $j$ in state $i$.</p>
 <hr>
 <h3 id="Policies">Policies<a class="anchor-link" href="#Policies">&#182;</a></h3><p>Our goal is to define a <strong>policy</strong> $\pi$, which can be thought of as a set of rules for choosing actions based on the state. Typically, we represent $\pi$ as a probability distribution:
@@ -565,14 +446,14 @@ For discrete action spaces and observation spaces, we can think of this as a tab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">generate_state_transition_matrix</span><span class="p">(</span><span class="n">num_states</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">):</span>
     <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">num_states</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">,</span> <span class="n">num_states</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_states</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_actions</span><span class="p">):</span>
-            <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span> <span class="c1"># convert to a probability distribution</span>
+            <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">P</span>
 </pre></div>
 
@@ -583,7 +464,7 @@ For discrete action spaces and observation spaces, we can think of this as a tab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">generate_reward_matrix</span><span class="p">(</span><span class="n">num_states</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
@@ -597,7 +478,7 @@ For discrete action spaces and observation spaces, we can think of this as a tab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">generate_policy</span><span class="p">(</span><span class="n">num_states</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">):</span>
@@ -614,28 +495,16 @@ For discrete action spaces and observation spaces, we can think of this as a tab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_states</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># the number of states in our Markov Decision Process. Our current state is just an integer from 0 to 9.</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_states</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">num_actions</span> <span class="o">=</span> <span class="mi">2</span> 
 
 <span class="n">P</span> <span class="o">=</span> <span class="n">generate_state_transition_matrix</span><span class="p">(</span><span class="n">num_states</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">)</span>
 <span class="n">R</span> <span class="o">=</span> <span class="n">generate_reward_matrix</span><span class="p">(</span><span class="n">num_states</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">)</span>
 <span class="n">pi</span> <span class="o">=</span> <span class="n">generate_policy</span><span class="p">(</span><span class="n">num_states</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;P: </span><span class="se">\n</span><span class="si">{P}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">R: </span><span class="se">\n</span><span class="si">{R}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">pi: </span><span class="se">\n</span><span class="si">{pi}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -652,17 +521,28 @@ For discrete action spaces and observation spaces, we can think of this as a tab
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[[[0.29154301 0.12923674 0.10628912 0.47293113]
-  [0.31880752 0.50158099 0.08928148 0.09033001]]
+<pre>P: 
+[[[0.17042536 0.34201973 0.10786943 0.37968548]
+  [0.16186722 0.38207381 0.16551557 0.29054341]]
 
- [[0.39315656 0.31143769 0.18538221 0.11002354]
-  [0.35151358 0.09209864 0.43188849 0.12449929]]
+ [[0.09679337 0.42781783 0.11451198 0.36087682]
+  [0.22995667 0.34899076 0.35566587 0.0653867 ]]
 
- [[0.48028848 0.12740656 0.16171249 0.23059247]
-  [0.0546665  0.36694055 0.22133244 0.35706051]]
+ [[0.4094171  0.07837153 0.28083541 0.23137597]
+  [0.14460938 0.19997512 0.29981354 0.35560195]]
 
- [[0.4500914  0.11077827 0.16285864 0.27627169]
-  [0.03940261 0.22188685 0.38365416 0.35505639]]]
+ [[0.07871477 0.24551736 0.38380149 0.29196638]
+  [0.13551819 0.47594282 0.19870079 0.18983819]]] 
+R: 
+[[ 0.06807389  1.06863631]
+ [-0.1527366  -0.64913176]
+ [ 1.10558323  0.02134114]
+ [ 2.00332665 -0.63635805]] 
+pi: 
+[[0.83715368 0.16284632]
+ [0.8570525  0.1429475 ]
+ [0.18023624 0.81976376]
+ [0.05224557 0.94775443]]
 </pre>
 </div>
 </div>
@@ -673,100 +553,32 @@ For discrete action spaces and observation spaces, we can think of this as a tab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[[ 1.65090392  0.70730626]
- [ 1.44894347 -0.27185346]
- [-0.49901451  0.48511235]
- [-1.70095257 -1.01470947]]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[[0.36371602 0.63628398]
- [0.37551598 0.62448402]
- [0.74930411 0.25069589]
- [0.4875516  0.5124484 ]]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">generate_trajectory</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">s_0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a_0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-    <span class="n">num_states</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span> <span class="c1"># the number of next states we may go to</span>
-    <span class="n">num_actions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># the number of actions we may take</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">generate_trajectory</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">s_0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="n">num_states</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+    <span class="n">num_actions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     
-    <span class="n">s_t</span> <span class="o">=</span> <span class="n">s_0</span> <span class="c1"># the current state is the starting state</span>
-    <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span> <span class="c1"># the trajectory, a fixed-length array of length T</span>
-    <span class="n">tau</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_t</span> <span class="c1"># the first state is the starting state</span>
+    <span class="n">s_t</span> <span class="o">=</span> <span class="n">s_0</span>
+    <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">tau</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_t</span>
     
-    <span class="n">a_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_actions</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">pi</span><span class="p">[</span><span class="n">s_t</span><span class="p">])</span> <span class="c1"># select our first action</span>
-    <span class="n">actions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span> <span class="c1"># the actions we choose, a fixed-length array of length T</span>
+    <span class="n">a_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_actions</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">pi</span><span class="p">[</span><span class="n">s_t</span><span class="p">])</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
     <span class="n">actions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">a_t</span> 
     
-    <span class="n">rewards</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="c1"># the rewards experiences, a fixed-length array of length T</span>
-    <span class="n">rewards</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">s_t</span><span class="p">,</span> <span class="n">a_t</span><span class="p">]</span> <span class="c1"># the first reward is the reward for being in the first state and choosing the first action</span>
+    <span class="n">rewards</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">rewards</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">s_t</span><span class="p">,</span> <span class="n">a_t</span><span class="p">]</span>
     
-    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span> <span class="c1"># the length of the rest of the trajectory</span>
-        <span class="n">s_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_states</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">s_t</span><span class="p">,</span> <span class="n">a_t</span><span class="p">])</span> <span class="c1"># randomly select a state using P, where every entry j in P[s_t] is the probability of transitioning from state s_t ot state j</span>
-        <span class="n">a_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_actions</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">pi</span><span class="p">[</span><span class="n">s_t</span><span class="p">])</span> <span class="c1"># randomly select an action given the state.</span>
-        <span class="n">tau</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_t</span> <span class="c1"># add this state to our trajectory.</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+        <span class="n">s_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_states</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">s_t</span><span class="p">,</span> <span class="n">a_t</span><span class="p">])</span>
+        <span class="n">a_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_actions</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">pi</span><span class="p">[</span><span class="n">s_t</span><span class="p">])</span>
+        <span class="n">tau</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_t</span>
         <span class="n">actions</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">a_t</span>
         <span class="n">rewards</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">s_t</span><span class="p">,</span> <span class="n">a_t</span><span class="p">]</span>
 
-    <span class="k">return</span> <span class="n">tau</span><span class="p">,</span> <span class="n">rewards</span>
+    <span class="k">return</span> <span class="n">tau</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">rewards</span>
 </pre></div>
 
     </div>
@@ -776,23 +588,11 @@ For discrete action spaces and observation spaces, we can think of this as a tab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tau</span><span class="p">,</span> <span class="n">rewards</span> <span class="o">=</span> <span class="n">generate_trajectory</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">pi</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tau</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tau</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">rewards</span> <span class="o">=</span> <span class="n">generate_trajectory</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">pi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;tau: </span><span class="se">\n</span><span class="si">{tau}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">actions: </span><span class="se">\n</span><span class="si">{actions}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">rewards: </span><span class="se">\n</span><span class="si">{rewards}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -809,56 +609,32 @@ For discrete action spaces and observation spaces, we can think of this as a tab
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[0 0 0 3 2 0 2 1 3 0 1 2 0 0 0 3 2 2 0 3 2 2 1 3 2 2 0 1 0 1 0 3 0 0 2 3 2
- 0 1 0 1 3 0 2 3 1 0 0 0 1 2 0 1 1 0 0 1 1 0 3 0 1 0 1 2 0 0 1 1 2 3 3 2 0
- 3 3 0 0 1 0 2 1 0 1 2 3 1 3 1 2 1 3 0 1 0 0 0 0 3 0]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">rewards</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[ 0.70730626  0.70730626  1.65090392 -1.01470947 -0.49901451  0.70730626
-  0.48511235 -0.27185346 -1.70095257  0.70730626  1.44894347 -0.49901451
-  0.70730626  1.65090392  0.70730626 -1.70095257  0.48511235 -0.49901451
-  0.70730626 -1.70095257  0.48511235  0.48511235 -0.27185346 -1.01470947
-  0.48511235 -0.49901451  0.70730626 -0.27185346  0.70730626 -0.27185346
-  1.65090392 -1.70095257  0.70730626  1.65090392 -0.49901451 -1.70095257
- -0.49901451  0.70730626  1.44894347  0.70730626 -0.27185346 -1.70095257
-  1.65090392  0.48511235 -1.01470947 -0.27185346  0.70730626  1.65090392
-  0.70730626 -0.27185346 -0.49901451  0.70730626  1.44894347  1.44894347
-  1.65090392  0.70730626 -0.27185346  1.44894347  1.65090392 -1.70095257
-  0.70730626 -0.27185346  0.70730626 -0.27185346 -0.49901451  1.65090392
-  0.70730626  1.44894347  1.44894347  0.48511235 -1.01470947 -1.01470947
- -0.49901451  1.65090392 -1.01470947 -1.01470947  0.70730626  1.65090392
-  1.44894347  1.65090392  0.48511235 -0.27185346  0.70730626 -0.27185346
-  0.48511235 -1.01470947 -0.27185346 -1.01470947 -0.27185346 -0.49901451
- -0.27185346 -1.01470947  0.70730626 -0.27185346  0.70730626  0.70730626
-  0.70730626  1.65090392 -1.70095257  1.65090392]
+<pre>tau: 
+[0 0 2 0 2 1 3 1 1 3 1 1 3 0 3 1 3 0 1 1 3 1 3 1 3 2 3 2 2 1 1 2 2 3 3 3 2
+ 0 1 0 0 3 1 1 3 1 3 1 0 1 1 3 1 3 1 3 3 1 2 3 2 3 1 1 0 0 3 2 3 3 1 3 1 1
+ 3 2 2 3 1 3 1 1 2 3 1 1 1 3 3 3 0 0 1 1 2 2 3 2 3 1] 
+actions: 
+[0 0 0 0 1 0 1 0 0 1 0 0 1 0 1 0 1 0 0 0 1 0 1 0 1 1 1 1 1 0 0 1 1 1 1 1 1
+ 0 0 0 0 1 1 0 1 0 1 1 0 0 0 1 0 0 0 1 1 0 1 1 1 1 0 1 0 0 0 1 1 1 0 1 0 0
+ 1 1 1 1 0 1 1 0 1 1 0 0 0 1 1 1 1 1 0 0 0 1 1 1 1 0] 
+rewards: 
+[ 0.06807389  0.06807389  1.10558323  0.06807389  0.02134114 -0.1527366
+ -0.63635805 -0.1527366  -0.1527366  -0.63635805 -0.1527366  -0.1527366
+ -0.63635805  0.06807389 -0.63635805 -0.1527366  -0.63635805  0.06807389
+ -0.1527366  -0.1527366  -0.63635805 -0.1527366  -0.63635805 -0.1527366
+ -0.63635805  0.02134114 -0.63635805  0.02134114  0.02134114 -0.1527366
+ -0.1527366   0.02134114  0.02134114 -0.63635805 -0.63635805 -0.63635805
+  0.02134114  0.06807389 -0.1527366   0.06807389  0.06807389 -0.63635805
+ -0.64913176 -0.1527366  -0.63635805 -0.1527366  -0.63635805 -0.64913176
+  0.06807389 -0.1527366  -0.1527366  -0.63635805 -0.1527366   2.00332665
+ -0.1527366  -0.63635805 -0.63635805 -0.1527366   0.02134114 -0.63635805
+  0.02134114 -0.63635805 -0.1527366  -0.64913176  0.06807389  0.06807389
+  2.00332665  0.02134114 -0.63635805 -0.63635805 -0.1527366  -0.63635805
+ -0.1527366  -0.1527366  -0.63635805  0.02134114  0.02134114 -0.63635805
+ -0.1527366  -0.63635805 -0.64913176 -0.1527366   0.02134114 -0.63635805
+ -0.1527366  -0.1527366  -0.1527366  -0.63635805 -0.63635805 -0.63635805
+  1.06863631  1.06863631 -0.1527366  -0.1527366   1.10558323  0.02134114
+ -0.63635805  0.02134114 -0.63635805 -0.1527366 ]
 </pre>
 </div>
 </div>
@@ -870,29 +646,13 @@ For discrete action spaces and observation spaces, we can think of this as a tab
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this notebook, we learned about:</p>
-<ul>
-<li>Markov processes and how trajectories $\tau$ depend on the underlying state dynamics  $\mathcal{P}$. </li>
-<li>Markov reward processes and how we can generate a stream of rewards given our trajectory.</li>
-<li>Returns, the value function $V(s_t)$ and how we can learn to approximate it using the TD(0) algorithm.</li>
-<li>Markov decision processes and how we can use a policy $\pi$ to guide our trajectories by choosing actions $a_t$ conditioned on the state $s_t$.</li>
-</ul>
+<h3 id="Summary">Summary<a class="anchor-link" href="#Summary">&#182;</a></h3><ol>
+<li>Markov Decision Processes are mathematical models of the world that consider how the world changes based on underlying state dynamics and decisions of agents. It also measures the <em>goodness</em> of certain states by associating with each state a reward.</li>
+<li>We can use the TD(0) algorithm to learn the value function $V$ for discrete state spaces.</li>
+</ol>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
 </div>
  
 

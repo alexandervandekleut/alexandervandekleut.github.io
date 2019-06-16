@@ -78,12 +78,14 @@
 
 <p>Our goal is for the agent to learn a <strong>policy</strong>, a set of rules for choosing actions based on the current state, that maximizes the cumulative rewards.</p>
 
-<p>Over the course of several lessons, we will build up an understanding of two main classes of policies: <a href="http://localhost:4000/q-learning"><strong><script type="math/tex">Q</script> -learning</strong></a> and <a href="http://localhost:4000/policy-gradients"><strong>policy gradients</strong></a>.</p>
+<p>Over the course of several lessons, we will build up an understanding of two main classes of policies:<strong>$Q$-learning$$</strong> and <strong>policy gradients</strong>.</p>
 
 <hr />
 <h3 id="who-is-this-for">Who is this for?</h3>
 
 <p>When writing my undergraduate thesis in reinforcement learning, I found plenty of resources spread across the internet. <a href="https://medium.com/@jonathan_hui">Some pages</a> were extremely helpful in understanding the theoretical underpinnings of reinforcement learning, whereas <a href="https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-0-q-learning-with-tables-and-neural-networks-d195264329d0">others</a> focused mostly on code and spent very little time on theory. Furthermore, there are <a href="https://github.com/openai/baselines">open source implementations</a> of many reinforcement learning techniques with little explanation as to how the code actually <em>works</em>. I decided to put together a comprehensive resource that provides clear explanations of the theory behind reinforcement learning, combined with high-quality implementations of each algorithm to help you go from theory to implementation when you decide to try something out for yourself.</p>
+
+<p>Most resources out there use <code class="highlighter-rouge">tensorflow 1.x</code>, but since that is going to be phased out this year (2019), I have decided to learn and use <code class="highlighter-rouge">tensorflow 2.0a</code> instead. <code class="highlighter-rouge">tensorflow 2</code> is written with the imperative nature of python in mind, so it runs using ‘eager execution’ and ‘gradient tapes’ rather than using predefined ‘sessions’ (as you will often see in older implementations). Most of this guide was written during the alpha and beta release.</p>
 
 <p>I assume you have the required mathematical background to understand machine learning concepts:</p>
 
